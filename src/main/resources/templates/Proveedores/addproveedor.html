@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+
+
+
+
+
+
+
+		<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="product-payment-inner-st">
+						<div class="sparkline13-hd">
+							<div class="main-sparkline13-hd">
+								<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+
+
+
+
+								<h1>Añadir proveedor</h1>
+							</div>
+						</div>
+						<form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload"
+							th:action="@{/addProveedor}" th:object="${proveedor}" method="POST">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<div class="form-group">
+										<label class="login2">Nro. de registro </label>
+										<input name="nroregistro" id="nroregistro" type="number" required="true"
+											th:field="*{nro_registro}" class="form-control"
+											placeholder="Número de registro">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('nro_registro')}">
+											<span th:errors="*{nro_registro}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Nro. de contrato </label>
+										<input name="nrocontrato" id="nrocontrato" type="text" class="form-control"
+											th:field="*{nro_contrato}" required="true" placeholder="Número de contrato">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('nro_contrato')}">
+											<span th:errors="*{nro_contrato}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Nombre del proveedor </label>
+										<input name="nombreproveedor" id="nombreproveedor" type="text"
+											th:field="*{nombre_proveedor}" class="form-control" required="true"
+											placeholder="Nombre del proveedor">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('nombre_proveedor')}">
+											<span th:errors="*{nombre_proveedor}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Alias </label>
+										<input name="alias" id="alias" type="text" class="form-control"
+											th:field="*{alias_proveedor}" placeholder="Alias">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('alias_proveedor')}">
+											<span th:errors="*{alias_proveedor}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Tipo de contrato </label>
+
+
+										<select data-placeholder="--Seleccione tipo de contrato--"
+											id="loadTipoContratoFragment" class="form-control select2" required="true"
+											th:field="*{tipo_contrato.nro}">
+											<option value="-1">--Seleccione tipo de contrato--</option>
+
+											<option th:each="tipocontrato :${tipocontratos}"
+												th:value=" ${tipocontrato.nro}" th:text="${tipocontrato.tipo_contrato}">
+											</option>
+
+										</select>
+
+
+
+									</div>
+
+									<div id="loadTipoContratoFragment">
+
+									</div>
+									<div class="form-group">
+										<button id="addcontrato" title="Añadir contrato" type="button"
+											class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+											data-target="#DetailModalAddContrato">
+											+ Añadir Contrato</button>
+									</div>
+
+									<div class="form-group">
+										<label class="login2">Fecha de suscripción </label>
+
+										<div class="form-group data-custon-pick" id="data_1">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+												<input id="fechasuscripcion" th:field="*{fecha_suscripcion}"
+													placeholder="Fecha de suscripción" type="text" class="form-control">
+												<div style="color: red" role="alert"
+													th:if="${#fields.hasErrors('fecha_suscripcion')}">
+													<span th:errors="*{fecha_suscripcion}"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+
+
+									<div class="form-group">
+										<label class="login2">Vigencia </label>
+
+										<div class="form-group data-custon-pick" id="data_1">
+											<div class="input-group ">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+												<input id="fechavigencia" type="text" class="form-control"
+													name="vigencia" th:field="*{vigencia}" placeholder="Vigencia" />
+												<div style="color: red" role="alert"
+													th:if="${#fields.hasErrors('vigencia')}">
+													<span th:errors="*{vigencia}"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Ficha del cliente </label>
+										<input name="fichacliente" id="fichacliente" type="text" class="form-control"
+											th:field="*{ficha_cliente}" placeholder="Ficha del cliente">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('ficha_cliente')}">
+											<span th:errors="*{ficha_cliente}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Código REUP </label>
+										<input name="codigo" id="codigo" type="text" class="form-control"
+											th:field="*{codigo_REUP}" placeholder="Código REUP">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('codigo_REUP')}">
+											<span th:errors="*{codigo_REUP}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Cuenta bancaria </label>
+										<input name="cuenta" id="cuenta" type="number" class="form-control"
+											th:field="*{cuenta_bancaria}" placeholder="Cuenta bancaria">
+										<div style="color: red" role="alert"
+											th:if="${#fields.hasErrors('cuenta_bancaria')}">
+											<span th:errors="*{cuenta_bancaria}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<div class="form-group">
+										<label class="login2">Teléfono </label>
+										<input name="telefono" id="telefono" type="text" class="form-control"
+											th:field="*{telefono}" placeholder="Teléfono">
+										<!--<div style="color: red" role="alert" th:if="${#fields.hasErrors('telefono')}">
+											<span th:errors="*{telefono}"></span>
+										</div>-->
+									</div>
+									<div class="form-group">
+										<label class="login2">Email </label>
+										<input name="email" id="email" type="text" class="form-control"
+											th:field="*{email}" placeholder="Email">
+										<!--	<div style="color: red" role="alert" th:if="${#fields.hasErrors('email')}">
+											<span th:errors="*{email}"></span>
+										</div>-->
+									</div>
+									<div class="form-group">
+										<label class="login2">Dirección </label>
+										<input name="direccion" id="direccion" type="text" class="form-control"
+											th:field="*{direccion}" placeholder="Dirección">
+										<div style="color: red" role="alert" th:if="${#fields.hasErrors('direccion')}">
+											<span th:errors="*{direccion}"></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="login2">Provincia </label>
+										<select data-placeholder="--Seleccione la provincia--" name="provincia"
+											id="provincia" class="form-control select2" required="true">
+											<option value="-1">--Seleccione la provincia--</option>
+
+											<option th:each="prov :${provincias}" th:value=" ${prov.id}"
+												th:text="${prov.nomb_prov}"></option>
+
+										</select>
+
+									</div>
+									<div class="form-group">
+										<div class="form-select-list">
+											<label class="login2">Municipio </label>
+											<select id="loadMunicipiosFragment"
+												data-placeholder="--Seleccione el municipio--" name="municipio"
+												th:field="*{municipio}" class="form-control select2" required="true">
+												<option value="-1">--Seleccione el municipio--</option>
+
+
+											</select>
+
+										</div>
+									</div>
+
+
+
+
+
+
+
+									<div class="form-group">
+										<div class="form-group res-mg-t-15">
+											<label class="login2">Observaciones </label>
+											<textarea name="observaciones" id="observaciones"
+												th:field="*{observaciones}" placeholder="Observaciones"></textarea>
+											<!--<div style="color: red" role="alert"
+												th:if="${#fields.hasErrors('observaciones')}">
+												<span th:errors="*{observaciones}"></span>
+											</div>-->
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+											<label class="login2 pull-right pull-right-pro">Dictaminado </label>
+										</div>
+										<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+											<div class="inline-checkbox-cs">
+												<label class="checkbox-inline i-checks pull-left">
+													<input type="radio" name="dictaminado" id="dictaminado1" value="Si"
+														th:field="*{dictaminado}"> <i></i> Si
+												</label>
+												<label class="checkbox-inline i-checks pull-left">
+													<input type="radio" checked="" name="dictaminado" value="No"
+														id="dictaminado2" th:field="*{dictaminado}">
+													<i></i> No </label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+											<label class="login2 pull-right pull-right-pro">Vencido </label>
+										</div>
+										<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+											<div class="inline-checkbox-cs">
+												<label class="checkbox-inline i-checks pull-left">
+													<input type="radio" value="Si" name="vencido" id="vencido1"
+														th:field="*{vencido}"> <i></i>
+													Si </label>
+												<label class="checkbox-inline i-checks pull-left">
+													<input type="radio" checked="" value="No" name="vencido"
+														th:field="*{vencido}" id="vencido2"> <i></i> No </label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+											<label class="login2 pull-right pull-right-pro">Notificar </label>
+										</div>
+										<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+											<div class="inline-checkbox-cs">
+												<label class="checkbox-inline i-checks pull-left">
+													<input type="radio" value="Si" name="notificar" id="notificar1"
+														th:field="*{notificar}">
+													<i></i> Si </label>
+												<label class="checkbox-inline i-checks pull-left">
+													<input type="radio" checked="" value="No" name="notificar"
+														th:field="*{notificar}" id="notificar2"> <i></i> No </label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="payment-adress">
+										<a class="btn btn-primary waves-effect waves-light" th:href="@{/proveedores}"><i
+												class="fa fa-user"></i> Cancelar</a>
+										<button type="submit" class="btn btn-primary waves-effect waves-light"><i
+												class="fa fa-save"></i> Aceptar</button>
+
+									</div>
+								</div>
+							</div>
+						</form>
+
+						<!-- modal add contrato-->
+						<div id="DetailModalAddContrato" class="modal modal-edu-general default-popup-PrimaryModal fade"
+							role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header header-color-modal bg-color-1">
+										<h4 class="modal-title">Agregar Contrato</h4>
+										<div class="modal-close-area modal-close-df">
+											<a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i>
+											</a>
+										</div>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<div class="devit-card-custom">
+													<div class="row">
+														<div class="form-group">
+															<input class="form-control" placeholder="Tipo de contrato"
+																name="tipocontrato" required="true" type="text"
+																id="tipocontrato">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="modal-footer">
+											<div class="button-drop-style-one btn-default-bg">
+
+
+												<button class="btn btn-primary waves-effect waves-light"
+													data-dismiss="modal"><i class="fa fa-close"></i> Cancelar</button>
+
+
+												<button type="button" class="btn btn-primary waves-effect waves-light"
+													onclick="addTipoContrato();" data-dismiss="modal"><i
+														class="fa fa-save"></i> Aceptar</button>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script th:inline="javascript">
+
+			$(document).ready(function () {
+
+				$('#fechasuscripcion').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+				$('#fechavigencia').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+			})
+
+
+
+			$(document).ready(function () {
+
+
+
+
+
+				$('#provincia').change(function () {
+					// var contextPath = "<%=request.getContextPath()%>";
+					//var username = $('#username').val();
+
+					var provincia = $('#provincia').val();
+
+
+
+					//var newpassword = $('#newpassword').val();
+					//	var newpassword2 = $('#newpassword2').val();
+					dir = '/getMunicipioByProvincia/' + provincia;
+					$.ajax({
+						url: '/getMunicipioByProvincia',
+						dataType: 'html',
+						data: {
+							provincia: provincia,
+							//newpassword : newpassword
+						},
+						success: function (data) {
+
+
+							//$('#loadMunicipiosFragment').addClass('chosen-select').trigger('change');
+							// $("#loadTableFragment").empty();
+							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
+
+							// $("#usuario").addClass("flat");
+
+
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+
+
+			function addTipoContrato() {
+				var tipo_contrato = $("#tipocontrato").val();
+				var url =/*[[@{/addTipoContrato}]]*/ 'addTipoContrato';
+
+				if (tipo_contrato != "") {
+					$.ajax({
+						url: url,
+						dataType: 'json',
+						method: 'POST',
+						data: {
+							tipo_contrato: tipo_contrato,
+							//newpassword : newpassword
+						},
+						success: function (data) {
+
+
+							//$('#loadMunicipiosFragment').addClass('chosen-select').trigger('change');
+							// $("#loadTableFragment").empty();
+							$("#loadTipoContratoFragment").load('/getTipoContrato');
+							toastr[data.msgtipo](data.msgbody, data.msgtitu);
+
+
+						},
+						error: function (data) {
+							toastr[data.msgtipo](data.msgbody, data.msgtitu);
+						}
+
+					});
+				} else {
+
+					var type =/*[[#{Form.tipocontrato.vacio.type}]]*/
+					var body =/*[[#{Form.tipocontrato.vacio.body}]]*/
+					var title =/*[[#{Form.tipocontrato.vacio.title}]]*/
+						toastr[type](body,
+							title);
+
+				}
+
+
+
+			}
+
+
+		</script>
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

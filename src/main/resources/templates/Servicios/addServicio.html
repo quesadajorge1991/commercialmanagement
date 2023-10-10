@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+		<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+
+
+		<div class="single-pro-review-area mt-t-30 mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-payment-inner-st">
+							<div class="sparkline13-hd">
+								<div class="main-sparkline13-hd">
+									<h1>Agregar servicio</h1>
+								</div>
+							</div>
+							<form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload"
+								th:action="@{/add_Servicio}" method="POST" th:object="${servicio}">
+
+
+								<label class="login2">* Debe elegir la solicitud.</label>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="chosen-select-single mg-b-20">
+											<select name="solicitud" id="solicitud"
+												data-placeholder="--Seleccione la solicitud--" class="select2"
+												style="width: 100%;" required="true">
+												<option value="-1">--Seleccione la solicitud--</option>
+												<option th:each="solicitud :${listsolicitudes}"
+													th:value="${solicitud.id}" th:text="${solicitud.nomb_pers}">
+												</option>
+
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										<section id="sct1" hidden>
+
+
+											<div class="form-group">
+												<label class="login2">Grupo </label>
+												<select name="grupo" id="grupo" th:field="*{grupo.nombre_grupo}"
+													style="width: 100%;" data-placeholder="--Seleccione el grupo--"
+													class="select2" required="true">
+													<option value="-1">--Seleccione el grupo--</option>
+													<option th:each="grupo :${listgrupos}"
+														th:value="${grupo.nombre_grupo}"
+														th:text="${grupo.nombre_grupo}"></option>
+												</select>
+											</div>
+
+
+
+											<div class="form-group">
+												<label class="login2">Nro. de contrato </label>
+												<select name="contrato" id="contrato" th:field="*{cliente.nro}"
+													style="width: 100%;"
+													data-placeholder="--Seleccione el número de contrato--"
+													class="select2" required="true">
+													<option value="-1">--Seleccione el número de contrato--</option>
+													<option th:each="grupo :${listclientes}" th:value="${grupo.nro}"
+														th:text="${grupo.nro_contrato}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="login2">Nro. de factura </label>
+												<input name="nrofactura" id="nrofactura" type="text"
+													class="form-control" required="true" placeholder="Nro. de factura"
+													th:field="*{nro_factura}">
+											</div>
+											<div class="form-group">
+												<label class="login2">Fecha de servicio </label>
+												<div class="form-group data-custon-pick" id="data_1">
+
+													<div class="input-group ">
+														<span class="input-group-addon"><i
+																class="fa fa-calendar"></i></span>
+														<input id="fechaservicio" type="text" class="form-control"
+															placeholder="Fecha de servicio"
+															th:field="*{fecha_servicio}">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="login2">Cultivo dañado </label>
+												<input name="cultivo" id="cultivo" type="text" class="form-control"
+													required="true" placeholder="Cultivo dañado" th:field="*{cultivo}">
+											</div>
+											<div class="form-group">
+												<label class="login2">Tipo de afectación </label>
+												<input name="tipo_afectacion" id="tipo_afectacion" type="text"
+													class="form-control" placeholder="Tipo de afectaciÃ³n"
+													required="true" th:field="*{tipo_afectacion}">
+											</div>
+										</section>
+									</div>
+
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										<section id="sct2" hidden>
+											<div class="form-group">
+												<label class="login2">Fecha de afectación</label>
+												<div class="form-group data-custon-pick data-custom-mg">
+
+													<div class="input-daterange input-group" id="datepickerrango">
+														<input type="text" class="form-control" name="start"
+															th:field="*{fecha_afectacion}" />
+														<span class="input-group-addon">al</span>
+														<input type="text" class="form-control" name="end"
+															th:field="*{fecha_afectacionfin}" />
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="login2">Zona afectada </label>
+												<input name="zona_afectacion" id="zona_afectacion" type="text"
+													class="form-control" placeholder="Zona afectada"
+													th:field="*{zona_afectacion}">
+											</div>
+											<div class="form-group">
+												<label class="login2">Provincia </label>
+												<select name="provincia" id="provincia" style="width: 100%;"
+													data-placeholder="--Seleccione la provincia--"
+													class="form-control select2" required="true">
+													<option value="-1">--Seleccione la provincia--</option>
+													<option th:each="provincia:${provincias}" th:value="${provincia.id}"
+														th:text="${provincia.nomb_prov}"></option>
+
+												</select>
+											</div>
+
+											<div class="form-group">
+												<div class="form-select-list">
+													<label class="login2">Municipio </label>
+													<select name="municipio" id="loadMunicipiosFragment"
+														style="width: 100%;" class="form-control select2"
+														data-placeholder="--Seleccione el municipio--" required="true">
+														<option value="-1">--Seleccione el municipio--</option>
+													</select>
+												</div>
+											</div>
+
+
+											<div class="form-group">
+												<div class="form-select-list">
+													<label class="login2">Pueblo </label>
+													<select name="pueblo" class="form-control select2"
+														id="loadPueblosFragment" style="width: 100%;"
+														data-placeholder="--Seleccione el pueblo--" required="true"
+														th:field="*{pueblo.id}">
+														<option value="-1">--Seleccione el pueblo--</option>
+													</select>
+
+
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+													<label class="login2 pull-right pull-right-pro">Entregado </label>
+												</div>
+												<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+													<div class="inline-checkbox-cs">
+														<label class="checkbox-inline i-checks pull-left">
+															<input type="radio" value="si" name="entregado"
+																id="entregado1"> <i></i> Si </label>
+														<label class="checkbox-inline i-checks pull-left">
+															<input type="radio" checked="" value="no" name="entregado"
+																id="entregado2"> <i></i> No </label>
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+								</div>
+								<br />
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="payment-adress">
+											<a class="btn btn-primary waves-effect waves-light"
+												th:href="@{/listservicios}"><span class="fa fa-bars"></span>
+												Cancelar</a>
+											<button type="submit" id="addservicio" hidden=""
+												class="btn btn-primary waves-effect waves-light"><span
+													class="fa fa-save"> </span> Aceptar</button>
+
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<script type="text/javascript" charset="UTF-8">
+
+			$(document).ready(function () {
+
+				$('#datepickerrango').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+
+				});
+
+
+
+				$('#provincia').change(function () {
+					var provincia = $('#provincia').val();
+					dir = '/getMunicipioByProvincia/' + provincia;
+					$.ajax({
+						url: '/getMunicipioByProvincia',
+						dataType: 'html',
+						data: {
+							provincia: provincia,
+						},
+						success: function (data) {
+							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
+							if (provincia === "-1") {
+								$("#addpueblo").prop("disabled", "disabled");
+								$("#loadPueblosFragment").prop("disabled", "disabled");
+							}
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+
+
+
+				$('#loadMunicipiosFragment').change(function () {
+					var municipio = $('#loadMunicipiosFragment').val();
+					dir = '/getPuebloByMunicipio/';
+					$.ajax({
+						url: '/getPuebloByMunicipio',
+						dataType: 'html',
+						data: {
+							municipio: municipio,
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$("#addpueblo").removeAttr("disabled");
+							$("#loadPueblosFragment").removeAttr("disabled");
+
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+
+
+
+				var contexPath = "<%=request.getContextPath()%>";
+				$('#solicitud').change(function (e) {
+					if (jQuery(this).val() !== "-1") {
+						e.preventDefault();
+						var val = $('#solicitud').val();
+						jQuery("#sct1").trigger('chosen:updated').removeAttr("hidden");
+						jQuery("#sct2").trigger('chosen:updated').removeAttr("hidden");
+						jQuery("#addservicio").trigger('chosen:updated').removeAttr("hidden");
+
+						$('#grupo').val('').trigger("chosen:updated");
+						$('#contrato').val('').trigger("chosen:updated");
+						$('#fecha_servicio').val(null);
+						$('#nrofactura').val(null);
+						$('#fecha_afectacion').val(null);
+
+
+						$.ajax({
+							type: "GET",
+							url: '/datosSolicitud',
+							dataType: 'json',
+							data: {ids: val},
+							success: function (data) {
+
+								//alert(temp[0]);
+								showSolicitud(data);
+							},
+							error:
+								function (e) {
+									alert('Error: ' + e);
+								}
+						});
+					} else {
+						$("#sct1").trigger('chosen:updated').attr("hidden", "hidden");
+						$("#sct2").trigger('chosen:updated').attr("hidden", "hidden");
+						$("#addservicio").trigger('chosen:updated').attr("hidden", "hidden");
+						$('#cultivo').val(null);
+						$('#tipo_afectacion').val(null);
+						$('#fecha_afectacion').val(null);
+						$('#zona_afectacion').val(null);
+					}
+
+					function showSolicitud(data) {
+						var temp = data.fecha.split('T')
+						$('#cultivo').val(data.cult_danado);
+						$('#tipo_afectacion').val(data.tipo_afect);
+						$('#fechaafecta').val(data.fecha);
+						$('#zona_afectacion').val(data.zona_afect);
+
+					}
+
+
+				})
+
+
+			});
+
+
+
+
+
+		</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			$(document).ready(function () {
+
+				$('#fechaservicio').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+
+				$('#fechaafectacion').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+
+
+
+				$('#provincia').change(function () {
+					var provincia = $('#provincia').val();
+					dir = '/getMunicipioByProvincia/' + provincia;
+					$.ajax({
+						url: '/getMunicipioByProvincia',
+						dataType: 'html',
+						data: {
+							provincia: provincia,
+						},
+						success: function (data) {
+							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
+							if (provincia === "-1") {
+								$("#addpueblo").prop("disabled", "disabled");
+								$("#loadPueblosFragment").prop("disabled", "disabled");
+							}
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+
+
+
+			$(document).ready(function () {
+				$('#loadMunicipiosFragment').change(function () {
+					var municipio = $('#loadMunicipiosFragment').val();
+					dir = '/getPuebloByMunicipio/';
+					$.ajax({
+						url: '/getPuebloByMunicipio',
+						dataType: 'html',
+						data: {
+							municipio: municipio,
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$("#addpueblo").removeAttr("disabled");
+							$("#loadPueblosFragment").removeAttr("disabled");
+
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+
+
+		</script>
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

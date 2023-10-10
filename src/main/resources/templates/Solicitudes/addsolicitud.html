@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+		<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+
+
+		<!-- Single pro tab review Start-->
+		<div class="single-pro-review-area mt-t-30 mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-payment-inner-st">
+							<div class="sparkline13-hd">
+								<div class="main-sparkline13-hd">
+									<h1>Añadir solicitud</h1>
+								</div>
+							</div>
+							<form method="post" th:action="@{/addSolicitud}"
+								class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload"
+								th:object="${solicitud}">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+											<label class="login2">Nombre de la persona </label>
+											<input name="nomb_pers" id="nomb_pers" type="text" class="form-control"
+												required="true" placeholder="Nombre de la persona"
+												th:field="*{nomb_pers}">
+											<div style="color: red" role="alert"
+												th:if="${#fields.hasErrors('nomb_pers')}">
+												<span th:errors="*{nomb_pers}"></span>
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="login2">Carnet de Identidad o Código NIT </label>
+											<input name="ci" id="ci" type="text" class="form-control"
+												placeholder="Carnet de Identidad" required="true"
+												data-mask="99999999999" th:field="*{ci}">
+											<div style="color: red" role="alert" th:if="${#fields.hasErrors('ci')}">
+												<span th:errors="*{ci}"></span>
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="login2">Dirección </label>
+											<input name="direccion" id="direccion" type="text" class="form-control"
+												placeholder="Dirección" th:field="*{direccion}">
+											<div style="color: red" role="alert"
+												th:if="${#fields.hasErrors('direccion')}">
+												<span th:errors="*{direccion}"></span>
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="login2">Teléfono </label>
+											<input name="telefono" id="telefono" type="text" class="form-control"
+												placeholder="Teléfono" th:field="*{telefono}">
+											<div style="color: red" role="alert"
+												th:if="${#fields.hasErrors('telefono')}">
+												<span th:errors="*{telefono}"></span>
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="login2">Cultivo dañado </label>
+											<input name="cult_danado" id="cult_danado" type="text" class="form-control"
+												placeholder="Cultivo dañado" th:field="*{cult_danado}">
+											<div style="color: red" role="alert"
+												th:if="${#fields.hasErrors('cult_danado')}">
+												<span th:errors="*{cult_danado}"></span>
+											</div>
+
+										</div>
+										<div class="form-group">
+											<label class="login2">Tipo de afectación </label>
+											<input name="tipo_afect" id="tipo_afect" type="text" class="form-control"
+												placeholder="Tipo de afectación" th:field="*{tipo_afect}">
+											<div style="color: red" role="alert"
+												th:if="${#fields.hasErrors('tipo_afect')}">
+												<span th:errors="*{tipo_afect}"></span>
+											</div>
+
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+											<label class="login2">Fecha de afectación</label>
+											<div class="form-group data-custon-pick data-custom-mg">
+
+												<div class="input-daterange input-group" id="fechaafectacion">
+													<input type="text" class="form-control" name="start"
+														th:field="*{fecha}" />
+													<span class="input-group-addon">al</span>
+													<input type="text" class="form-control" name="end"
+														th:field="*{fechafin}" />
+												</div>
+											</div>
+										</div>
+
+
+
+
+
+										<div class="form-group">
+											<label class="login2">Zona afectada </label>
+											<input name="zona_afect" id="zona_afect" type="text" class="form-control"
+												placeholder="Zona afectada" th:field="*{zona_afect}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Provincia </label>
+											<select name="provincia" id="provincia"
+												data-placeholder="--Seleccione la provincia--" onclick="dd();"
+												class="form-control select2" required="true">
+												<option value="-1">--Seleccione la provincia--</option>
+												<option th:each="provincia:${provincias}" th:value="${provincia.id}"
+													th:text="${provincia.nomb_prov}"></option>
+
+											</select>
+										</div>
+
+										<script>
+
+
+											/*		$(document).ready(function () {
+														$("#provincia").chosen();
+														$("#loadMunicipiosFragment").chosen();
+														$("#loadPueblosFragment").chosen();
+		
+														
+		
+													})
+		
+													function dd(){
+														$("#provincia").trigger('chosen:updated');
+														$("#loadMunicipiosFragment").trigger('chosen:updated');
+														$("#loadMunicipiosFragment").trigger('chosen:updated');
+														
+													}*/
+
+										</script>
+
+										<div class="form-group">
+											<div class="form-select-list">
+												<label class="login2">Municipio </label>
+												<select name="municipio" id="loadMunicipiosFragment"
+													class="form-control select2"
+													data-placeholder="--Seleccione el municipio--" required="true">
+													<option value="-1">--Seleccione el municipio--</option>
+												</select>
+											</div>
+										</div>
+
+
+										<div class="form-group">
+											<div class="form-select-list">
+												<label class="login2">Pueblo </label>
+												<select name="pueblo" class="form-control select2"
+													id="loadPueblosFragment" data-placeholder="--Seleccione el pueblo--"
+													required="true" th:field="*{pueblo.id}">
+													<option value="-1">--Seleccione el pueblo--</option>
+												</select>
+
+
+											</div>
+										</div>
+
+
+
+
+
+
+
+									</div>
+
+
+									<div class="form-group-inner">
+										<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
+											<div class="form-group">
+												<button id="addpueblo" title="Añadir pueblo" type="button"
+													class="btn btn-primary waves-effect waves-light" disabled="disabled"
+													data-toggle="modal" data-target="#DetailModalAddPueblo">
+													+ Añadir Pueblo</button>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="payment-adress">
+											
+											<a class="btn btn-primary waves-effect waves-light"
+												th:href="@{/listsolicitudes}"><li class="fa fa-newspaper-o"></li> Cancelar</a>
+												
+												<button type="submit"
+												class="btn btn-primary waves-effect waves-light"><li class="fa fa-save"></li> Aceptar</button>
+												
+												
+									
+												
+												
+												
+												
+												
+										</div>
+									</div>
+								</div>
+							</form>
+
+
+
+							<!-- modal Detalles  solicitud-->
+							<div id="DetailModalAddPueblo"
+								class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header header-color-modal bg-color-1">
+											<h4 class="modal-title">Agregar Pueblo</h4>
+											<div class="modal-close-area modal-close-df">
+												<a class="close" data-dismiss="modal" href="#"><i
+														class="fa fa-close"></i></a>
+											</div>
+										</div>
+										<form method="get">
+											<div class="modal-body">
+												<div class="row">
+													<form method="GET">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="devit-card-custom">
+																<div class="row">
+																	<div class="form-group">
+																		<input class="form-control"
+																			placeholder="Nombre del pueblo"
+																			name="nombrepueblo" required="true"
+																			type="text" id="namepueblo">
+																	</div>
+																</div>
+															</div>
+														</div>
+												</div>
+
+												<div class="modal-footer">
+													<div class="button-drop-style-one btn-default-bg">
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Aceptar</button>
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															onclick="addPueblo();" data-dismiss="modal"><i
+																class="fa fa-save"></i> Aceptar</button>
+
+
+
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+		<script th:inline="javascript">
+
+			$(document).ready(function () {
+
+
+
+				$('#fechaafectacion').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+
+			})
+
+
+
+
+			$(document).ready(function () {
+				$('#provincia').change(function () {
+					var provincia = $('#provincia').val();
+					dir = '/getMunicipioByProvincia/' + provincia;
+					$.ajax({
+						url: '/getMunicipioByProvincia',
+						dataType: 'html',
+						data: {
+							provincia: provincia,
+						},
+						success: function (data) {
+							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
+							if (provincia === "-1") {
+								$("#addpueblo").prop("disabled", "disabled");
+								$("#loadPueblosFragment").prop("disabled", "disabled");
+							}
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+
+
+
+			$(document).ready(function () {
+				$('#loadMunicipiosFragment').change(function () {
+					var municipio = $('#loadMunicipiosFragment').val();
+					dir = '/getPuebloByMunicipio/';
+					$.ajax({
+						url: '/getPuebloByMunicipio',
+						dataType: 'html',
+						data: {
+							municipio: municipio,
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$("#addpueblo").removeAttr("disabled");
+							$("#loadPueblosFragment").removeAttr("disabled");
+
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+			function addPueblo() {
+				var municipio = $('#loadMunicipiosFragment').val();
+				var namepueblo = $('#namepueblo').val()
+
+				
+				if (namepueblo != "") { //validar que el pueblo a insertar no este vacio
+					$.ajax({
+						url: '/addPueblo',
+						dataType: 'json',
+						data: {
+							municipio: municipio,
+							namepueblo: namepueblo
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$('#namepueblo').val('');
+							toastr[data.msgtipo](data.msgbody,
+								data.msgtitu);
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+					});
+				} else {
+					var type =/*[[#{Form.pueblo.vacio.type}]]*/
+					var body =/*[[#{Form.pueblo.vacio.body}]]*/
+					var title =/*[[#{Form.pueblo.vacio.title}]]*/
+						toastr[type](body,
+							title);
+				}
+
+
+
+			}
+
+
+		</script>
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

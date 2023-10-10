@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+
+
+		<div id="gt" class="data-table-area mg-b-15">
+			<!-- Single pro tab review Start-->
+			<div class="single-pro-review-area mt-t-30 mg-b-15">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="product-payment-inner-st">
+								<ul id="myTabedu1" class="tab-review-design">
+									<li class="active"><a href="#description">Contratos vencidos</a></li>
+									<li><a href="#reviews">Contratos por vencerse</a></li>
+								</ul>
+								<div id="myTabContent" class="tab-content custom-product-edit">
+									<div class="product-tab-list tab-pane fade active in" id="description">
+										<div class="row">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<div class="review-content-section">
+													<div id="dropzone1" class="pro-ad">
+														<div class="sparkline13-graph">
+															<div id="ta"
+																class="datatable-dashv1-list custom-datatable-overright">
+																<table id="tablesolicitudes" data-toggle="table"
+																	data-pagination="true" data-search="true"
+																	data-show-columns="true"
+																	data-show-pagination-switch="true"
+																	data-show-refresh="true" data-key-events="true"
+																	data-show-toggle="true" data-resizable="true"
+																	data-cookie="true" data-cookie-id-table="saveId"
+																	data-show-export="true" data-click-to-select="true"
+																	data-toolbar="#toolbar">
+																	<thead>
+																		<tr>
+																			<th>No. registro</th>
+																			<th>No. contrato</th>
+																			<th>
+																				<div style="width: 90px">Proveedor</div>
+																			</th>
+																			<th>Fecha de suscripción</th>
+																			<th>Vigencia</th>
+																			<th>Acciones</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<div th:each="lprov:${contr_vencidos}">
+																			<tr th:id="fila+${lprov.nro}">
+																				<td th:text="${lprov.nro_registro}">
+																				</td>
+																				<td th:text="${lprov.nro_contrato}">
+																				</td>
+																				<td th:text="${lprov.alias}"></td>
+																				<td th:text="${#dates.format(lprov.fecha_suscripcion,'dd-MM-yyyy')}"
+																					>
+																				</td>
+																				<td th:text="${#dates.format(lprov.vigencia,'dd-MM-yyyy')}"></td>
+																				<td>
+																					<button title="Detalles"
+																						type="button"
+																						class="btn btn-primary"
+																						data-toggle="modal"
+																						th:attr="data-target='#DetailModal'+${lprov.nro}"><i
+																							class="fa fa-list"
+																							aria-hidden="true"></i></button>
+																					<a class="btn btn-primary"
+																						th:href="@{/updateProveedor/}+${lprov.nro}"><i
+																							class="fa fa-pencil-square-o"
+																							aria-hidden="true"></i></a>
+
+
+																					<button title="Eliminar"
+																						th:attr="data-target='#DangerModalalert'+${lprov.nro}"
+																						class="btn btn-danger"
+																						type="submit"
+																						data-toggle="modal"><i
+																							class="fa fa-trash-o"
+																							aria-hidden="true"></i></button>
+
+																				</td>
+																			</tr>
+																			<!-- modal Detalles  solicitud-->
+																			<div th:id="DetailModal+${lprov.nro}"
+																				class="modal default-popup-PrimaryModal fade"
+																				role="dialog">
+																				<div class="modal-content">
+																					<div
+																						class="modal-close-area modal-close-df">
+																						<a class="close"
+																							data-dismiss="modal"
+																							href="#"><i
+																								class="fa fa-close"></i></a>
+																					</div>
+																					<div
+																						class="modal-header header-color-modal bg-color-1">
+																						<h4 class="modal-title">Detalles
+																							del proveedor</h4>
+																						<div
+																							class="modal-close-area modal-close-df">
+																							<a class="close"
+																								data-dismiss="modal"
+																								href="#"><i
+																									class="fa fa-close"></i></a>
+																						</div>
+																					</div>
+																					<div class="modal-body">
+																						<div class="devit-card-custom">
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Nro:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.nro}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Código
+																														REUP:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.codigo_REUP}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Nro.
+																											de registro:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.nro_registro}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Cuenta
+																														bancaria:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.cuenta_bancaria}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Nro.
+																											de contrato:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.nro_contrato}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Teléfono:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.telefono}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Nombre
+																											del
+																											proveedor:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.nombre_proveedor}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Email:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.email}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Alias:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.alias}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Dirección:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.direccion}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Tipo
+																											de contrato:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.tipo_contrato.tipo_contrato}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Observaciones:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<!--<div class="input-daterange input-group" id="datepicker" >
+                                                                                                        <div class="form-group res-mg-t-15">
+                                                                                                            <textarea name="observaciones" id="observaciones" disabled="">${lprov.observaciones}</textarea>
+                                                                                                        </div>
+                                                                                                    </div>-->
+																												<div
+																													class="message">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.observaciones}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Fecha
+																											de
+																											suscripción:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control" th:text="${#dates.format(lprov.fecha_suscripcion,'dd-MM-yyyy')}"
+																														></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Dictaminado:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.dictaminado}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Vigencia:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control" th:text="${#dates.format(lprov.vigencia,'dd-MM-yyyy')}"
+																														></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Vencido:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.vencido}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div
+																								class="form-group-inner">
+																								<div class="row">
+																									<div
+																										class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																										<label
+																											class="login2 pull-right pull-right-pro">Ficha
+																											del cliente:
+																										</label>
+																									</div>
+																									<div
+																										class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.ficha_cliente}"></label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<div
+																													class="form-select-list">
+																													<label
+																														class="login2 pull-right pull-right-pro">Notificado:
+																													</label>
+																												</div>
+																											</div>
+																											<div
+																												class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																												<div class="input-daterange input-group"
+																													id="datepicker">
+																													<label
+																														class="form-control"
+																														th:text="${lprov.notificar}"></label>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="modal-footer">
+																						<a data-dismiss="modal"
+																							href="#">Aceptar</a>
+																					</div>
+																				</div>
+
+																			</div>
+																			<!--modal de aterta de eliminacion-->
+																			<div th:id="DangerModalalert+${lprov.nro}"
+																				class="modal modal-edu-general FullColor-popup-DangerModal fade"
+																				role="dialog">
+																				<div class="modal-dialog">
+																					<div class="modal-content">
+																						<div
+																							class="modal-close-area modal-close-df">
+																							<a class="close"
+																								data-dismiss="modal"
+																								href="#"><i
+																									class="fa fa-close"></i></a>
+																						</div>
+																						<div class="modal-body">
+																							<span
+																								class="educate-icon educate-danger modal-check-pro information-icon-pro"></span>
+																							<h3>
+																								<p> Está seguro que
+																									quiere eliminar el
+																									proveedor: <span
+																										th:text="${lprov.alias}"></span>
+																									con Nro. de
+																									contrato: <span
+																										th:text="${lprov.nro_contrato}"></span>
+																								</p>
+																							</h3>
+																							<div class="col-lg-12">
+																								<div
+																									class="payment-adress">
+																									<a data-dismiss="modal"
+																										class="btn btn-primary waves-effect waves-light"
+																										href="#">Cancelar</a>
+																									<button
+																										type="button"
+																										class="btn btn-primary waves-effect waves-light"
+																										data-dismiss="modal"
+																										onclick="deleteProveedor('<%=request.getContextPath()%>', '${lprov.nro}')">Eliminar</button>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</tbody>
+																</table>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="product-tab-list tab-pane fade" id="reviews">
+										<div class="row">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<div class="review-content-section">
+													<div class="row">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="devit-card-custom">
+																<div class="sparkline13-graph">
+																	<div id="ta"
+																		class="datatable-dashv1-list custom-datatable-overright">
+																		<table id="tablesolicitudes" data-toggle="table"
+																			data-pagination="true" data-search="true"
+																			data-show-columns="true"
+																			data-show-pagination-switch="true"
+																			data-show-refresh="true"
+																			data-key-events="true"
+																			data-show-toggle="true"
+																			data-resizable="true" data-cookie="true"
+																			data-cookie-id-table="saveId"
+																			data-show-export="true"
+																			data-click-to-select="true"
+																			data-toolbar="#toolbar">
+																			<thead>
+																				<tr>
+																					<th>No. registro</th>
+																					<th>No. contrato</th>
+																					<th>Proveedor</th>
+																					<th>Fecha de suscripción</th>
+																					<th>Vigencia</th>
+																					<th>Faltan</th>
+																					<th>Acciones</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<div th:each="cxv : ${contrxVencerse}">
+																					<tr
+																						th:id="fila+${cxv.proveedor.nro}">
+																						<td
+																							th:text="${cxv.proveedor.nro_registro}">
+																						</td>
+																						<td
+																							th:text="${cxv.proveedor.nro_registro}">
+																						</td>
+																						<td
+																							th:text="${cxv.proveedor.alias_proveedor}">
+																						</td>
+																						<td
+																							th:text="${#dates.format(cxv.proveedor.fecha_suscripcion,'dd-MM-yyyy')}">
+																						</td>
+																						<td
+																							th:text="${#dates.format(cxv.proveedor.vigencia,'dd-MM-yyyy')}">
+																						</td>
+																						<td th:text="${cxv.dias} +' días'"> 
+																						</td>
+																						<td>
+																							<button title="Detalles"
+																								type="button"
+																								class="btn btn-primary"
+																								data-toggle="modal"
+																								th:attr="data-target='#DetailModal'+${cxv.proveedor.nro}"><i
+																									class="fa fa-list"
+																									aria-hidden="true"></i></button>
+																							<a class="btn btn-primary"
+																								th:href="@{/updateProveedor/}+${cxv.proveedor.nro}"><i
+																									class="fa fa-pencil-square-o"
+																									aria-hidden="true"></i></a>
+
+																							<button title="Eliminar"
+																								th:attr="data-target='#DangerModalalert'+${cxv.proveedor.nro}"
+																								class="btn btn-danger"
+																								type="submit"
+																								data-toggle="modal"><i
+																									class="fa fa-trash-o"
+																									aria-hidden="true"></i></button>
+
+																						</td>
+																					</tr>
+																					<!-- modal Detalles  solicitud-->
+																					<div th:id="DetailModal+${cxv.proveedor.nro}"
+																						class="modal default-popup-PrimaryModal fade"
+																						role="dialog">
+																						<div class="modal-content">
+																							<div
+																								class="modal-close-area modal-close-df">
+																								<a class="close"
+																									data-dismiss="modal"
+																									href="#"><i
+																										class="fa fa-close"></i></a>
+																							</div>
+																							<div
+																								class="modal-header header-color-modal bg-color-1">
+																								<h4 class="modal-title">
+																									Detalles del
+																									proveedor</h4>
+																								<div
+																									class="modal-close-area modal-close-df">
+																									<a class="close"
+																										data-dismiss="modal"
+																										href="#"><i
+																											class="fa fa-close"></i></a>
+																								</div>
+																							</div>
+																							<div class="modal-body">
+																								<div
+																									class="devit-card-custom">
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Nro:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.nro}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Código
+																																REUP:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.codigo_REUP}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Nro.
+																													de
+																													registro:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.nro_registro}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Cuenta
+																																bancaria:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.cuenta_bancaria}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Nro.
+																													de
+																													contrato:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.nro_contrato}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Teléfono:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.telefono}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Nombre
+																													del
+																													proveedor:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.nombre_proveedor}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Email:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.email}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Alias:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.alias}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Dirección:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.direccion}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Tipo
+																													de
+																													contrato:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.tipo_contrato.tipo_contrato}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Observaciones:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<!--<div class="input-daterange input-group" id="datepicker" >
+                                                                                                                <div class="form-group res-mg-t-15">
+                                                                                                                    <textarea name="observaciones" id="observaciones" disabled="">${cxv.proveedor.observaciones}</textarea>
+                                                                                                                </div>
+                                                                                                            </div>-->
+																														<div
+																															class="message">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.observaciones}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Fecha
+																													de
+																													suscripción:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control" th:text="${#dates.format(cxv.proveedor.fecha_suscripcion,'dd-MM-yyyy')}"
+																																></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Dictaminado:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.dictaminado}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Vigencia:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"  th:text="${#dates.format(cxv.proveedor.vigencia,'dd-MM-yyyy')}"
+																																></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Vencido:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.vencido}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="form-group-inner">
+																										<div
+																											class="row">
+																											<div
+																												class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																												<label
+																													class="login2 pull-right pull-right-pro">Ficha
+																													del
+																													cliente:
+																												</label>
+																											</div>
+																											<div
+																												class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.ficha_cliente}"></label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<div
+																															class="form-select-list">
+																															<label
+																																class="login2 pull-right pull-right-pro">Notificado:
+																															</label>
+																														</div>
+																													</div>
+																													<div
+																														class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																														<div class="input-daterange input-group"
+																															id="datepicker">
+																															<label
+																																class="form-control"
+																																th:text="${cxv.proveedor.notificar}"></label>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																							<div class="modal-footer">
+																								<a data-dismiss="modal"
+																									href="#">Aceptar</a>
+																							</div>
+																						</div>
+
+																					</div>
+																					<!--modal de aterta de eliminacion-->
+																					<div id="DangerModalalert${cxv.proveedor.nro}"
+																						class="modal modal-edu-general FullColor-popup-DangerModal fade"
+																						role="dialog">
+																						<div class="modal-dialog">
+																							<div class="modal-content">
+																								<div
+																									class="modal-close-area modal-close-df">
+																									<a class="close"
+																										data-dismiss="modal"
+																										href="#"><i
+																											class="fa fa-close"></i></a>
+																								</div>
+																								<div class="modal-body">
+																									<span
+																										class="educate-icon educate-danger modal-check-pro information-icon-pro"></span>
+																									<h3>
+																										<p> Está seguro
+																											que quiere
+																											eliminar el
+																											proveedor:
+																											<span
+																												th:text="${cxv.proveedor.alias}"></span>
+																											con Nro. de
+																											contrato:
+																											<span
+																												th:text"${cxv.proveedor.nro_contrato}"></span>
+																										</p>
+																									</h3>
+																									<div
+																										class="col-lg-12">
+																										<div
+																											class="payment-adress">
+																											<a data-dismiss="modal"
+																												class="btn btn-primary waves-effect waves-light"
+																												href="#">Cancelar</a>
+																											<button
+																												type="button"
+																												class="btn btn-primary waves-effect waves-light"
+																												data-dismiss="modal"
+																												onclick="deleteProveedor('<%=request.getContextPath()%>', '${cxv.proveedor.nro}')">Eliminar</button>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</tbody>
+																		</table>
+
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

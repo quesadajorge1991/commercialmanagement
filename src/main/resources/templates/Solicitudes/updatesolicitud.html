@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body >
+
+
+	<div layout:fragment="content">
+
+		<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+
+
+		<div class="single-pro-review-area mt-t-30 mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-payment-inner-st">
+							<div class="sparkline13-hd">
+								<div class="main-sparkline13-hd">
+									<h1>Modificar solicitud</h1>
+								</div>
+							</div>
+							<form th:action="@{/updateSolicitudd}" method="POST" th:object="${solicitud}"
+								name="upsolicitud" id="upsolicitud"
+								class="dropzone dropzone-custom needsclick add-professors">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+										<input name="nomb_pers" id="nomb_pers" type="hidden" class="form-control"
+											required="true" placeholder="Nombre de la persona" th:field="*{id}">
+
+										<div class="form-group">
+											<label class="login2">Nombre de la persona </label>
+											<input name="nomb_pers" id="nomb_pers" type="text" class="form-control"
+												required="true" placeholder="Nombre de la persona"
+												th:field="*{nomb_pers}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Carnet de Identidad </label>
+											<input name="ci" id="ci" type="text" class="form-control"
+												placeholder="Carnet de Identidad" required="true"
+												data-mask="99999999999" th:field="*{ci}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Dirección </label>
+											<input name="direccion" id="direccion" type="text" class="form-control"
+												placeholder="Dirección" th:field="*{direccion}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Teléfono </label>
+											<input name="telefono" id="telefono" type="text" class="form-control"
+												placeholder="Teléfono" th:field="*{telefono}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Cultivo dañado </label>
+											<input name="cult_danado" id="cult_danado" type="text" class="form-control"
+												placeholder="Cultivo dañado" th:field="*{cult_danado}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Tipo de afectación </label>
+											<input name="tipo_afect" id="tipo_afect" type="text" class="form-control"
+												placeholder="Tipo de afectación" th:field="*{tipo_afect}">
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										<div class="form-group">
+												<label class="login2">Fecha de afectación</label>
+												<div class="form-group data-custon-pick data-custom-mg" >
+
+													<div class="input-daterange input-group" id="fechaafectacion">
+														<input type="text" class="form-control" name="start" th:field="*{fecha}" />
+														<span class="input-group-addon">al</span>
+														<input type="text" class="form-control" name="end"  th:field="*{fechafin}"/>
+													</div>
+												</div>
+											</div>
+
+
+										<script>
+										
+								/*		$(document).ready(function(){
+											
+											alert("sdfsdf");
+												$("#datepicker").datepicker({
+													changeMonth: true,
+													changeYear: true,
+													dateFormat: 'dd-mm-yy', //Se especifica como deseamos representarla
+													firstDay: 1
+												});
+											
+										})*/
+										
+
+
+
+										</script>
+
+
+										<div class="form-group">
+											<label class="login2">Zona afectada </label>
+											<input name="zona_afect" id="zona_afect" type="text" class="form-control"
+												placeholder="Zona afectada" th:field="*{zona_afect}">
+										</div>
+										<div class="form-group">
+											<label class="login2">Provincia </label>
+											<select name="provincia" id="provincia" class="form-control"
+												required="true">
+												<option th:each="provincia:${provincias}" th:value="${provincia.id}"
+													th:text="${provincia.nomb_prov}"> </option>
+
+											</select>
+										</div>
+										<div class="form-group">
+											<label class="login2">Municipio </label>
+											<select name="municipio" id="loadMunicipiosFragment" class="form-control"
+												required="true">
+												<option th:each="municipio:${municipios}" th:value="${municipio.id}"
+													th:text="${municipio.nomb_mun}"></option>
+
+											</select>
+										</div>
+										<div class="form-group">
+											<div class="form-select-list">
+												<label class="login2">Pueblo </label>
+												<select name="pueblo" class="form-control" id="loadPueblosFragment"
+													required="true">
+													<option th:each="pueblo:${pueblos}" th:value="${pueblo.id}"
+														th:text="${pueblo.nomb_pueb}"></option>
+
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="payment-adress">
+											<button type="submit"    
+												class="btn btn-primary waves-effect waves-light">Aceptar</button>
+											<a class="btn btn-primary waves-effect waves-light"
+												href="${path}/Gestion_Solicitud">Cancelar</a>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+		
+			$(document).ready(function () {
+
+				$('#fechaafectacion').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+			
+			})
+
+		
+		
+		
+		
+		
+			function validate_exist() {
+				var nomb_pers = $('#nomb_pers').val();
+				var ci = $('#ci').val();
+				var direccion = $('#direccion').val();
+				var cult_danado = $('#cult_danado').val();
+				var tipo_afect = $('#tipo_afect').val();
+				var fecha = $('#fecha').val();
+				var zona_afect = $('#zona_afect').val();
+				var pueblo = $('#pueblo').val();
+
+				if (!(nomb_pers === "" || ci === "" || direccion === "" || cult_danado === "" || fecha === "" ||
+					tipo_afect === "" || zona_afect === "")) {
+					if (!(pueblo === "-1")) {
+						validate();
+					} else {
+						Lobibox.notify("error", {
+							position: 'top right',
+							msg: "Debe elegir la provincia, el municipio y el pueblo",
+							title: "Error"
+						});
+					}
+				} else {
+					Lobibox.notify("error", {
+						position: 'top right',
+						msg: "Faltan datos",
+						title: "Error"
+					});
+				}
+			}
+
+			function validate() {
+				return document.upsolicitud.submit();
+			}
+
+
+
+			$(document).ready(function () {
+				$('#provincia').change(function () {
+					var provincia = $('#provincia').val();
+					dir = '/getMunicipioByProvincia/' + provincia;
+					$.ajax({
+						url: '/getMunicipioByProvincia',
+						dataType: 'html',
+						data: {
+							provincia: provincia,
+						},
+						success: function (data) {
+							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
+							if (provincia === "-1") {
+								$("#addpueblo").prop("disabled", "disabled");
+								$("#loadPueblosFragment").prop("disabled", "disabled");
+							}
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+
+
+
+			$(document).ready(function () {
+				$('#loadMunicipiosFragment').change(function () {
+					var municipio = $('#loadMunicipiosFragment').val();
+					dir = '/getPuebloByMunicipio/';
+					$.ajax({
+						url: '/getPuebloByMunicipio',
+						dataType: 'html',
+						data: {
+							municipio: municipio,
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$("#addpueblo").removeAttr("disabled");
+							$("#loadPueblosFragment").removeAttr("disabled");
+
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+
+					});
+
+				});
+			});
+
+
+
+
+
+
+
+
+
+
+
+
+		</script>
+
+
+
+
+	</div>
+
+</body>
+
+</html>

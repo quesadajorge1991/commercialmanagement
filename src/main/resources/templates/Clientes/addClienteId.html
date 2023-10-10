@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+		<script th:src="@{/js/vendor/jquery-1.12.4.min.js}"></script>
+
+
+
+		<!-- Single pro tab review Start-->
+		<div class="single-pro-review-area mt-t-30 mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="product-payment-inner-st">
+							<div class="sparkline13-hd">
+								<div class="main-sparkline13-hd">
+									<h1>Agregar cliente</h1>
+								</div>
+							</div>
+
+
+				<!--					* Debe elegir la solicitud.
+					<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<select name="solicitud" id="solicitud"
+										data-placeholder="--Seleccione la solicitud--" class="chosen-select"
+										required="true">
+										<option value="-1">--Seleccione la solicitud--</option>
+
+										<option th:each="s :${solicitudtoadd}" th:value="${s.id}"
+											th:text="${s.nomb_pers} +' - '+ ${s.ci}"></option>
+
+									</select>
+								</div>
+							</div>
+							<br />-->
+
+							<form class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload"
+								th:action="@{/add_Cliente_Id}" th:object="${cliente}" method="POST">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<section id="sct1" >
+										<div class="form-group">
+											<label class="login2">Nro. de contrato </label>
+											<input name="nrocontrato" id="nrocontrato" type="text" th:field="*{nro_contrato}"
+												class="form-control" required="true"
+												placeholder="Número de contrato">
+										</div>
+										<div class="form-group">
+											<label class="login2">Nombre del cliente </label>
+											<input name="nombre_cliente" id="nombre_cliente" type="text"
+												th:field="*{nombre_cliente}" class="form-control" required="true"
+												placeholder="Nombre del cliente">
+										</div>
+										<div class="form-group">
+											<label class="login2">Carnet de Identidad o Código NIT</label>
+											<input name="ci" id="ci" type="text" class="form-control" th:field="*{ci}"
+												placeholder="Carnet de Identidad" required="true">
+										</div>
+										<div class="form-group">
+											<label class="login2">Dirección </label>
+											<input name="direccion" id="direccion" type="text" class="form-control"
+												th:field="*{direccion}" placeholder="Dirección">
+										</div>
+										<div class="form-group">
+											<label class="login2">Teléfono </label>
+											<input name="telefono" id="telefono" type="text" class="form-control"
+												th:field="*{telefono}"  placeholder="Teléfono">
+										</div>
+										<div class="form-group">
+											<label class="login2">Tipo de contrato </label>
+											<input name="tipo_contrato" id="tipo_contrato" type="text"
+												 class="form-control"  th:field="*{tipo_contrato}"
+												value="Prestación de Servicios" placeholder="Tipo de contrato">
+										</div>
+										<div class="form-group">
+											<label class="login2">Fecha de suscripción </label>
+											<div class="form-group data-custon-pick" id="data_1">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+															class="fa fa-calendar"></i></span>
+													<input id="fechasuscripcion" th:field="*{fecha_suscripcion}"  name="fechasuscripcion"
+														placeholder="Fecha de suscripción" type="text"
+														class="form-control">
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="login2">Vigencia </label>
+											<div class="form-group data-custon-pick" id="data_1">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+															class="fa fa-calendar"></i></span>
+													<input id="fechavigencia" name="fechavigencia" th:field="*{vigencia}"
+														placeholder="Fecha de vigencia" type="text"
+														class="form-control">
+
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+									<section id="sct2" >
+										<div class="form-group">
+											<label class="login2">Nro. de suplemento </label>
+											<input name="nro_suplemento" id="nro_suplemento" type="text"
+												 class="form-control" th:field="*{nro_suplemento}"
+												placeholder="Nro de suplemento">
+										</div>
+										<div class="form-group">
+											<label class="login2">Fecha de suplemento </label>
+												<div class="form-group data-custon-pick" id="data_1">
+												<div class="input-group">
+													<span class="input-group-addon"><i
+															class="fa fa-calendar"></i></span>
+													<input id="fechasuplemento" name="fechasuplemento" th:field="*{fecha_suplemento}"
+														placeholder="Fecha de suplemento" type="text"
+														class="form-control">
+
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="login2">Entidad </label>
+											<input name="entidad" id="entidad" type="text" class="form-control" th:field="*{entidad}"
+												 placeholder="Entidad" >
+										</div>
+										<div class="form-group">
+											<label class="login2">Provincia </label>
+											<select name="provincia" id="provincia"
+												data-placeholder="--Seleccione la provincia--" onclick="dd();"
+												class="form-control" required="true">
+												<option th:each="provincia:${listprovincias}" th:value="${provincia.id}"
+													th:text="${provincia.nomb_prov}"></option>
+
+											</select>
+										</div>
+
+
+										<div class="form-group">
+											<div class="form-select-list">
+												<label class="login2">Municipio </label>
+												<select name="municipio" id="loadMunicipiosFragment"
+													class="form-control" data-placeholder="--Seleccione el municipio--"
+													required="true">
+														<!--<option value="-1">--Seleccione el municipio--</option>-->
+													<option th:value="${cliente.pueblo.municipio.id}" th:text="${cliente.pueblo.municipio.nomb_mun}"></option>
+												</select>
+											</div>
+										</div>
+
+
+										<div class="form-group">
+											<div class="form-select-list">
+												<label class="login2">Pueblo </label>
+												<select name="pueblo" class="form-control" id="loadPueblosFragment"
+													data-placeholder="--Seleccione el pueblo--" required="true"
+													th:field="*{pueblo.id}">
+													<option value="-1">--Seleccione el pueblo--</option>
+													<option th:value="${cliente.pueblo.id}" th:text="${cliente.pueblo.nomb_pueb}">--Seleccione el pueblo--</option>
+												</select>
+
+
+											</div>
+										</div>
+
+										<div class="form-group">
+											<button id="addpueblo" title="AÃ±adir pueblo" type="button"
+												class="btn btn-primary waves-effect waves-light" disabled="disabled"
+												data-toggle="modal" data-target="#DetailModalAddPueblo">
+												+ Añadir Pueblo</button>
+
+										</div>
+
+
+
+										<div class="form-group">
+											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+												<label class="login2 pull-right pull-right-pro">Vencido </label>
+											</div>
+											<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+												<div class="inline-checkbox-cs">
+													<label class="checkbox-inline i-checks pull-left">
+														<input type="radio" value="Si" name="vencido" id="vencido1" th:field="*{vencido}"
+															>
+														<i></i> Si </label>
+													<label class="checkbox-inline i-checks pull-left">
+														<input type="radio" checked="" value="No" name="vencido"  th:field="*{vencido}"
+															id="vencido2"> <i></i> No </label>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+
+								<br />
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="payment-adress">
+											<button type="submit" id="addcliente" 
+												class="btn btn-primary waves-effect waves-light">Aceptar</button>
+											<a class="btn btn-primary waves-effect waves-light"
+												href="${path}/Gestion_Clientes">Cancelar</a>
+										</div>
+									</div>
+								</div>
+							</form>
+
+
+
+
+
+
+							<!-- modal Detalles  solicitud-->
+							<div id="DetailModalAddPueblo"
+								class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header header-color-modal bg-color-1">
+											<h4 class="modal-title">Agregar Pueblo</h4>
+											<div class="modal-close-area modal-close-df">
+												<a class="close" data-dismiss="modal" href="#"><i
+														class="fa fa-close"></i> </a>
+											</div>
+										</div>
+										<div class="modal-body">
+											<div class="row">
+
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="devit-card-custom">
+														<div class="row">
+															<div class="form-group">
+																<input class="form-control"
+																	placeholder="Nombre del pueblo" name="nombrep"
+																	required="true" type="text" id="namepueblo">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="modal-footer">
+												<div class="button-drop-style-one btn-default-bg">
+													<input data-dismiss="modal" type="submit" class="btn btn-primary"
+														value="Cancelar" />
+													<input type="button" data-dismiss="modal" onclick="addPuebloo();"
+														class="btn btn-primary" value="Aceptar" />
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<br />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script th:inline="javascript">
+			$(document).ready(function () {
+				$('#provincia').change(function () {
+					var provincia = $('#provincia').val();
+					dir = '/getMunicipioByProvincia/' + provincia;
+					$.ajax({
+						url: '/getMunicipioByProvincia',
+						dataType: 'html',
+						data: {
+							provincia: provincia,
+						},
+						success: function (data) {
+							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
+							if (provincia === "-1") {
+								$("#addpueblo").prop("disabled", "disabled");
+								$("#loadPueblosFragment").prop("disabled", "disabled");
+							}
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+					});
+				});
+			});
+
+			$(document).ready(function () {
+				$('#loadMunicipiosFragment').change(function () {
+					var municipio = $('#loadMunicipiosFragment').val();
+					dir = '/getPuebloByMunicipio/';
+					$.ajax({
+						url: '/getPuebloByMunicipio',
+						dataType: 'html',
+						data: {
+							municipio: municipio,
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$("#addpueblo").removeAttr("disabled");
+							$("#loadPueblosFragment").removeAttr("disabled");
+
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+					});
+				});
+			});
+
+			function addPuebloo() {
+				var municipio = $('#loadMunicipiosFragment').val();
+				var namepueblo = $('#namepueblo').val()
+
+				if (namepueblo != '') {
+					$.ajax({
+						url: '/addPueblo',
+						dataType: 'json',
+						data: {
+							municipio: municipio,
+							namepueblo: namepueblo
+						},
+						success: function (data) {
+							$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							$('#namepueblo').val('');
+							toastr[data.msgtipo](data.msgbody,
+								data.msgtitu);
+						},
+						error: function (data) {
+							toastr["error"](data.body,
+								data.titulo);
+							console.log("No hay resultado");
+						}
+					});
+
+
+				} else {
+
+					toastr['error']('Debe escribir un nombre de pueblo',
+						'Error');
+
+
+				}
+
+
+			}
+
+
+
+
+
+
+			jQuery(document).ready(function () {
+
+				$('#fechasuscripcion').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+				$('#fechavigencia').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+				$('#fechasuplemento').datepicker({
+					startView: 1,
+					todayBtn: "linked",
+					keyboardNavigation: false,
+					forceParse: false,
+					autoclose: true,
+					format: "dd-mm-yyyy"
+				});
+
+
+
+
+
+
+
+
+				$('#solicitud').change(function (e) {
+					if (jQuery(this).val() !== "-1") {
+						e.preventDefault();
+						var val = $('#solicitud').val();
+						jQuery("#sct1").trigger('chosen:updated').removeAttr("hidden");
+						jQuery("#sct2").trigger('chosen:updated').removeAttr("hidden");
+						jQuery("#addcliente").trigger('chosen:updated').removeAttr("hidden");
+						$.ajax({
+							type: "GET",
+							url: '/datosSolicitud',
+							contentType: "application/json",
+							dataType: 'json',
+							data: {ids: val},
+							success: function (data) {
+
+
+								$('#nombre_cliente').val(data.nomb_pers);
+								$('#ci').val(data.ci);
+								$('#direccion').val(data.direccion);
+								$('#telefono').val(data.telefono);
+
+								resetCombo(); /*resetea los combo pueblo y municipio*/
+
+								$('#loadPueblosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.nomb_pueb + "</option>");
+								$('#loadMunicipiosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.municipio.id + "\">" + data.pueblo.municipio.nomb_mun + "</option>");
+
+							},
+							error:
+								function (e) {
+									alert('Error: ' + e);
+								}
+						});
+					} else {
+						$("#sct1").trigger('chosen:updated').attr("hidden", "hidden");
+						$("#sct2").trigger('chosen:updated').attr("hidden", "hidden");
+						$("#addcliente").trigger('chosen:updated').attr("hidden", "hidden");
+						$('#nombre_cliente').val(null);
+						$('#ci').val(null);
+						$('#direccion').val(null);
+						$('#telefono').val(null);
+					}
+				});
+				function resetCombo() {
+					$('#provincia').empty();
+					$('#loadPueblosFragment').empty();
+					$('#loadMunicipiosFragment').empty();
+					var val = $('#solicitud').val();
+
+					$.ajax({
+						type: "GET",
+						url: '/getprovincia',
+						contentType: "application/json",
+						dataType: 'json',
+						data: {ids: val},
+						success: function (data) {
+
+							for (var i = 0; i <= data.length; i++) {
+								$('#provincia').trigger('chosen:updated').append("<option value=\"" + data[i].id + "\">" + data[i].nomb_prov + "</option>");
+							}
+
+
+
+						},
+						error:
+							function (e) {
+								alert('Error: ' + e);
+							}
+					});
+
+
+				}
+			});
+
+
+
+
+
+
+
+
+		</script>
+
+
+
+
+
+
+
+
+
+	</div>
+
+</body>
+
+</html>

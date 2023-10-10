@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+		<!-- Static Table Start -->
+		<div class="data-table-area mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="sparkline13-list">
+							<div class="sparkline13-hd">
+								<div class="main-sparkline13-hd">
+
+									<h1>Lista <span class="table-project-n">de</span> Clientes</h1>
+
+
+								</div>
+
+							</div>
+
+
+
+							<div class="sparkline13-graph">
+								<div class="datatable-dashv1-list custom-datatable-overright">
+									<div class="add-product" sec:authorize="hasAnyRole('ADMIN','COMERCIAL')">
+										<a class="Primary mg-b-10" th:href="@{/addCliente}">+ Añadir cliente</a>
+									</div>
+
+
+									<table id="table" data-toggle="table" data-pagination="true" data-search="true"
+										data-show-columns="true" data-show-pagination-switch="true"
+										data-show-refresh="true" data-key-events="true" data-show-toggle="true"
+										data-resizable="true" data-cookie="true" data-cookie-id-table="saveId"
+										data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+										<thead>
+											<tr>
+												<th>Nro</th>
+												<th>Nro contrato</th>
+												<th>Nombre del cliente</th>
+												<th>CI o Código NIT</th>
+												<th>Fecha de suscripción</th>
+												<th>Vigencia</th>
+												<th>Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="cliente: ${clientes}">
+												<td th:text="${cliente.nro}"></td>
+												<td th:text="${cliente.nro_contrato}"></td>
+												<td th:text="${cliente.nombre_cliente}"></td>
+												<td th:text="${cliente.ci}"></td>
+												<td th:text="${#dates.format(cliente.fecha_suscripcion,'dd-MM-yyyy')}">
+												</td>
+												<td th:text="${#dates.format(cliente.vigencia,'dd-MM-yyyy')}"></td>
+
+
+
+												<td>
+
+
+													<button title="Detalles" type="button" class="btn btn-primary"
+														data-toggle="modal"
+														th:attr="data-target='#modal-detail'+${cliente.nro}"><i
+															class="fa fa-list" aria-hidden="true"></i></button>
+													<a class="btn btn-primary"
+														sec:authorize="hasAnyRole('ADMIN','COMERCIAL')"
+														th:href="@{/updateCliente/}+${cliente.nro}"><i
+															class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+													<button title="Eliminar" class="btn btn-danger" type="submit"
+														sec:authorize="hasAnyRole('ADMIN','COMERCIAL')"
+														data-toggle="modal"
+														th:attr="data-target='#DangerModalalert'+${cliente.nro}"><i
+															class="fa fa-trash-o" aria-hidden="true"></i></button>
+
+												</td>
+
+
+
+												<div th:id="modal-detail+${cliente.nro}"
+													class="modal default-popup-PrimaryModal fade" role="dialog">
+													<div class="modal-content">
+														<div class="modal-close-area modal-close-df">
+															<a class="close" data-dismiss="modal" href="#"><i
+																	class="fa fa-close"></i></a>
+														</div>
+														<div class="modal-header header-color-modal bg-color-1">
+															<h4 class="modal-title">Detalles del proveedor</h4>
+															<div class="modal-close-area modal-close-df">
+																<a class="close" data-dismiss="modal" href="#"><i
+																		class="fa fa-close"></i></a>
+															</div>
+														</div>
+														<div class="modal-body">
+															<div class="devit-card-custom">
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Nro:
+																			</label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.nro}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Fecha
+																							del suplemento: </label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${#dates.format(cliente.fecha_suplemento,'dd-MM-yyyy')}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Nro.
+																				de contrato: </label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.nro_contrato}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Nro
+																							de suplemento: </label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.nro_suplemento}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Nombre
+																				del cliente: </label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.nombre_cliente}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Entidad:
+																						</label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.entidad}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Carnet
+																				de Identidad: </label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.ci}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Provincia:
+																						</label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.pueblo.municipio.provincia.nomb_prov}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Dirección:
+																			</label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.direccion}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Municipio:
+																						</label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="message">
+																						<label class="form-control"
+																							th:text="${cliente.pueblo.municipio.nomb_mun}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Teléfono:
+																			</label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.telefono}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Pueblo:
+																						</label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.pueblo.nomb_pueb}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Fecha
+																				de suscripcion: </label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${#dates.format(cliente.fecha_suscripcion,'dd-MM-yyyy')}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Tipo
+																							de contrato: </label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.tipo_contrato}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group-inner">
+																	<div class="row">
+																		<div
+																			class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																			<label
+																				class="login2 pull-right pull-right-pro">Vigencia:
+																			</label>
+																		</div>
+																		<div
+																			class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																			<div class="row">
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${#dates.format(cliente.vigencia,'dd-MM-yyyy')}"></label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																					<div class="form-select-list">
+																						<label
+																							class="login2 pull-right pull-right-pro">Vencido:
+																						</label>
+																					</div>
+																				</div>
+																				<div
+																					class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																					<div class="input-daterange input-group"
+																						id="datepicker">
+																						<label class="form-control"
+																							th:text="${cliente.vencido}"></label>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="modal-footer">
+															<a data-dismiss="modal" href="#">Aceptar</a>
+														</div>
+
+													</div>
+
+												</div>
+
+
+
+
+
+
+												<!--modal de aterta de eliminacion-->
+												<div th:id="DangerModalalert+${cliente.nro}"
+													class="modal modal-edu-general FullColor-popup-DangerModal fade"
+													role="dialog">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-close-area modal-close-df">
+																<a class="close" data-dismiss="modal" href="#"><i
+																		class="fa fa-close"></i></a>
+															</div>
+															<div class="modal-body">
+																<span
+																	class="educate-icon educate-danger modal-check-pro information-icon-pro"></span>
+																<h3>
+																	<p> Está seguro que quiere eliminar el cliente:
+																		<span
+																			th:text="${cliente.nombre_cliente}"></span>
+																	</p>
+																</h3>
+																<br />
+																<h3>
+																	<p style="color: red;"> Se eliminarán también los
+																		servicios realizados
+																		al cliente </p>
+																</h3>
+																<div class="col-lg-12">
+																	<div class="payment-adress">
+																		<a data-dismiss="modal"
+																			class="btn btn-primary waves-effect waves-light"
+																			href="#">Cancelar</a>
+																		<a th:attr="href='/delete_cliente/'+${cliente.nro}"
+																			class="btn btn-primary waves-effect waves-light"
+																			>Eliminar</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+
+
+
+
+
+								</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								</tr>
+
+
+
+
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Static Table End -->
+
+
+	</div>
+
+</body>
+
+</html>

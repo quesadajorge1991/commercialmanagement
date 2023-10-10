@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{templateBase/BaseKiaalap}">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div layout:fragment="content">
+
+
+
+		<div id="gt" class="data-table-area mg-b-15">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="sparkline13-list">
+
+							<div class="sparkline13-hd">
+								<div class="main-sparkline13-hd">
+									<h1>Solicitudes</h1>
+								</div>
+							</div>
+
+
+							* Filtrar por año
+							<div class="row">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+									<select name="solicitud" id="solicitud"
+										data-placeholder="--Seleccione la solicitud--"
+										class="form-control chosen-select" required="true">
+										<option value="-1">--Seleccione el año--</option>
+
+										<option th:each="s :${years}" th:value="${s}"
+											th:text="${s}"></option>
+
+									</select>
+								</div>
+							</div>
+
+
+
+							<div class="single-pro-review-area mt-t-30 mg-b-15">
+								<div class="container-fluid">
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<div class="product-payment-inner-st">
+												<ul id="myTabedu1" class="tab-review-design">
+													<li class="active"><a href="#description">Solicitudes pendientes</a>
+													</li>
+													<li><a href="#reviews">Solicitudes realizadas</a></li>
+												</ul>
+												<div id="myTabContent" class="tab-content custom-product-edit">
+													<div class="product-tab-list tab-pane fade active in"
+														id="description">
+														<div class="row">
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																<div class="review-content-section">
+																	<div id="dropzone1" class="pro-ad">
+																		<div class="sparkline13-graph">
+
+																			<div id="ta"
+																				class="datatable-dashv1-list custom-datatable-overright">
+
+																				<table id="tablesolicitudes"
+																					data-toggle="table"
+																					data-pagination="true"
+																					data-search="true"
+																					data-show-columns="true"
+																					data-show-pagination-switch="true"
+																					data-show-refresh="true"
+																					data-key-events="true"
+																					data-show-toggle="true"
+																					data-resizable="true"
+																					data-cookie="true"
+																					data-cookie-id-table="saveId"
+																					data-show-export="true"
+																					data-click-to-select="true"
+																					data-toolbar="#toolbar">
+																					<thead>
+																						<tr>
+																							<th>Nombre de la persona
+																							</th>
+																							<th>Carnet de Identidad</th>
+																							<th>Fecha de afectación</th>
+																							<th>Acciones</th>
+																						</tr>
+																					</thead>
+																					<tbody>
+																						<div
+																							th:each="sss : ${s_sin_servicio}">
+																							<tr id="fila${sss.id}">
+																								<td id="tdd"
+																									th:text="${sss.nomb_pers}">
+																								</td>
+																								<td th:text="${sss.ci}">
+																								</td>
+																								<td
+																									th:text="${#dates.format(sss.fecha,'dd-MM-yyyy')} +' al ' +${#dates.format(sss.fechafin,'dd-MM-yyyy')}">
+																								</td>
+																								<td>
+																									<button
+																										title="Detalles de la solicitud"
+																										type="button"
+																										class="btn btn-primary"
+																										data-toggle="modal"
+																										th:attr="data-target='#DetailModal'+${sss.id}"><i
+																											class="fa fa-list"
+																											aria-hidden="true"></i></button>
+
+																									<a sec:authorize="hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')"
+																										title="Modificar solicitud"
+																										class="btn btn-primary"
+																										th:href="@{/updateSolicitud/}+${sss.id}"
+																										th:if="${sss.servicio==false}"><i
+																											class="fa fa-pencil-square-o"
+																											aria-hidden="true"></i></a>
+
+																									<a sec:authorize="hasAnyRole('ADMIN','COMERCIAL')"
+																										title="Añadir cliente por solicitud"
+																										class="btn btn-primary"
+																										th:href="@{/addClienteId/}+${sss.id}"
+																										th:if="${sss.servicio==false}"><i
+																											class="fa fa-user-plus"
+																											aria-hidden="true"></i></a>
+
+
+																									<a sec:authorize="hasAnyRole('ADMIN','COMERCIAL')"
+																										title="Añadir servicio por solicitud"
+																										class="btn btn-primary"
+																										th:href="@{/addServicioId/}+${sss.id}"
+																										th:if="${sss.servicio==false}"><i
+																											class="fa fa-copy"
+																											aria-hidden="true"
+																											th:if="${sss.servicio==false}"></i></a>
+
+																									<button
+																										sec:authorize="hasAnyRole('ADMIN','COMERCIAL')"
+																										title="Eliminar"
+																										class="btn btn-danger"
+																										type="submit"
+																										data-toggle="modal"
+																										th:attr="data-target='#DangerModalalert'+${sss.id}"><i
+																											class="fa fa-trash-o"
+																											aria-hidden="true"></i></button>
+
+																								</td>
+																							</tr>
+																							<!-- modal Detalles  solicitud-->
+																							<div th:id="DetailModal+${sss.id}"
+																								class="modal default-popup-PrimaryModal fade"
+																								role="dialog">
+																								<div
+																									class="modal-content">
+																									<div
+																										class="modal-close-area modal-close-df">
+																										<a class="close"
+																											data-dismiss="modal"
+																											href="#"><i
+																												class="fa fa-close"></i></a>
+																									</div>
+																									<div
+																										class="modal-header header-color-modal bg-color-1">
+																										<h4
+																											class="modal-title">
+																											Detalles de
+																											la solicitud
+																										</h4>
+																										<div
+																											class="modal-close-area modal-close-df">
+																											<a class="close"
+																												data-dismiss="modal"
+																												href="#"><i
+																													class="fa fa-close"></i></a>
+																										</div>
+																									</div>
+																									<div
+																										class="modal-body">
+																										<div
+																											class="devit-card-custom">
+																											<div
+																												class="form-group-inner">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<label
+																															class="login2 pull-right pull-right-pro">Nro:
+																														</label>
+																													</div>
+																													<div
+																														class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.id}"></label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<div
+																																	class="form-select-list">
+																																	<label
+																																		class="login2 pull-right pull-right-pro">Tipo
+																																		de
+																																		afectación:
+																																	</label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.tipo_afect}"></label>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																											<div
+																												class="form-group-inner">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<label
+																															class="login2 pull-right pull-right-pro">Nombre
+																															de
+																															la
+																															persona:
+																														</label>
+																													</div>
+																													<div
+																														class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.nomb_pers}"></label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<div
+																																	class="form-select-list">
+																																	<label
+																																		class="login2 pull-right pull-right-pro">Fecha
+																																		de
+																																		afectación:
+																																	</label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${#dates.format(sss.fecha,'dd-MM-yyyy')} +' al ' +${#dates.format(sss.fechafin,'dd-MM-yyyy')}"></label>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																											<div
+																												class="form-group-inner">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<label
+																															class="login2 pull-right pull-right-pro">Carnet
+																															de
+																															Identidad:
+																														</label>
+																													</div>
+																													<div
+																														class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.ci}"></label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<div
+																																	class="form-select-list">
+																																	<label
+																																		class="login2 pull-right pull-right-pro">Zona
+																																		afectada:
+																																	</label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.zona_afect}"></label>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																											<div
+																												class="form-group-inner">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<label
+																															class="login2 pull-right pull-right-pro">Dirección:
+																														</label>
+																													</div>
+																													<div
+																														class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.direccion}"></label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<div
+																																	class="form-select-list">
+																																	<label
+																																		class="login2 pull-right pull-right-pro">Provincia:
+																																	</label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.pueblo.municipio.provincia.nomb_prov}"></label>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																											<div
+																												class="form-group-inner">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<label
+																															class="login2 pull-right pull-right-pro">Teléfono:
+																														</label>
+																													</div>
+																													<div
+																														class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.telefono}"></label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<div
+																																	class="form-select-list">
+																																	<label
+																																		class="login2 pull-right pull-right-pro">Municipio:
+																																	</label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div
+																																	class="message">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.pueblo.municipio.nomb_mun}"></label>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																											<div
+																												class="form-group-inner">
+																												<div
+																													class="row">
+																													<div
+																														class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																														<label
+																															class="login2 pull-right pull-right-pro">Cultivo
+																															dañado:
+																														</label>
+																													</div>
+																													<div
+																														class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.cult_danado}"></label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<div
+																																	class="form-select-list">
+																																	<label
+																																		class="login2 pull-right pull-right-pro">Pueblo:
+																																	</label>
+																																</div>
+																															</div>
+																															<div
+																																class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																<div class="input-daterange input-group"
+																																	id="datepicker">
+																																	<label
+																																		class="form-control"
+																																		th:text="${sss.pueblo.nomb_pueb}"></label>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="modal-footer">
+																										<a data-dismiss="modal"
+																											href="#">Aceptar</a>
+																									</div>
+																								</div>
+
+																							</div>
+																							<!--modal de aterta de eliminacion-->
+																							<div th:id="DangerModalalert+${sss.id}"
+																								class="modal modal-edu-general FullColor-popup-DangerModal fade"
+																								role="dialog">
+																								<div
+																									class="modal-dialog">
+																									<div
+																										class="modal-content">
+																										<div
+																											class="modal-close-area modal-close-df">
+																											<a class="close"
+																												data-dismiss="modal"
+																												href="#"><i
+																													class="fa fa-close"></i></a>
+																										</div>
+																										<div
+																											class="modal-body">
+																											<span
+																												class="educate-icon educate-danger modal-check-pro information-icon-pro"></span>
+																											<h3>
+																												<p> EstÃ¡
+																													seguro
+																													que
+																													quiere
+																													eliminar
+																													la
+																													solicitud.
+																												</p>
+																											</h3>
+																											<div
+																												class="col-lg-12">
+																												<div
+																													class="payment-adress">
+																													<a data-dismiss="modal"
+																														class="btn btn-primary waves-effect waves-light"
+																														href="#">Cancelar</a>
+																													<a type="button"
+																														class="btn btn-primary waves-effect waves-light"
+																														th:attr="href='/deleteSolicitud/'+${sss.id}">Eliminar</a>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+
+																					</tbody>
+																				</table>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="product-tab-list tab-pane fade" id="reviews">
+														<div class="row">
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																<div class="review-content-section">
+																	<div class="row">
+																		<div
+																			class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																			<div class="devit-card-custom">
+																				<div class="sparkline13-graph">
+																					<div id="ta"
+																						class="datatable-dashv1-list custom-datatable-overright">
+																						<table id="tablesolicitudes"
+																							data-toggle="table"
+																							data-pagination="true"
+																							data-search="true"
+																							data-show-columns="true"
+																							data-show-pagination-switch="true"
+																							data-show-refresh="true"
+																							data-key-events="true"
+																							data-show-toggle="true"
+																							data-resizable="true"
+																							data-cookie="true"
+																							data-cookie-id-table="saveId"
+																							data-show-export="true"
+																							data-click-to-select="true"
+																							data-toolbar="#toolbar">
+																							<thead>
+																								<tr>
+																									<th>Nombre de la
+																										persona</th>
+																									<th>Carnet de
+																										Identidad</th>
+																									<th>Fecha de
+																										afectación</th>
+																									<th>Acciones</th>
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<div
+																									th:each="scs :${s_con_servicio}">
+																									<tr
+																										th:id="fila+${scs.id}">
+																										<td
+																											th:text="${scs.nomb_pers}">
+																											</tdht>
+																										<td
+																											th:text="${scs.ci}">
+																										</td>
+																										<td
+																											th:text="${#dates.format(scs.fecha,'dd-MM-yyyy')}">
+																										</td>
+																										<td>
+																											<button
+																												title="Detalles de la solicitud"
+																												type="button"
+																												class="btn btn-primary"
+																												data-toggle="modal"
+																												th:attr="data-target='#DetailModal'+${scs.id}"><i
+																													class="fa fa-list"
+																													aria-hidden="true"></i></button>
+
+																											<a title="Modificar solicitud"
+																												class="btn btn-primary"
+																												href="updateSolicitud/${scs.id}"
+																												th:if="${scs.servicio==false}"><i
+																													class="fa fa-pencil-square-o"
+																													aria-hidden="true"></i></a>
+
+
+																											<a title="Añadir cliente por solicitud"
+																												class="btn btn-primary"
+																												href="addClienteId/${scs.id}"
+																												th:if="${scs.servicio==false}"><i
+																													class="fa fa-user-plus"
+																													aria-hidden="true"></i></a>
+
+																											<a title="Añadir servicio por solicitud"
+																												class="btn btn-primary"
+																												href="addServicioId/${scs.id}"
+																												th:if="${scs.servicio==false}"><i
+																													class="fa fa-copy"
+																													aria-hidden="true"
+																													th:if="${scs.servicio==true}"></i></a>
+
+																											<button
+																												title="Eliminar"
+																												class="btn btn-danger"
+																												type="submit"
+																												data-toggle="modal"
+																												th:attr="data-target='#DangerModalalert'+${scs.id}"><i
+																													class="fa fa-trash-o"
+																													aria-hidden="true"></i></button>
+
+																										</td>
+																									</tr>
+																									<!-- modal Detalles  solicitud-->
+																									<div th:id="DetailModal+${scs.id}"
+																										class="modal default-popup-PrimaryModal fade"
+																										role="dialog">
+																										<div
+																											class="modal-content">
+																											<div
+																												class="modal-close-area modal-close-df">
+																												<a class="close"
+																													data-dismiss="modal"
+																													href="#"><i
+																														class="fa fa-close"></i></a>
+																											</div>
+																											<div
+																												class="modal-header header-color-modal bg-color-1">
+																												<h4
+																													class="modal-title">
+																													Detalles
+																													de
+																													la
+																													solicitud
+																												</h4>
+																												<div
+																													class="modal-close-area modal-close-df">
+																													<a class="close"
+																														data-dismiss="modal"
+																														href="#"><i
+																															class="fa fa-close"></i></a>
+																												</div>
+																											</div>
+																											<div
+																												class="modal-body">
+																												<div
+																													class="devit-card-custom">
+																													<div
+																														class="form-group-inner">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<label
+																																	class="login2 pull-right pull-right-pro">Nro:
+																																</label>
+																															</div>
+																															<div
+																																class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																																<div
+																																	class="row">
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.id}"></label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																		<div
+																																			class="form-select-list">
+																																			<label
+																																				class="login2 pull-right pull-right-pro">Tipo
+																																				de
+																																				afectación:
+																																			</label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.tipo_afect}"></label>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div
+																														class="form-group-inner">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<label
+																																	class="login2 pull-right pull-right-pro">Nombre
+																																	de
+																																	la
+																																	persona:
+																																</label>
+																															</div>
+																															<div
+																																class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																																<div
+																																	class="row">
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.nomb_pers}"></label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																		<div
+																																			class="form-select-list">
+																																			<label
+																																				class="login2 pull-right pull-right-pro">Fecha
+																																				de
+																																				afectación:
+																																			</label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${#dates.format(scs.fecha,'dd-MM-yyyy')}"></label>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div
+																														class="form-group-inner">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<label
+																																	class="login2 pull-right pull-right-pro">Carnet
+																																	de
+																																	Identidad:
+																																</label>
+																															</div>
+																															<div
+																																class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																																<div
+																																	class="row">
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.ci}"></label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																		<div
+																																			class="form-select-list">
+																																			<label
+																																				class="login2 pull-right pull-right-pro">Zona
+																																				afectada:
+																																			</label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.zona_afect}"></label>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div
+																														class="form-group-inner">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<label
+																																	class="login2 pull-right pull-right-pro">Dirección:
+																																</label>
+																															</div>
+																															<div
+																																class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																																<div
+																																	class="row">
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.direccion}"></label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																		<div
+																																			class="form-select-list">
+																																			<label
+																																				class="login2 pull-right pull-right-pro">Provincia:
+																																			</label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.pueblo.municipio.provincia.nomb_prov}"></label>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div
+																														class="form-group-inner">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<label
+																																	class="login2 pull-right pull-right-pro">Teléfono:
+																																</label>
+																															</div>
+																															<div
+																																class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																																<div
+																																	class="row">
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.telefono}"></label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																		<div
+																																			class="form-select-list">
+																																			<label
+																																				class="login2 pull-right pull-right-pro">Municipio:
+																																			</label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div
+																																			class="message">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.pueblo.municipio.nomb_mun}"></label>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div
+																														class="form-group-inner">
+																														<div
+																															class="row">
+																															<div
+																																class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																<label
+																																	class="login2 pull-right pull-right-pro">Cultivo
+																																	dañado:
+																																</label>
+																															</div>
+																															<div
+																																class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+																																<div
+																																	class="row">
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.cult_danado}"></label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+																																		<div
+																																			class="form-select-list">
+																																			<label
+																																				class="login2 pull-right pull-right-pro">Pueblo:
+																																			</label>
+																																		</div>
+																																	</div>
+																																	<div
+																																		class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+																																		<div class="input-daterange input-group"
+																																			id="datepicker">
+																																			<label
+																																				class="form-control"
+																																				th:text="${scs.pueblo.nomb_pueb}"></label>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																											<div
+																												class="modal-footer">
+																												<a data-dismiss="modal"
+																													href="#">Aceptar</a>
+																											</div>
+																										</div>
+																									</div>
+																									<!--modal de aterta de eliminacion-->
+																									<div th:id="DangerModalalert+${scs.id}"
+																										class="modal modal-edu-general FullColor-popup-DangerModal fade"
+																										role="dialog">
+																										<div
+																											class="modal-dialog">
+																											<div
+																												class="modal-content">
+																												<div
+																													class="modal-close-area modal-close-df">
+																													<a class="close"
+																														data-dismiss="modal"
+																														href="#"><i
+																															class="fa fa-close"></i></a>
+																												</div>
+																												<div
+																													class="modal-body">
+																													<span
+																														class="educate-icon educate-danger modal-check-pro information-icon-pro"></span>
+																													<h3>
+																														<p> Está
+																															seguro
+																															que
+																															quiere
+																															eliminar
+																															la
+																															solicitud.
+																														</p>
+																													</h3>
+																													<div
+																														class="col-lg-12">
+																														<div
+																															class="payment-adress">
+																															<a data-dismiss="modal"
+																																class="btn btn-primary waves-effect waves-light"
+																																href="#">Cancelar</a>
+																															<a type="button"
+																																class="btn btn-primary waves-effect waves-light"
+																																th:attr="href='/deleteSolicitud/'+${scs.id}">Eliminar</a>
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</tbody>
+																						</table>
+
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function deleteCliente(contextPath, id) {
+				$.ajax({
+					url: contextPath + '/delete_solicitud/' + id,
+					dataType: 'json',
+					data: {id: id},
+					success: function (data) {
+						if (data.eliminado === 'true') {
+							Lobibox.notify(data.msgtipo, {
+								position: 'top right',
+								msg: data.mensaje,
+								title: data.msgtitulo
+							});
+							$("#fila" + id).remove();
+						}
+					},
+					error: function (data) {
+						Lobibox.notify(data.msgtipo, {
+							position: 'top right',
+							msg: data.mensaje,
+							title: data.msgtitulo
+						});
+						console.log("No hay resultado");
+					}
+				});
+			}
+		</script>
+
+
+
+
+
+
+	</div>
+
+</body>
+
+</html>
