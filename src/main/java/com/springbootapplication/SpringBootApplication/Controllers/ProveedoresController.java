@@ -40,7 +40,7 @@ public class ProveedoresController {
 	ProvinciaRepository provinciaRepository;
 
 	@Autowired
-	Tipo_ContratoRepository tipo_ContratoRepository;
+	TipoContratoRepository tipoContratoRepository;
 
 	@Autowired
 	PuebloRepository puebloRepository;
@@ -48,7 +48,7 @@ public class ProveedoresController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ECONOMIA')")
 	@GetMapping("/proveedores")
 	public String listproveedores(Model model) {
-		model.addAttribute("proveedores", proovedorRepository.findAll());
+		model.addAttribute("proveedores", proovedorRepository.findByOrderByNroRegistro());
 		model.addAttribute("standardDate", new Date());
 		return "Proveedores/listproveedores";
 	}
@@ -58,7 +58,7 @@ public class ProveedoresController {
 	public String Addproveedores(Model model) {
 		model.addAttribute("proveedor", new Proveedor());
 		model.addAttribute("provincias", provinciaRepository.findAll());
-		model.addAttribute("tipocontratos", tipo_ContratoRepository.findAll());
+		model.addAttribute("tipocontratos", tipoContratoRepository.findAll());
 		return "Proveedores/addproveedor";
 	}
 
@@ -83,8 +83,8 @@ public class ProveedoresController {
 		listMunicipio.remove(tempmunicipio);
 		listMunicipio.add(0, tempmunicipio);
 
-		Tipo_Contrato tipo_Contrato = proveedor.getTipo_contrato();
-		List<Tipo_Contrato> listTipo_Contrato = (List<Tipo_Contrato>) tipo_ContratoRepository.findAll();
+		TipoContrato tipo_Contrato = proveedor.getTipoContrato();
+		List<TipoContrato> listTipo_Contrato = (List<TipoContrato>) tipoContratoRepository.findAll();
 		listTipo_Contrato.remove(tipo_Contrato);
 		listTipo_Contrato.add(0, tipo_Contrato);
 
@@ -102,19 +102,19 @@ public class ProveedoresController {
 			Model model, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("provincias", provinciaRepository.findAll());
-			model.addAttribute("tipocontratos", tipo_ContratoRepository.findAll());
+			model.addAttribute("tipocontratos", tipoContratoRepository.findAll());
 
 			return "Proveedores/addproveedor";
 		} else {
 			try {
-				proovedorRepository.save(new Proveedor(proveedor.getNro_contrato(), proveedor.getNro_registro(),
-						proveedor.getNombre_proveedor(), proveedor.getAlias_proveedor(),
-						proveedor.getFecha_suscripcion(), proveedor.getVigencia(), proveedor.getFicha_cliente(),
-						proveedor.getCodigo_REUP(), proveedor.getCuenta_bancaria(), proveedor.getDictaminado(),
+				proovedorRepository.save(new Proveedor(proveedor.getNroContrato(), proveedor.getNroRegistro(),
+						proveedor.getNombreProveedor(), proveedor.getAliasProveedor(),
+						proveedor.getFechaSuscripcion(), proveedor.getVigencia(), proveedor.getFichaCliente(),
+						proveedor.getCodigoREUP(), proveedor.getCuentaBancaria(), proveedor.getDictaminado(),
 						proveedor.getTelefono(), proveedor.getEmail(), proveedor.getDireccion(),
 						proveedor.getObservaciones(), proveedor.getVencido(), proveedor.getNotificar(),
 						new Municipio(proveedor.getMunicipio().getId()),
-						new Tipo_Contrato(proveedor.getTipo_contrato().getNro())));
+						new TipoContrato(proveedor.getTipoContrato().getNro())));
 
 				redirectAttributes.addFlashAttribute("msgtipo", "success");
 				redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -138,20 +138,20 @@ public class ProveedoresController {
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("provincias", provinciaRepository.findAll());
-			model.addAttribute("tipocontratos", tipo_ContratoRepository.findAll());
+			model.addAttribute("tipocontratos", tipoContratoRepository.findAll());
 
 			return "Proveedores/updateproveedor";
 		} else {
 			try {
 
-				proovedorRepository.save(new Proveedor(proveedor.getNro(), proveedor.getNro_contrato(),
-						proveedor.getNro_registro(), proveedor.getNombre_proveedor(), proveedor.getAlias_proveedor(),
-						proveedor.getFecha_suscripcion(), proveedor.getVigencia(), proveedor.getFicha_cliente(),
-						proveedor.getCodigo_REUP(), proveedor.getCuenta_bancaria(), proveedor.getDictaminado(),
+				proovedorRepository.save(new Proveedor(proveedor.getNro(), proveedor.getNroContrato(),
+						proveedor.getNroRegistro(), proveedor.getNombreProveedor(), proveedor.getAliasProveedor(),
+						proveedor.getFechaSuscripcion(), proveedor.getVigencia(), proveedor.getFichaCliente(),
+						proveedor.getCodigoREUP(), proveedor.getCuentaBancaria(), proveedor.getDictaminado(),
 						proveedor.getTelefono(), proveedor.getEmail(), proveedor.getDireccion(),
 						proveedor.getObservaciones(), proveedor.getVencido(), proveedor.getNotificar(),
 						new Municipio(proveedor.getMunicipio().getId()),
-						new Tipo_Contrato(proveedor.getTipo_contrato().getNro())));
+						new TipoContrato(proveedor.getTipoContrato().getNro())));
 
 				redirectAttributes.addFlashAttribute("msgtipo", "success");
 				redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -214,9 +214,9 @@ public class ProveedoresController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping({ "/index", "/" })
 	public String index(Model model) {
-
+		List<Proveedor> listproveedores = proovedorRepository.findByOrderByVigencia();
 		try {
-			List<Proveedor> listproveedores = proovedorRepository.getVigencia();
+		
 			List<Proveedor> contr_vencidos = new ArrayList<Proveedor>();
 			ContratosxVencerse cxv = new ContratosxVencerse();
 			List<ContratosxVencerse> contrxVencerse = new ArrayList<ContratosxVencerse>();

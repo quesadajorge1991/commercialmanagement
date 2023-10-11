@@ -7,6 +7,8 @@ package com.springbootapplication.SpringBootApplication.Entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,27 +34,26 @@ public class Proveedor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nro;
     
-    
-    private String nro_registro;
+    private String nroRegistro;
     
     
     @Size(min = 2, message = "Número de contrato, obligatorio con mas de 2 caracteres")
-    private String nro_contrato;
+    private String nroContrato;
     
     
    
     
     @Size(min = 2, message = "Nombre del Proveedor, obligatorio con mas de 2 caracteres")
-    private String nombre_proveedor;
+    private String nombreProveedor;
     
     
     @Size(min = 2, message = "Alias del Proveedor, obligatorio con mas de 2 caracteres")
-    private String alias_proveedor;
+    private String aliasProveedor;
 
 
     @NotNull(message = "La fecha de suscripción no puede estar vacía")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fecha_suscripcion;
+    private Date fechaSuscripcion;
 
     @NotNull(message = "La fecha de vigencia no puede estar vacía")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -60,15 +61,15 @@ public class Proveedor implements Serializable {
     
     
     @Size(min = 2, message = "Ficha del cliente, obligatorio con mas de 2 caracteres")
-    private String ficha_cliente;
+    private String fichaCliente;
     
     
     @Size(min = 2, message = "Código reup, obligatorio con mas de 2 caracteres")
-    private String codigo_REUP;
+    private String codigoREUP;
     
     
     @NotNull(message = "La cuenta bancaria, no puede estar vacía")
-    private String cuenta_bancaria;
+    private String cuentaBancaria;
     
     
     
@@ -102,7 +103,7 @@ public class Proveedor implements Serializable {
     private Municipio municipio;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Tipo_Contrato tipo_contrato;
+    private TipoContrato tipoContrato;
 
     public Proveedor() {
     }
@@ -111,23 +112,23 @@ public class Proveedor implements Serializable {
         this.nro = nro;
     }
 
-    public Proveedor(String nro_contrato, String nro_registro, 
-            String nombre_proveedor, 
-            String alias_proveedor, Date fecha_suscripcion, 
-            Date vigencia, String ficha_cliente, String codigo_REUP, 
-            String cuenta_bancaria, String dictaminado, String telefono, 
+    public Proveedor(String nroContrato, String nroRegistro, 
+            String nombreProveedor, 
+            String aliasProveedor, Date fechaSuscripcion, 
+            Date vigencia, String fichaCliente, String codigoREUP, 
+            String cuentaBancaria, String dictaminado, String telefono, 
             String email, String direccion, String observaciones, 
             String vencido, String notificar, Municipio municipio, 
-            Tipo_Contrato tipo_contrato) {
-        this.nro_contrato = nro_contrato;
-        this.nro_registro = nro_registro;
-        this.nombre_proveedor = nombre_proveedor;
-        this.alias_proveedor = alias_proveedor;
-        this.fecha_suscripcion = fecha_suscripcion;
+            TipoContrato tipoContrato) {
+        this.nroContrato = nroContrato;
+        this.nroRegistro = nroRegistro;
+        this.nombreProveedor = nombreProveedor;
+        this.aliasProveedor = aliasProveedor;
+        this.fechaSuscripcion = fechaSuscripcion;
         this.vigencia = vigencia;
-        this.ficha_cliente = ficha_cliente;
-        this.codigo_REUP = codigo_REUP;
-        this.cuenta_bancaria = cuenta_bancaria;
+        this.fichaCliente = fichaCliente;
+        this.codigoREUP = codigoREUP;
+        this.cuentaBancaria = cuentaBancaria;
         this.dictaminado = dictaminado;
         this.telefono = telefono;
         this.email = email;
@@ -136,26 +137,26 @@ public class Proveedor implements Serializable {
         this.vencido = vencido;
         this.notificar = notificar;
         this.municipio = municipio;
-        this.tipo_contrato = tipo_contrato;
+        this.tipoContrato = tipoContrato;
     }
 
-    public Proveedor(int nro, String nro_contrato, String nro_registro, 
-            String nombre_proveedor, String alias_proveedor, 
-            Date fecha_suscripcion, Date vigencia, String ficha_cliente, 
-            String codigo_REUP, String cuenta_bancaria, String dictaminado, 
+    public Proveedor(int nro, String nro_contrato, String nroRegistro, 
+            String nombreProveedor, String aliasProveedor, 
+            Date fechaSuscripcion, Date vigencia, String fichaCliente, 
+            String codigoREUP, String cuentaBancaria, String dictaminado, 
             String telefono, String email, String direccion, 
             String observaciones, String vencido, String notificar, 
-            Municipio municipio, Tipo_Contrato tipo_contrato) {
+            Municipio municipio, TipoContrato tipoContrato) {
         this.nro = nro;
-        this.nro_contrato = nro_contrato;
-        this.nro_registro = nro_registro;
-        this.nombre_proveedor = nombre_proveedor;
-        this.alias_proveedor = alias_proveedor;
-        this.fecha_suscripcion = fecha_suscripcion;
+        this.nroContrato = nro_contrato;
+        this.nroRegistro = nroRegistro;
+        this.nombreProveedor = nombreProveedor;
+        this.aliasProveedor = aliasProveedor;
+        this.fechaSuscripcion = fechaSuscripcion;
         this.vigencia = vigencia;
-        this.ficha_cliente = ficha_cliente;
-        this.codigo_REUP = codigo_REUP;
-        this.cuenta_bancaria = cuenta_bancaria;
+        this.fichaCliente = fichaCliente;
+        this.codigoREUP = codigoREUP;
+        this.cuentaBancaria = cuentaBancaria;
         this.dictaminado = dictaminado;
         this.telefono = telefono;
         this.email = email;
@@ -164,20 +165,25 @@ public class Proveedor implements Serializable {
         this.vencido = vencido;
         this.notificar = notificar;
         this.municipio = municipio;
-        this.tipo_contrato = tipo_contrato;
+        this.tipoContrato = tipoContrato;
     }
 
     
 
-    public String getNro_registro() {
-        return nro_registro;
-    }
+ 
 
-    public void setNro_registro(String nro_registro) {
-        this.nro_registro = nro_registro;
-    }
 
-    public int getNro() {
+	
+
+    public String getNroRegistro() {
+		return nroRegistro;
+	}
+
+	public void setNroRegistro(String nroRegistro) {
+		this.nroRegistro = nroRegistro;
+	}
+
+	public int getNro() {
         return nro;
     }
 
@@ -185,37 +191,7 @@ public class Proveedor implements Serializable {
         this.nro = nro;
     }
 
-    public String getNro_contrato() {
-        return nro_contrato;
-    }
-
-    public void setNro_contrato(String nro_contrato) {
-        this.nro_contrato = nro_contrato;
-    }
-
-    public String getNombre_proveedor() {
-        return nombre_proveedor;
-    }
-
-    public void setNombre_proveedor(String nombre_proveedor) {
-        this.nombre_proveedor = nombre_proveedor;
-    }
-
-    public String getAlias() {
-        return alias_proveedor;
-    }
-
-    public void setAlias(String alias) {
-        this.alias_proveedor = alias;
-    }
-
-    public Date getFecha_suscripcion() {
-        return fecha_suscripcion;
-    }
-
-    public void setFecha_suscripcion(Date fecha_suscripcion) {
-        this.fecha_suscripcion = fecha_suscripcion;
-    }
+  
 
     public Date getVigencia() {
         return vigencia;
@@ -241,29 +217,7 @@ public class Proveedor implements Serializable {
         this.notificar = notificar;
     }
 
-    public String getFicha_cliente() {
-        return ficha_cliente;
-    }
-
-    public void setFicha_cliente(String ficha_cliente) {
-        this.ficha_cliente = ficha_cliente;
-    }
-
-    public String getCodigo_REUP() {
-        return codigo_REUP;
-    }
-
-    public void setCodigo_REUP(String codigo_REUP) {
-        this.codigo_REUP = codigo_REUP;
-    }
-
-    public String getCuenta_bancaria() {
-        return cuenta_bancaria;
-    }
-
-    public void setCuenta_bancaria(String cuenta_bancaria) {
-        this.cuenta_bancaria = cuenta_bancaria;
-    }
+   
 
     public String getDictaminado() {
         return dictaminado;
@@ -313,20 +267,70 @@ public class Proveedor implements Serializable {
         this.municipio = municipio;
     }
 
-    public String getAlias_proveedor() {
-        return alias_proveedor;
-    }
+	public String getNroContrato() {
+		return nroContrato;
+	}
 
-    public void setAlias_proveedor(String alias_proveedor) {
-        this.alias_proveedor = alias_proveedor;
-    }
+	public void setNroContrato(String nroContrato) {
+		this.nroContrato = nroContrato;
+	}
 
-    public Tipo_Contrato getTipo_contrato() {
-        return tipo_contrato;
-    }
+	public String getNombreProveedor() {
+		return nombreProveedor;
+	}
 
-    public void setTipo_contrato(Tipo_Contrato tipo_contrato) {
-        this.tipo_contrato = tipo_contrato;
-    }    
+	public void setNombreProveedor(String nombreProveedor) {
+		this.nombreProveedor = nombreProveedor;
+	}
+
+	public String getAliasProveedor() {
+		return aliasProveedor;
+	}
+
+	public void setAliasProveedor(String aliasProveedor) {
+		this.aliasProveedor = aliasProveedor;
+	}
+
+	public Date getFechaSuscripcion() {
+		return fechaSuscripcion;
+	}
+
+	public void setFechaSuscripcion(Date fechaSuscripcion) {
+		this.fechaSuscripcion = fechaSuscripcion;
+	}
+
+	public String getFichaCliente() {
+		return fichaCliente;
+	}
+
+	public void setFichaCliente(String fichaCliente) {
+		this.fichaCliente = fichaCliente;
+	}
+
+	public String getCodigoREUP() {
+		return codigoREUP;
+	}
+
+	public void setCodigoREUP(String codigoREUP) {
+		this.codigoREUP = codigoREUP;
+	}
+
+	public String getCuentaBancaria() {
+		return cuentaBancaria;
+	}
+
+	public void setCuentaBancaria(String cuentaBancaria) {
+		this.cuentaBancaria = cuentaBancaria;
+	}
+
+	public TipoContrato getTipoContrato() {
+		return tipoContrato;
+	}
+
+	public void setTipoContrato(TipoContrato tipoContrato) {
+		this.tipoContrato = tipoContrato;
+	}
+
+   
     
 }

@@ -16,29 +16,29 @@ import jakarta.persistence.Table;
  * @author jenice
  */
 @Entity
-@Table(name = "tipo_contrato")
-public class Tipo_Contrato {
+//@Table(name = "tipo_contrato")
+public class TipoContrato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nro;
 
-    private String tipo_contrato;
+    private String tipoContrato;
 
-    public Tipo_Contrato() {
+    public TipoContrato() {
     }
 
-    public Tipo_Contrato(int nro) {
+    public TipoContrato(int nro) {
         this.nro = nro;
     }
 
-    public Tipo_Contrato(int nro, String tipo_contrato) {
+    public TipoContrato(int nro, String tipoContrato) {
         this.nro = nro;
-        this.tipo_contrato = tipo_contrato;
+        this.tipoContrato = tipoContrato;
     }
 
-    public Tipo_Contrato(String tipo_contrato) {
-        this.tipo_contrato = tipo_contrato;
+    public TipoContrato(String tipoContrato) {
+        this.tipoContrato = tipoContrato;
     }
 
     public int getNro() {
@@ -49,12 +49,13 @@ public class Tipo_Contrato {
         this.nro = nro;
     }
 
-    public String getTipo_contrato() {
-        return tipo_contrato;
-    }
+	public String getTipoContrato() {
+		return tipoContrato;
+	}
 
-    public void setTipo_contrato(String tipo_contrato) {
-        this.tipo_contrato = tipo_contrato;
-    }
+	public void setTipoContrato(String tipoContrato) {
+		this.tipoContrato = tipoContrato;
+	}
 
+ 
 }

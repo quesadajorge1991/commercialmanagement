@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springbootapplication.SpringBootApplication.Entity.Authorities;
-import com.springbootapplication.SpringBootApplication.Entity.Tipo_Contrato;
+import com.springbootapplication.SpringBootApplication.Entity.TipoContrato;
 import com.springbootapplication.SpringBootApplication.Entity.Users;
 import com.springbootapplication.SpringBootApplication.Repository.*;
 

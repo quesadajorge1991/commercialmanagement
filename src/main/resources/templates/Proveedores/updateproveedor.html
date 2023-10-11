@@ -38,33 +38,33 @@
 									<div class="form-group">
 										<label class="login2">Nro. de registro </label>
 										<input name="nroregistro" type="number" class="form-control"
-											placeholder="Número de registro" th:field="*{nro_registro}">
+											placeholder="Número de registro" th:field="*{nroRegistro}">
 									</div>
 									<div class="form-group">
 										<label class="login2">Nro. de contrato </label>
 										<input name="nrocontrato" id="nrocontrato" type="text" class="form-control"
-											placeholder="Número de contrato" th:field="*{nro_contrato}">
+											placeholder="Número de contrato" th:field="*{nroContrato}">
 									</div>
 									<div class="form-group">
 										<label class="login2">Nombre del proveedor </label>
 										<input name="nombreproveedor" id="nombreproveedor" type="text"
 											class="form-control" placeholder="Nombre del proveedor"
-											th:field="*{nombre_proveedor}">
+											th:field="*{nombreProveedor}">
 									</div>
 									<div class="form-group">
 										<label class="login2">Alias </label>
 										<input name="alias" id="alias" type="text" class="form-control"
-											placeholder="Alias" th:field="*{alias}">
+											placeholder="Alias" th:field="*{aliasProveedor}">
 									</div>
 									<div class="form-group">
 										<label class="login2">Tipo de contrato </label>
 										<select data-placeholder="--Seleccione tipo de contrato--"
 											id="loadTipoContratoFragment" class="form-control" required="true"
-											th:field="*{tipo_contrato.nro}">
+											th:field="*{tipoContrato.nro}">
 											<option value="-1">--Seleccione tipo de contrato--</option>
 
 											<option th:each="tipocontrato :${tipocontratos}"
-												th:value=" ${tipocontrato.nro}" th:text="${tipocontrato.tipo_contrato}">
+												th:value=" ${tipocontrato.nro}" th:text="${tipocontrato.tipoContrato}">
 											</option>
 
 										</select>
@@ -77,7 +77,7 @@
 															class="fa fa-calendar"></i></span>
 													<input id="fechasuscripcion" type="text" class="form-control"
 														placeholder="Fecha de suscripcion"
-														th:field="*{fecha_suscripcion}">
+														th:field="*{fechaSuscripcion}">
 												</div>
 											</div>
 										</div>
@@ -96,17 +96,17 @@
 									<div class="form-group">
 										<label class="login2">Ficha del cliente </label>
 										<input name="fichacliente" id="fichacliente" type="text" class="form-control"
-											placeholder="Ficha del cliente" th:field="*{ficha_cliente}">
+											placeholder="Ficha del cliente" th:field="*{fichaCliente}">
 									</div>
 									<div class="form-group">
 										<label class="login2">Código REUP </label>
 										<input name="codigo" id="codigo" type="text" class="form-control"
-											placeholder="Código REUP" th:field="*{codigo_REUP}">
+											placeholder="Código REUP" th:field="*{codigoREUP}">
 									</div>
 									<div class="form-group">
 										<label class="login2">Cuenta bancaria </label>
 										<input name="cuenta" id="cuenta" type="number" class="form-control"
-											placeholder="Cuenta bancaria" th:field="*{cuenta_bancaria}">
+											placeholder="Cuenta bancaria" th:field="*{cuentaBancaria}">
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

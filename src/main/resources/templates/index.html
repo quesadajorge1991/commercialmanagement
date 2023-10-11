@@ -58,15 +58,17 @@
 																	<tbody>
 																		<div th:each="lprov:${contr_vencidos}">
 																			<tr th:id="fila+${lprov.nro}">
-																				<td th:text="${lprov.nro_registro}">
+																				<td th:text="${lprov.nroRegistro}">
 																				</td>
-																				<td th:text="${lprov.nro_contrato}">
+																				<td th:text="${lprov.nroContrato}">
 																				</td>
-																				<td th:text="${lprov.alias}"></td>
-																				<td th:text="${#dates.format(lprov.fecha_suscripcion,'dd-MM-yyyy')}"
-																					>
+																				<td th:text="${lprov.aliasProveedor}"></td>
+																				<td
+																					th:text="${#dates.format(lprov.fechaSuscripcion,'dd-MM-yyyy')}">
 																				</td>
-																				<td th:text="${#dates.format(lprov.vigencia,'dd-MM-yyyy')}"></td>
+																				<td
+																					th:text="${#dates.format(lprov.vigencia,'dd-MM-yyyy')}">
+																				</td>
 																				<td>
 																					<button title="Detalles"
 																						type="button"
@@ -155,7 +157,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.codigo_REUP}"></label>
+																														th:text="${lprov.codigoREUP}"></label>
 																												</div>
 																											</div>
 																										</div>
@@ -182,7 +184,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.nro_registro}"></label>
+																														th:text="${lprov.nroRegistro}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -201,7 +203,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.cuenta_bancaria}"></label>
+																														th:text="${lprov.cuentaBancaria}"></label>
 																												</div>
 																											</div>
 																										</div>
@@ -228,7 +230,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.nro_contrato}"></label>
+																														th:text="${lprov.nroContrato}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -274,7 +276,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.nombre_proveedor}"></label>
+																														th:text="${lprov.nombreProveedor}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -318,7 +320,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.alias}"></label>
+																														th:text="${lprov.aliasProveedor}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -363,7 +365,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.tipo_contrato.tipo_contrato}"></label>
+																														th:text="${lprov.tipoContrato.tipoContrato}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -413,8 +415,8 @@
 																												<div class="input-daterange input-group"
 																													id="datepicker">
 																													<label
-																														class="form-control" th:text="${#dates.format(lprov.fecha_suscripcion,'dd-MM-yyyy')}"
-																														></label>
+																														class="form-control"
+																														th:text="${#dates.format(lprov.fechaSuscripcion,'dd-MM-yyyy')}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -457,8 +459,8 @@
 																												<div class="input-daterange input-group"
 																													id="datepicker">
 																													<label
-																														class="form-control" th:text="${#dates.format(lprov.vigencia,'dd-MM-yyyy')}"
-																														></label>
+																														class="form-control"
+																														th:text="${#dates.format(lprov.vigencia,'dd-MM-yyyy')}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -503,7 +505,7 @@
 																													id="datepicker">
 																													<label
 																														class="form-control"
-																														th:text="${lprov.ficha_cliente}"></label>
+																														th:text="${lprov.fichaCliente}"></label>
 																												</div>
 																											</div>
 																											<div
@@ -557,10 +559,10 @@
 																								<p> Está seguro que
 																									quiere eliminar el
 																									proveedor: <span
-																										th:text="${lprov.alias}"></span>
+																										th:text="${lprov.aliasProveedor}"></span>
 																									con Nro. de
 																									contrato: <span
-																										th:text="${lprov.nro_contrato}"></span>
+																										th:text="${lprov.nroContrato}"></span>
 																								</p>
 																							</h3>
 																							<div class="col-lg-12">
@@ -629,21 +631,22 @@
 																					<tr
 																						th:id="fila+${cxv.proveedor.nro}">
 																						<td
-																							th:text="${cxv.proveedor.nro_registro}">
+																							th:text="${cxv.proveedor.nroRegistro}">
 																						</td>
 																						<td
-																							th:text="${cxv.proveedor.nro_registro}">
+																							th:text="${cxv.proveedor.nroRegistro}">
 																						</td>
 																						<td
-																							th:text="${cxv.proveedor.alias_proveedor}">
+																							th:text="${cxv.proveedor.aliasProveedor}">
 																						</td>
 																						<td
-																							th:text="${#dates.format(cxv.proveedor.fecha_suscripcion,'dd-MM-yyyy')}">
+																							th:text="${#dates.format(cxv.proveedor.fechaSuscripcion,'dd-MM-yyyy')}">
 																						</td>
 																						<td
 																							th:text="${#dates.format(cxv.proveedor.vigencia,'dd-MM-yyyy')}">
 																						</td>
-																						<td th:text="${cxv.dias} +' días'"> 
+																						<td
+																							th:text="${cxv.dias} +' días'">
 																						</td>
 																						<td>
 																							<button title="Detalles"
@@ -735,7 +738,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.codigo_REUP}"></label>
+																																th:text="${cxv.proveedor.codigoREUP}"></label>
 																														</div>
 																													</div>
 																												</div>
@@ -764,7 +767,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.nro_registro}"></label>
+																																th:text="${cxv.proveedor.nroRegistro}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -783,7 +786,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.cuenta_bancaria}"></label>
+																																th:text="${cxv.proveedor.cuentaBancaria}"></label>
 																														</div>
 																													</div>
 																												</div>
@@ -812,7 +815,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.nro_contrato}"></label>
+																																th:text="${cxv.proveedor.nroContrato}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -859,7 +862,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.nombre_proveedor}"></label>
+																																th:text="${cxv.proveedor.nombreProveedor}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -904,7 +907,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.alias}"></label>
+																																th:text="${cxv.proveedor.aliasProveedor}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -951,7 +954,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.tipo_contrato.tipo_contrato}"></label>
+																																th:text="${cxv.proveedor.tipoContrato.tipoContrato}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -1002,8 +1005,8 @@
 																														<div class="input-daterange input-group"
 																															id="datepicker">
 																															<label
-																																class="form-control" th:text="${#dates.format(cxv.proveedor.fecha_suscripcion,'dd-MM-yyyy')}"
-																																></label>
+																																class="form-control"
+																																th:text="${#dates.format(cxv.proveedor.fechaSuscripcion,'dd-MM-yyyy')}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -1047,8 +1050,8 @@
 																														<div class="input-daterange input-group"
 																															id="datepicker">
 																															<label
-																																class="form-control"  th:text="${#dates.format(cxv.proveedor.vigencia,'dd-MM-yyyy')}"
-																																></label>
+																																class="form-control"
+																																th:text="${#dates.format(cxv.proveedor.vigencia,'dd-MM-yyyy')}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -1095,7 +1098,7 @@
 																															id="datepicker">
 																															<label
 																																class="form-control"
-																																th:text="${cxv.proveedor.ficha_cliente}"></label>
+																																th:text="${cxv.proveedor.fichaCliente}"></label>
 																														</div>
 																													</div>
 																													<div
@@ -1151,11 +1154,11 @@
 																											eliminar el
 																											proveedor:
 																											<span
-																												th:text="${cxv.proveedor.alias}"></span>
+																												th:text="${cxv.proveedor.aliasProveedor}"></span>
 																											con Nro. de
 																											contrato:
 																											<span
-																												th:text"${cxv.proveedor.nro_contrato}"></span>
+																												th:text"${cxv.proveedor.nroContrato}"></span>
 																										</p>
 																									</h3>
 																									<div

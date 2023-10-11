@@ -42,39 +42,39 @@
 									<div class="form-group">
 										<label class="login2">Nro. de registro </label>
 										<input name="nroregistro" id="nroregistro" type="number" required="true"
-											th:field="*{nro_registro}" class="form-control"
+											th:field="*{nroRegistro}" class="form-control"
 											placeholder="Número de registro">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('nro_registro')}">
+											th:if="${#fields.hasErrors('nroRegistro')}">
 											<span th:errors="*{nro_registro}"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="login2">Nro. de contrato </label>
 										<input name="nrocontrato" id="nrocontrato" type="text" class="form-control"
-											th:field="*{nro_contrato}" required="true" placeholder="Número de contrato">
+											th:field="*{nroContrato}" required="true" placeholder="Número de contrato">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('nro_contrato')}">
-											<span th:errors="*{nro_contrato}"></span>
+											th:if="${#fields.hasErrors('nroContrato')}">
+											<span th:errors="*{nroContrato}"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="login2">Nombre del proveedor </label>
 										<input name="nombreproveedor" id="nombreproveedor" type="text"
-											th:field="*{nombre_proveedor}" class="form-control" required="true"
+											th:field="*{nombreProveedor}" class="form-control" required="true"
 											placeholder="Nombre del proveedor">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('nombre_proveedor')}">
-											<span th:errors="*{nombre_proveedor}"></span>
+											th:if="${#fields.hasErrors('nombreProveedor')}">
+											<span th:errors="*{nombreProveedor}"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="login2">Alias </label>
 										<input name="alias" id="alias" type="text" class="form-control"
-											th:field="*{alias_proveedor}" placeholder="Alias">
+											th:field="*{aliasProveedor}" placeholder="Alias">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('alias_proveedor')}">
-											<span th:errors="*{alias_proveedor}"></span>
+											th:if="${#fields.hasErrors('aliasProveedor')}">
+											<span th:errors="*{aliasProveedor}"></span>
 										</div>
 									</div>
 									<div class="form-group">
@@ -83,11 +83,11 @@
 
 										<select data-placeholder="--Seleccione tipo de contrato--"
 											id="loadTipoContratoFragment" class="form-control select2" required="true"
-											th:field="*{tipo_contrato.nro}">
+											th:field="*{tipoContrato.nro}">
 											<option value="-1">--Seleccione tipo de contrato--</option>
 
 											<option th:each="tipocontrato :${tipocontratos}"
-												th:value=" ${tipocontrato.nro}" th:text="${tipocontrato.tipo_contrato}">
+												th:value=" ${tipocontrato.nro}" th:text="${tipocontrato.tipoContrato}">
 											</option>
 
 										</select>
@@ -112,11 +112,11 @@
 										<div class="form-group data-custon-pick" id="data_1">
 											<div class="input-group">
 												<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-												<input id="fechasuscripcion" th:field="*{fecha_suscripcion}"
+												<input id="fechasuscripcion" th:field="*{fechaSuscripcion}"
 													placeholder="Fecha de suscripción" type="text" class="form-control">
 												<div style="color: red" role="alert"
-													th:if="${#fields.hasErrors('fecha_suscripcion')}">
-													<span th:errors="*{fecha_suscripcion}"></span>
+													th:if="${#fields.hasErrors('fechaSuscripcion')}">
+													<span th:errors="*{fechaSuscripcion}"></span>
 												</div>
 											</div>
 										</div>
@@ -144,28 +144,28 @@
 									<div class="form-group">
 										<label class="login2">Ficha del cliente </label>
 										<input name="fichacliente" id="fichacliente" type="text" class="form-control"
-											th:field="*{ficha_cliente}" placeholder="Ficha del cliente">
+											th:field="*{fichaCliente}" placeholder="Ficha del cliente">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('ficha_cliente')}">
-											<span th:errors="*{ficha_cliente}"></span>
+											th:if="${#fields.hasErrors('fichaCliente')}">
+											<span th:errors="*{fichaCliente}"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="login2">Código REUP </label>
 										<input name="codigo" id="codigo" type="text" class="form-control"
-											th:field="*{codigo_REUP}" placeholder="Código REUP">
+											th:field="*{codigoREUP}" placeholder="Código REUP">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('codigo_REUP')}">
-											<span th:errors="*{codigo_REUP}"></span>
+											th:if="${#fields.hasErrors('codigoREUP')}">
+											<span th:errors="*{codigoREUP}"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="login2">Cuenta bancaria </label>
 										<input name="cuenta" id="cuenta" type="number" class="form-control"
-											th:field="*{cuenta_bancaria}" placeholder="Cuenta bancaria">
+											th:field="*{cuentaBancaria}" placeholder="Cuenta bancaria">
 										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('cuenta_bancaria')}">
-											<span th:errors="*{cuenta_bancaria}"></span>
+											th:if="${#fields.hasErrors('cuentaBancaria')}">
+											<span th:errors="*{cuentaBancaria}"></span>
 										</div>
 									</div>
 								</div>
@@ -429,7 +429,7 @@
 
 
 			function addTipoContrato() {
-				var tipo_contrato = $("#tipocontrato").val();
+				var tipoContrato = $("#tipocontrato").val();
 				var url =/*[[@{/addTipoContrato}]]*/ 'addTipoContrato';
 
 				if (tipo_contrato != "") {
@@ -438,7 +438,7 @@
 						dataType: 'json',
 						method: 'POST',
 						data: {
-							tipo_contrato: tipo_contrato,
+							tipoContrato: tipoContrato,
 							//newpassword : newpassword
 						},
 						success: function (data) {

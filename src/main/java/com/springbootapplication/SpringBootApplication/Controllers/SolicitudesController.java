@@ -22,8 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.springbootapplication.SpringBootApplication.Entity.*;
 import com.springbootapplication.SpringBootApplication.Repository.*;
 
-
-
 @Controller
 public class SolicitudesController {
 
@@ -232,41 +230,51 @@ public class SolicitudesController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')")
 	@GetMapping(value = "/datosSolicitud")
 	public @ResponseBody Solicitud getSolicitud(@RequestParam("ids") int ids, Model model) throws Exception {
-		Solicitud solicitud = solicitudRepository.findById(ids).get();
-		Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
-				.getMunicipio();
-		Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
-		Solicitud resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
-				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-				solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
-				solicitud.isServicio(), pueblo);
+		Solicitud resultsolicitud = new Solicitud();
+		try {
+			Solicitud solicitud = solicitudRepository.findById(ids).get();
+			Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
+					.getMunicipio();
+			Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
+			resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
+					solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
+					solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
+					solicitud.isServicio(), pueblo);
 
-		Municipio tempmun = pueblo.getMunicipio();
-		Provincia tempprov = tempmun.getProvincia();
+			Municipio tempmun = pueblo.getMunicipio();
+			Provincia tempprov = tempmun.getProvincia();
 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return resultsolicitud;
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')")
 	@GetMapping("/getprovincia")
 	public @ResponseBody List<Provincia> getprovincia(@RequestParam("ids") int ids, Model model) {
+		List<Provincia> listaprovin=new ArrayList<>();
+		try {
+			Solicitud solicitud = solicitudRepository.findById(ids).get();
+			Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
+					.getMunicipio();
+			Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
+		/*	Solicitud resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
+					solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
+					solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
+					solicitud.isServicio(), pueblo);*/
 
-		Solicitud solicitud = solicitudRepository.findById(ids).get();
-		Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
-				.getMunicipio();
-		Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
-		Solicitud resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
-				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-				solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
-				solicitud.isServicio(), pueblo);
+			Municipio tempmun = pueblo.getMunicipio();
+			Provincia tempprov = tempmun.getProvincia();
 
-		Municipio tempmun = pueblo.getMunicipio();
-		Provincia tempprov = tempmun.getProvincia();
+			listaprovin = (List<Provincia>) provinciaRepository.findAll();
+			listaprovin.remove(tempprov);
+			listaprovin.add(0, tempprov);
 
-		List<Provincia> listaprovin = (List<Provincia>) provinciaRepository.findAll();
-		listaprovin.remove(tempprov);
-		listaprovin.add(0, tempprov);
-
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	
 		return listaprovin;
 
 	}

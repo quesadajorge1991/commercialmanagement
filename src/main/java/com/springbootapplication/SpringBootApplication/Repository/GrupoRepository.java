@@ -8,7 +8,7 @@ import com.springbootapplication.SpringBootApplication.Entity.Grupo;
 
 
 
-@Repository
+
 public interface GrupoRepository extends CrudRepository<Grupo, String> {
 
 }

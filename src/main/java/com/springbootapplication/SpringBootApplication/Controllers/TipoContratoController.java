@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.springbootapplication.SpringBootApplication.Entity.Tipo_Contrato;
+import com.springbootapplication.SpringBootApplication.Entity.TipoContrato;
 import com.springbootapplication.SpringBootApplication.Repository.*;
 
 
 
 @Controller
-public class TIpoContratoController {
+public class TipoContratoController {
 	
 	@Autowired
-	Tipo_ContratoRepository tipo_ContratoRepository;
+	TipoContratoRepository tipoContratoRepository;
 	
 	
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping(value = "/getTipoContrato")
 	public String getTipoContrato(Model model) {
-		List<Tipo_Contrato> tipocontrato = (List<Tipo_Contrato>) tipo_ContratoRepository.findAll();
+		List<TipoContrato> tipocontrato = (List<TipoContrato>) tipoContratoRepository.findAll();
 		model.addAttribute("tipocontratos", tipocontrato);
 		return "templateBase/ComponentFragment :: tipocontrato";
 
@@ -37,14 +37,14 @@ public class TIpoContratoController {
 	
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@PostMapping("/addTipoContrato")
-	public @ResponseBody String addTipoContrato(@RequestParam("tipo_contrato") String tipo_contrato) {
+	public @ResponseBody String addTipoContrato(@RequestParam("tipoContrato") String tipoContrato) {
 		
 		JSONObject jsono = new JSONObject();
 
-		if (!tipo_ContratoRepository.getTipoContrato(tipo_contrato).contains(tipo_contrato)) {/* Pregunta si la lista esta vacia, de estarlo inserta el pueblo */
+		if (!tipoContratoRepository.getTipoContrato(tipoContrato).contains(tipoContrato)) {/* Pregunta si la lista esta vacia, de estarlo inserta el pueblo */
 
 			try {
-				tipo_ContratoRepository.save(new Tipo_Contrato(tipo_contrato));
+				tipoContratoRepository.save(new TipoContrato(tipoContrato));
 				jsono.put("msgtipo", "success");
 				jsono.put("msgtitu", "Información");
 				jsono.put("msgbody", "Se inserto correctamente el tipo de contrato ");

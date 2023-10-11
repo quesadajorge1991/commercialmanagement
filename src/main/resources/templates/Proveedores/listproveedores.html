@@ -52,8 +52,8 @@
 												<th>Fecha_suscripcion</th>
 												<th>Vigencia</th>
 												
-												<th>Codigo REUP</th>
-												<!--<th>Cuenta bancaria</th>
+												<!--<th>Codigo REUP</th>
+												<th>Cuenta bancaria</th>
 												<th>Dictaminado</th>
 												<th>Telefono</th>
 												<th>Email</th>
@@ -69,17 +69,17 @@
 										<tbody>
 											<tr th:each="proveedor: ${proveedores}">
 
-												<td th:text="${proveedor.nro_registro}"></td>
-												<td th:text="${proveedor.nro_contrato}"></td>
-												<td th:text="${proveedor.alias_proveedor}"></td>
-												<td th:text="${proveedor.tipo_contrato.tipo_contrato}"></td>
+												<td th:text="${proveedor.nroRegistro}"></td>
+												<td th:text="${proveedor.nroContrato}"></td>
+												<td th:text="${proveedor.aliasProveedor}"></td>
+												<td th:text="${proveedor.tipoContrato.tipoContrato}"></td>
 												<td
-													th:text="${#dates.format(proveedor.fecha_suscripcion,'dd-MM-yyyy')}">
+													th:text="${#dates.format(proveedor.fechaSuscripcion,'dd-MM-yyyy')}">
 												</td>
 												<td th:text="${#dates.format(proveedor.vigencia,'dd-MM-yyyy')}"></td>
 											
-												<td th:text="${proveedor.codigo_REUP}"></td>
-												<!--	<td th:text="${proveedor.cuenta_bancaria}"></td>
+											<!--	<td th:text="${proveedor.codigoREUP}"></td>
+													<td th:text="${proveedor.cuenta_bancaria}"></td>
 												<td th:text="${proveedor.dictaminado}"></td>
 												<td th:text="${proveedor.telefono}"></td>
 												<td th:text="${proveedor.email}"></td>
@@ -158,7 +158,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.codigo_REUP}"></label>
+																							th:text="${proveedor.codigoREUP}"></label>
 																					</div>
 																				</div>
 																			</div>
@@ -181,7 +181,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.nro_registro}"></label>
+																							th:text="${proveedor.nroRegistro}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -197,7 +197,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.cuenta_bancaria}"></label>
+																							th:text="${proveedor.cuentaBancaria}"></label>
 																					</div>
 																				</div>
 																			</div>
@@ -220,7 +220,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.nro_contrato}"></label>
+																							th:text="${proveedor.nroContrato}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -259,7 +259,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.nombre_proveedor}"></label>
+																							th:text="${proveedor.nombreProveedor}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -298,7 +298,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.alias}"></label>
+																							th:text="${proveedor.aliasProveedor}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -337,7 +337,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.tipo_contrato.tipo_contrato}"></label>
+																							th:text="${proveedor.tipoContrato.tipoContrato}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -380,7 +380,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${#dates.format(proveedor.fecha_suscripcion,'dd-MM-yyyy')}"></label>
+																							th:text="${#dates.format(proveedor.fechaSuscripcion,'dd-MM-yyyy')}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -458,7 +458,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${proveedor.ficha_cliente}"></label>
+																							th:text="${proveedor.fichaCliente}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -517,7 +517,7 @@
 																<h3>
 																	<p> Seguro que quiere eliminar el proveedor con
 																		nombre: <label
-																			th:text="${proveedor.nombre_proveedor}">
+																			th:text="${proveedor.nombreProveedor}">
 																	</p>
 																</h3>
 																<div class="col-lg-12">
