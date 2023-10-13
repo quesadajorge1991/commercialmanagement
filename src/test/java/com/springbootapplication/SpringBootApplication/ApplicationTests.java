@@ -15,12 +15,16 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.springbootapplication.SpringBootApplication.Entity.Proveedor;
 import com.springbootapplication.SpringBootApplication.Repository.ProovedorRepository;
+import com.springbootapplication.SpringBootApplication.Repository.PuebloRepository;
 
 @SpringBootTest
 class ApplicationTests {
 
 	@Autowired
 	DataSource dataSource;
+	
+	@Autowired
+	PuebloRepository puebloRepository;
 
 	@Autowired
 	ApplicationContext applicationContext;
@@ -31,12 +35,7 @@ class ApplicationTests {
 	@Test
 	void contextLoads() throws SQLException {
 
-		List<Proveedor> list = proovedorRepository.findByOrderByVigencia();
-
-		for (int i = 0; i < list.size(); i++) {
-
-			System.out.println(list.get(i).getAliasProveedor());
-		}
+		System.out.println(puebloRepository.findById(1L).get().getNomb_pueb());
 
 	}
 

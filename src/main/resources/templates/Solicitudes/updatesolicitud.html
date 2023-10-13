@@ -108,7 +108,7 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Provincia </label>
-											<select name="provincia" id="provincia" class="form-control"
+											<select name="provincia" id="provincia" class="form-control select2"
 												required="true">
 												<option th:each="provincia:${provincias}" th:value="${provincia.id}"
 													th:text="${provincia.nomb_prov}"> </option>
@@ -117,7 +117,7 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Municipio </label>
-											<select name="municipio" id="loadMunicipiosFragment" class="form-control"
+											<select name="municipio" id="loadMunicipiosFragment" class="form-control select2"
 												required="true">
 												<option th:each="municipio:${municipios}" th:value="${municipio.id}"
 													th:text="${municipio.nomb_mun}"></option>
@@ -127,7 +127,7 @@
 										<div class="form-group">
 											<div class="form-select-list">
 												<label class="login2">Pueblo </label>
-												<select name="pueblo" class="form-control" id="loadPueblosFragment"
+												<select name="pueblo" class="form-control select2" id="loadPueblosFragment"
 													required="true">
 													<option th:each="pueblo:${pueblos}" th:value="${pueblo.id}"
 														th:text="${pueblo.nomb_pueb}"></option>

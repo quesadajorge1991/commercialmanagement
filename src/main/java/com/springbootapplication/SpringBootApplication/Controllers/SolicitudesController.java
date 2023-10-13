@@ -231,38 +231,36 @@ public class SolicitudesController {
 	@GetMapping(value = "/datosSolicitud")
 	public @ResponseBody Solicitud getSolicitud(@RequestParam("ids") int ids, Model model) throws Exception {
 		Solicitud resultsolicitud = new Solicitud();
-		try {
-			Solicitud solicitud = solicitudRepository.findById(ids).get();
-			Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
-					.getMunicipio();
-			Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
-			resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
-					solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-					solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
-					solicitud.isServicio(), pueblo);
+		Solicitud solicitud = solicitudRepository.findById(ids).get();
 
-			Municipio tempmun = pueblo.getMunicipio();
-			Provincia tempprov = tempmun.getProvincia();
+		Municipio municipio = municipioRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get();
 
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
+		
+		resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
+				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
+				solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
+				solicitud.isServicio(), pueblo);
+
 		return resultsolicitud;
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')")
 	@GetMapping("/getprovincia")
 	public @ResponseBody List<Provincia> getprovincia(@RequestParam("ids") int ids, Model model) {
-		List<Provincia> listaprovin=new ArrayList<>();
+		List<Provincia> listaprovin = new ArrayList<>();
 		try {
 			Solicitud solicitud = solicitudRepository.findById(ids).get();
 			Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
 					.getMunicipio();
 			Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
-		/*	Solicitud resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
-					solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-					solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
-					solicitud.isServicio(), pueblo);*/
+			/*
+			 * Solicitud resultsolicitud = new Solicitud(solicitud.getId(),
+			 * solicitud.getNomb_pers(), solicitud.getCi(), solicitud.getDireccion(),
+			 * solicitud.getTelefono(), solicitud.getCult_danado(),
+			 * solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(),
+			 * solicitud.getZona_afect(), solicitud.isServicio(), pueblo);
+			 */
 
 			Municipio tempmun = pueblo.getMunicipio();
 			Provincia tempprov = tempmun.getProvincia();
@@ -274,7 +272,7 @@ public class SolicitudesController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-	
+
 		return listaprovin;
 
 	}
