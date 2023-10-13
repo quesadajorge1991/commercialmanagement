@@ -120,7 +120,7 @@ public class ServicioController {
 			RedirectAttributes redirectAttributes) {
 
 		Pueblo p = new Pueblo(servicio.getPueblo().getId());
-		Grupo g = new Grupo(servicio.getGrupo().getNombre_grupo());
+		Grupo g = new Grupo(servicio.getGrupo().getName());
 		Cliente clientetemp = clientesRepository.findById(servicio.getCliente().getNro()).get();
 		Cliente c = new Cliente(clientetemp.getNro_contrato());
 		Solicitud sol = solicitudRepository.findById(getNumero())
@@ -219,7 +219,7 @@ public class ServicioController {
 			RedirectAttributes redirectAttributes) {
 
 		Pueblo p = new Pueblo(servicio.getPueblo().getId());
-		Grupo g = new Grupo(servicio.getGrupo().getNombre_grupo());
+		Grupo g = new Grupo(servicio.getGrupo().getName());
 		Cliente c = new Cliente(servicio.getCliente().getNro());
 
 		try {
@@ -233,7 +233,7 @@ public class ServicioController {
 			Servicio s = new Servicio(servicio.getFecha_servicio(), servicio.getCultivo(),
 					servicio.getTipo_afectacion(), servicio.getFecha_afectacion(), servicio.getFecha_afectacionfin(),
 					servicio.getNro_factura(), servicio.getZona_afectacion(), servicio.getEntregado(),
-					new Pueblo(p.getId()), new Cliente(c.getNro()), new Grupo(g.getNombre_grupo()));
+					new Pueblo(p.getId()), new Cliente(c.getNro()), new Grupo(g.getName()));
 
 			System.out.println("solicitud " + solicitud);
 			System.out.println("ffffff " + servicio.getFecha_servicio());
@@ -247,7 +247,7 @@ public class ServicioController {
 			System.out.println("ffffff " + servicio.getEntregado());
 			System.out.println("ffffff " + p.getId());
 			System.out.println("ffffff " + c.getNro());
-			System.out.println("ffffff " + g.getNombre_grupo());
+			System.out.println("ffffff " + g.getName());
 
 			servicioRepository.save(s);
 			solicitudRepository.save(soli);
@@ -332,7 +332,7 @@ public class ServicioController {
 					servicio.getTipo_afectacion(), servicio.getFecha_afectacion(), servicio.getFecha_afectacionfin(),
 					servicio.getNro_factura(), servicio.getZona_afectacion(), servicio.getEntregado(),
 					new Pueblo(servicio.getPueblo().getId()), new Cliente(servicio.getCliente().getNro()),
-					new Grupo(servicio.getGrupo().getNombre_grupo()));
+					new Grupo(servicio.getGrupo().getName()));
 
 			servicioRepository.save(s);
 			redirectAttributes.addFlashAttribute("msgbody", "Se modificado correctamente el servicio");

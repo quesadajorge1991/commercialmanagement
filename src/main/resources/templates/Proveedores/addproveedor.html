@@ -79,8 +79,6 @@
 									</div>
 									<div class="form-group">
 										<label class="login2">Tipo de contrato </label>
-
-
 										<select data-placeholder="--Seleccione tipo de contrato--"
 											id="loadTipoContratoFragment" class="form-control select2" required="true"
 											th:field="*{tipoContrato.nro}">
@@ -89,19 +87,14 @@
 											<option th:each="tipocontrato :${tipocontratos}"
 												th:value=" ${tipocontrato.nro}" th:text="${tipocontrato.tipoContrato}">
 											</option>
-
 										</select>
-
-
-
 									</div>
-
 									<div id="loadTipoContratoFragment">
 
 									</div>
 									<div class="form-group">
 										<button id="addcontrato" title="Añadir contrato" type="button"
-											class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+											class="btn btn-success waves-effect " data-toggle="modal"
 											data-target="#DetailModalAddContrato">
 											+ Añadir Contrato</button>
 									</div>
@@ -154,8 +147,7 @@
 										<label class="login2">Código REUP </label>
 										<input name="codigo" id="codigo" type="text" class="form-control"
 											th:field="*{codigoREUP}" placeholder="Código REUP">
-										<div style="color: red" role="alert"
-											th:if="${#fields.hasErrors('codigoREUP')}">
+										<div style="color: red" role="alert" th:if="${#fields.hasErrors('codigoREUP')}">
 											<span th:errors="*{codigoREUP}"></span>
 										</div>
 									</div>
@@ -432,7 +424,7 @@
 				var tipoContrato = $("#tipocontrato").val();
 				var url =/*[[@{/addTipoContrato}]]*/ 'addTipoContrato';
 
-				if (tipo_contrato != "") {
+				if (tipoContrato != "") {
 					$.ajax({
 						url: url,
 						dataType: 'json',

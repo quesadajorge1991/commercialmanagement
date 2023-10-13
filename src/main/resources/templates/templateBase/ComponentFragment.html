@@ -32,7 +32,15 @@
 		<select required="required" th:fragment="tipocontrato">
 			<option value="">Seleccione tipo de contrato</option>
 			<option th:each="tipocontrato : ${tipocontratos}" th:value="${tipocontrato.nro}"
-				th:text="${tipocontrato.tipo_contrato}" />
+				th:text="${tipocontrato.tipoContrato}" />
+		</select>
+	</div>
+	
+	<div class="form-group">
+		<select required="required" th:fragment="grupo">
+			<option value="">Seleccione grupo</option>
+			<option th:each="grupo : ${grupos}" th:value="${grupo.name}"
+				th:text="${grupo.name}" />
 		</select>
 	</div>
 

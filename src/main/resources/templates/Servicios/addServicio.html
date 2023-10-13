@@ -51,31 +51,55 @@
 										<section id="sct1" hidden>
 
 
-											<div class="form-group">
+											<div class="form-group ">
 												<label class="login2">Grupo </label>
-												<select name="grupo" id="grupo" th:field="*{grupo.nombre_grupo}"
+												<select name="grupo" id="loadGrupoFragment" th:field="*{grupo.name}"
 													style="width: 100%;" data-placeholder="--Seleccione el grupo--"
 													class="select2" required="true">
 													<option value="-1">--Seleccione el grupo--</option>
-													<option th:each="grupo :${listgrupos}"
-														th:value="${grupo.nombre_grupo}"
-														th:text="${grupo.nombre_grupo}"></option>
+													<option th:each="grupo :${listgrupos}" th:value="${grupo.name}"
+														th:text="${grupo.name}"></option>
 												</select>
+
+												<div class="form-group">
+													<button id="addcontrato" title="Añadir contrato" type="button"
+														class="btn btn-success waves-effect " data-toggle="modal"
+														data-target="#DetailModalAddGroup">
+														+ Add grupo</button>
+												</div>
+
+
 											</div>
 
 
 
-											<div class="form-group">
+
+
+
+
+											<div>
 												<label class="login2">Nro. de contrato </label>
 												<select name="contrato" id="contrato" th:field="*{cliente.nro}"
 													style="width: 100%;"
 													data-placeholder="--Seleccione el número de contrato--"
-													class="select2" required="true">
+													class="select2 " required="true">
 													<option value="-1">--Seleccione el número de contrato--</option>
 													<option th:each="grupo :${listclientes}" th:value="${grupo.nro}"
 														th:text="${grupo.nro_contrato}"></option>
 												</select>
+
+												<div class="form-group">
+													<button id="addcontrato" title="Añadir contrato" type="button"
+														class="btn btn-success waves-effect " data-toggle="modal"
+														data-target="#DetailModalAddContrato">
+														+ Add Nro. contrato</button>
+												</div>
 											</div>
+
+
+
+
+
 											<div class="form-group">
 												<label class="login2">Nro. de factura </label>
 												<input name="nrofactura" id="nrofactura" type="text"
@@ -132,12 +156,11 @@
 											</div>
 											<div class="form-group">
 												<label class="login2">Provincia </label>
-												<select name="provincia" id="provincia" style="width: 100%;"
+												<select name="provincia" id="loadProvinciaFragment" style="width: 100%;"
 													data-placeholder="--Seleccione la provincia--"
 													class="form-control select2" required="true">
-													<option value="-1">--Seleccione la provincia--</option>
-													<option th:each="provincia:${provincias}" th:value="${provincia.id}"
-														th:text="${provincia.nomb_prov}"></option>
+
+
 
 												</select>
 											</div>
@@ -148,7 +171,7 @@
 													<select name="municipio" id="loadMunicipiosFragment"
 														style="width: 100%;" class="form-control select2"
 														data-placeholder="--Seleccione el municipio--" required="true">
-														<option value="-1">--Seleccione el municipio--</option>
+
 													</select>
 												</div>
 											</div>
@@ -161,7 +184,7 @@
 														id="loadPueblosFragment" style="width: 100%;"
 														data-placeholder="--Seleccione el pueblo--" required="true"
 														th:field="*{pueblo.id}">
-														<option value="-1">--Seleccione el pueblo--</option>
+
 													</select>
 
 
@@ -185,6 +208,111 @@
 										</section>
 									</div>
 								</div>
+
+
+								<!-- modal add group-->
+								<div id="DetailModalAddGroup"
+									class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header header-color-modal bg-color-1">
+												<h4 class="modal-title">Add Grupo</h4>
+												<div class="modal-close-area modal-close-df">
+													<a class="close" data-dismiss="modal" href="#"><i
+															class="fa fa-close"></i>
+													</a>
+												</div>
+											</div>
+											<div class="modal-body">
+												<div class="row">
+
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<div class="devit-card-custom">
+															<div class="row">
+																<div class="form-group">
+																	<input class="form-control" placeholder="Group"
+																		name="grupo" required="true" type="text"
+																		id="grupo">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="modal-footer">
+													<div class="button-drop-style-one btn-default-bg">
+
+
+														<button class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Cancelar</button>
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															onclick="addGroup();" data-dismiss="modal"><i
+																class="fa fa-save"></i> Aceptar</button>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+								<!-- modal add contrato-->
+								<div id="DetailModalAddContrato"
+									class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header header-color-modal bg-color-1">
+												<h4 class="modal-title">Add Contrato</h4>
+												<div class="modal-close-area modal-close-df">
+													<a class="close" data-dismiss="modal" href="#"><i
+															class="fa fa-close"></i>
+													</a>
+												</div>
+											</div>
+											<div class="modal-body">
+												<div class="row">
+
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<div class="devit-card-custom">
+															<div class="row">
+																<div class="form-group">
+																	<input class="form-control"
+																		placeholder="Tipo de contrato"
+																		name="tipocontrato" required="true"
+																		type="number" id="tipocontrato">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="modal-footer">
+													<div class="button-drop-style-one btn-default-bg">
+
+
+														<button class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Cancelar</button>
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															onclick="addTipoContrato();" data-dismiss="modal"><i
+																class="fa fa-save"></i> Aceptar</button>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+
+
 								<br />
 								<div class="row">
 									<div class="col-lg-12">
@@ -211,6 +339,48 @@
 
 
 		<script type="text/javascript" charset="UTF-8">
+
+
+			function addGroup() {
+				
+				var grupo = $("#grupo").val();
+				var url =/*[[@{/addGrupo}]]*/ 'addGrupo';
+
+
+
+				if (true) {
+					$.ajax({
+						url: url,
+						dataType: 'json',
+						method: 'POST',
+						data: {
+							grupo: grupo
+						},
+						success: function (data) {
+						
+							//$('#loadMunicipiosFragment').addClass('chosen-select').trigger('change');
+							// $("#loadTableFragment").empty();
+							$("#loadGrupoFragment").load('/getGrupo');
+							toastr[data.msgtipo](data.msgbody, data.msgtitu);
+
+
+						},
+						error: function (data) {
+							toastr[data.msgtipo](data.msgbody, data.msgtitu);
+						}
+
+					});
+				} else {
+
+
+
+				}
+
+
+
+			}
+
+
 
 			$(document).ready(function () {
 
@@ -329,6 +499,11 @@
 						$('#fechaafecta').val(data.fecha);
 						$('#zona_afectacion').val(data.zona_afect);
 
+						$('#loadProvinciaFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.municipio.provincia.nomb_prov + "</option>");
+						$('#loadPueblosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.nomb_pueb + "</option>");
+						$('#loadMunicipiosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.municipio.id + "\">" + data.pueblo.municipio.nomb_mun + "</option>");
+
+
 					}
 
 
@@ -341,7 +516,6 @@
 
 
 
-		</script>
 
 
 
@@ -349,30 +523,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<script>
 
 
 
@@ -456,6 +606,7 @@
 					});
 
 				});
+
 			});
 
 
@@ -488,6 +639,9 @@
 
 				});
 			});
+
+
+
 
 
 

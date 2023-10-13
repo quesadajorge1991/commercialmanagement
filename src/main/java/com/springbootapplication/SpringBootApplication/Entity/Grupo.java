@@ -15,25 +15,24 @@ import jakarta.persistence.Table;
  * @author jorge
  */
 @Entity
-@Table(name = "grupos")
 public class Grupo implements Serializable {
 
     @Id
-    private String nombre_grupo;
+    private String name;
 
     public Grupo() {
     }
 
-    public Grupo(String nombre_grupo) {
-        this.nombre_grupo = nombre_grupo;
+    public Grupo(String name) {
+        this.name = name;
     }
 
-    public String getNombre_grupo() {
-        return nombre_grupo;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre_grupo(String nombre_grupo) {
-        this.nombre_grupo = nombre_grupo;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
