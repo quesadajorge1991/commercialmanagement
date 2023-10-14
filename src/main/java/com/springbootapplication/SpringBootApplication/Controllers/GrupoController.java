@@ -59,5 +59,17 @@ public class GrupoController {
 		return jsono.toString();
 
 	}
+	
+	
+/*	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
+	@GetMapping(value = "/getNroContrato")
+	public String getNroContrato(Model model) {
+		List<Grupo> grupos = (List<Grupo>) grupoRepository.findAll();
+		model.addAttribute("nroscontratos", nroscontratos);
+		return "templateBase/ComponentFragment :: grupo";
+
+	}  */
+	
+	
 
 }
