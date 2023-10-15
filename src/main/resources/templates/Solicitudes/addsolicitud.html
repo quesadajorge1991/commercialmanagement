@@ -127,28 +127,15 @@
 													th:text="${provincia.nomb_prov}"></option>
 
 											</select>
+
+											<div class="form-group">
+												<button id="addProvincia" title="Añadir pueblo" type="button"
+													class="btn btn-success waves-effect" 
+													data-toggle="modal" data-target="#DetailModalAddProvincia">
+													+ Add provincia</button>
+											</div>
 										</div>
 
-										<script>
-
-
-											/*		$(document).ready(function () {
-														$("#provincia").chosen();
-														$("#loadMunicipiosFragment").chosen();
-														$("#loadPueblosFragment").chosen();
-		
-														
-		
-													})
-		
-													function dd(){
-														$("#provincia").trigger('chosen:updated');
-														$("#loadMunicipiosFragment").trigger('chosen:updated');
-														$("#loadMunicipiosFragment").trigger('chosen:updated');
-														
-													}*/
-
-										</script>
 
 										<div class="form-group">
 											<div class="form-select-list">
@@ -158,6 +145,13 @@
 													data-placeholder="--Seleccione el municipio--" required="true">
 													<option value="-1">--Seleccione el municipio--</option>
 												</select>
+
+												<div class="form-group">
+													<button id="addmunicipio" title="Añadir municipio" type="button"
+														class="btn btn-success waves-effect" disabled="disabled"
+														data-toggle="modal" data-target="#DetailModalAddMunicipio">
+														+ Add municipio</button>
+												</div>
 											</div>
 										</div>
 
@@ -171,6 +165,13 @@
 													<option value="-1">--Seleccione el pueblo--</option>
 												</select>
 
+												<div class="form-group">
+													<button id="addpueblo" title="Añadir pueblo" type="button"
+														class="btn btn-success waves-effect" disabled="disabled"
+														data-toggle="modal" data-target="#DetailModalAddPueblo">
+														+ Add Pueblo</button>
+												</div>
+
 
 											</div>
 										</div>
@@ -183,40 +184,146 @@
 
 									</div>
 
-
-									<div class="form-group-inner">
-										<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12">
-											<div class="form-group">
-												<button id="addpueblo" title="Añadir pueblo" type="button"
-													class="btn btn-success waves-effect" disabled="disabled"
-													data-toggle="modal" data-target="#DetailModalAddPueblo">
-													+ Add Pueblo</button>
-											</div>
-										</div>
-									</div>
 
 								</div>
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="payment-adress">
-											
+
 											<a class="btn btn-primary waves-effect waves-light"
-												th:href="@{/listsolicitudes}"><li class="fa fa-newspaper-o"></li> Cancelar</a>
-												
-												<button type="submit"
-												class="btn btn-primary waves-effect waves-light"><li class="fa fa-save"></li> Aceptar</button>
-												
-												
-									
-												
-												
-												
-												
-												
+												th:href="@{/listsolicitudes}">
+												<li class="fa fa-newspaper-o"></li> Cancelar
+											</a>
+
+											<button type="submit" class="btn btn-primary waves-effect waves-light">
+												<li class="fa fa-save"></li> Aceptar
+											</button>
+
+
+
+
+
+
+
+
 										</div>
 									</div>
 								</div>
 							</form>
+
+
+
+							<!-- modal AddProvincia-->
+							<div id="DetailModalAddProvincia"
+								class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header header-color-modal bg-color-1">
+											<h4 class="modal-title">Agregar Provincia</h4>
+											<div class="modal-close-area modal-close-df">
+												<a class="close" data-dismiss="modal" href="#"><i
+														class="fa fa-close"></i></a>
+											</div>
+										</div>
+										<form method="get">
+											<div class="modal-body">
+												<div class="row">
+													<form method="GET">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="devit-card-custom">
+																<div class="row">
+																	<div class="form-group">
+																		<input class="form-control"
+																			placeholder="Nombre de la provincia"
+																			name="nameprovincia" required="true"
+																			type="text" id="nameprovincia">
+																	</div>
+																</div>
+															</div>
+														</div>
+												</div>
+
+												<div class="modal-footer">
+													<div class="button-drop-style-one btn-default-bg">
+
+
+														<button class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Cancelar</button>
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															onclick="addPueblo();" data-dismiss="modal"><i
+																class="fa fa-save"></i> Aceptar</button>
+
+
+
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<!-- modal AddMunicipio-->
+							<div id="DetailModalAddMunicipio"
+								class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header header-color-modal bg-color-1">
+											<h4 class="modal-title">Agregar Municipio</h4>
+											<div class="modal-close-area modal-close-df">
+												<a class="close" data-dismiss="modal" href="#"><i
+														class="fa fa-close"></i></a>
+											</div>
+										</div>
+										<form method="get">
+											<div class="modal-body">
+												<div class="row">
+													<form method="GET">
+														<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div class="devit-card-custom">
+																<div class="row">
+																	<div class="form-group">
+																		<input class="form-control"
+																			placeholder="Nombre del municipio"
+																			name="namemunicipio" required="true"
+																			type="text" id="namemunicipio">
+																	</div>
+																</div>
+															</div>
+														</div>
+												</div>
+
+												<div class="modal-footer">
+													<div class="button-drop-style-one btn-default-bg">
+
+
+														<button class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Cancelar</button>
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															onclick="addPueblo();" data-dismiss="modal"><i
+																class="fa fa-save"></i> Aceptar</button>
+
+
+
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+
+
+
 
 
 
@@ -254,8 +361,9 @@
 													<div class="button-drop-style-one btn-default-bg">
 
 
-															<button class="btn btn-primary waves-effect waves-light"
-													data-dismiss="modal"><i class="fa fa-close"></i> Cancelar</button>
+														<button class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Cancelar</button>
 
 
 														<button type="button"
@@ -272,6 +380,11 @@
 									</div>
 								</div>
 							</div>
+
+
+
+
+
 
 						</div>
 					</div>
@@ -319,10 +432,18 @@
 							provincia: provincia,
 						},
 						success: function (data) {
+							
+							
 							$("#loadMunicipiosFragment").load('/getMunicipioByProvincia', $("#provincia").serialize());
 							if (provincia === "-1") {
+								$("#addmunicipio").prop("disabled", "disabled");
 								$("#addpueblo").prop("disabled", "disabled");
-								$("#loadPueblosFragment").prop("disabled", "disabled");
+					     		$("#loadPueblosFragment").prop("disabled", "disabled");
+					     		$("#loadPueblosFragment").load('/getPuebloByMunicipio', $("#loadMunicipiosFragment").serialize());
+							}else{
+			
+								$("#addmunicipio").removeAttr("disabled");
+								
 							}
 						},
 						error: function (data) {
@@ -372,7 +493,7 @@
 				var municipio = $('#loadMunicipiosFragment').val();
 				var namepueblo = $('#namepueblo').val()
 
-				
+
 				if (namepueblo != "") { //validar que el pueblo a insertar no este vacio
 					$.ajax({
 						url: '/addPueblo',
