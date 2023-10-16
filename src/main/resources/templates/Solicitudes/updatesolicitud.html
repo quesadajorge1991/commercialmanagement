@@ -7,7 +7,7 @@
 	<title>Insert title here</title>
 </head>
 
-<body >
+<body>
 
 
 	<div layout:fragment="content">
@@ -69,32 +69,34 @@
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 										<div class="form-group">
-												<label class="login2">Fecha de afectación</label>
-												<div class="form-group data-custon-pick data-custom-mg" >
+											<label class="login2">Fecha de afectación</label>
+											<div class="form-group data-custon-pick data-custom-mg">
 
-													<div class="input-daterange input-group" id="fechaafectacion">
-														<input type="text" class="form-control" name="start" th:field="*{fecha}" />
-														<span class="input-group-addon">al</span>
-														<input type="text" class="form-control" name="end"  th:field="*{fechafin}"/>
-													</div>
+												<div class="input-daterange input-group" id="fechaafectacion">
+													<input type="text" class="form-control" name="start"
+														th:field="*{fecha}" />
+													<span class="input-group-addon">al</span>
+													<input type="text" class="form-control" name="end"
+														th:field="*{fechafin}" />
 												</div>
 											</div>
+										</div>
 
 
 										<script>
-										
-								/*		$(document).ready(function(){
-											
-											alert("sdfsdf");
-												$("#datepicker").datepicker({
-													changeMonth: true,
-													changeYear: true,
-													dateFormat: 'dd-mm-yy', //Se especifica como deseamos representarla
-													firstDay: 1
-												});
-											
-										})*/
-										
+
+											/*		$(document).ready(function(){
+														
+														alert("sdfsdf");
+															$("#datepicker").datepicker({
+																changeMonth: true,
+																changeYear: true,
+																dateFormat: 'dd-mm-yy', //Se especifica como deseamos representarla
+																firstDay: 1
+															});
+														
+													})*/
+
 
 
 
@@ -117,8 +119,8 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Municipio </label>
-											<select name="municipio" id="loadMunicipiosFragment" class="form-control select2"
-												required="true">
+											<select name="municipio" id="loadMunicipiosFragment"
+												class="form-control select2" required="true">
 												<option th:each="municipio:${municipios}" th:value="${municipio.id}"
 													th:text="${municipio.nomb_mun}"></option>
 
@@ -127,8 +129,8 @@
 										<div class="form-group">
 											<div class="form-select-list">
 												<label class="login2">Pueblo </label>
-												<select name="pueblo" class="form-control select2" id="loadPueblosFragment"
-													required="true">
+												<select name="pueblo" class="form-control select2"
+													id="loadPueblosFragment" required="true">
 													<option th:each="pueblo:${pueblos}" th:value="${pueblo.id}"
 														th:text="${pueblo.nomb_pueb}"></option>
 
@@ -140,10 +142,12 @@
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="payment-adress">
-											<button type="submit"    
-												class="btn btn-primary waves-effect waves-light">Aceptar</button>
+
 											<a class="btn btn-primary waves-effect waves-light"
-												href="${path}/Gestion_Solicitud">Cancelar</a>
+												href="${path}/Gestion_Solicitud"><li class="fa fa-newspaper-o"></li> Cancelar</a>
+											<button type="submit" class="btn btn-primary waves-effect waves-light">
+												<li class="fa fa-save"></li> Aceptar
+											</button>
 										</div>
 									</div>
 								</div>
@@ -154,7 +158,7 @@
 			</div>
 		</div>
 		<script>
-		
+
 			$(document).ready(function () {
 
 				$('#fechaafectacion').datepicker({
@@ -166,14 +170,14 @@
 					format: "dd-mm-yyyy"
 				});
 
-			
+
 			})
 
-		
-		
-		
-		
-		
+
+
+
+
+
 			function validate_exist() {
 				var nomb_pers = $('#nomb_pers').val();
 				var ci = $('#ci').val();

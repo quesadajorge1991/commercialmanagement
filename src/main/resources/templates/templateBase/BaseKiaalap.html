@@ -414,10 +414,9 @@
 													th:if="${#authentication.principal.username !=null }">
 													<a href="#" data-toggle="dropdown" role="button"
 														aria-expanded="false" class="nav-link dropdown-toggle">
-														<!--	<img src="img/product/pro4.jpg" alt="" />--> <span
-															class="admin-name"
-															th:text="${#authentication.principal.username}"></span> <i
-															class="fa fa-angle-down edu-icon edu-down-arrow"> </i>
+														<!--	<img src="img/product/pro4.jpg" alt="" />--> 
+													
+														<span class="admin-name" th:text="${#authentication.principal.username}"></span> <i	class="fa fa-angle-down edu-icon edu-down-arrow"> </i>
 													</a>
 													<ul role="menu"
 														class="dropdown-header-top author-log dropdown-menu animated zoomIn">
@@ -1253,8 +1252,9 @@
 		</div>
 
 
-		<div layout:fragment="content"></div>
-
+		<div class="container">
+			<div layout:fragment="content"></div>
+		</div>
 
 
 
@@ -1267,8 +1267,7 @@
 							<p>
 								© Copyright 2015 - 2023.
 								Centro Meteorológico Provincial Sancti Spíritus.
-								® Todos los derechos reservados. <a
-									href="https://www.cmpss.cu/index.php">Cmpss</a>
+								® Todos los derechos reservados. <a href="https://www.cmpss.cu/index.php">Cmpss</a>
 							</p>
 						</div>
 					</div>
