@@ -154,25 +154,25 @@ public class ServicioController {
 		} else {
 
 			try {
-				Servicio s = new Servicio(servicio.getFecha_servicio(), servicio.getCultivo(),
-						servicio.getTipo_afectacion(), servicio.getFecha_afectacion(),
-						servicio.getFecha_afectacionfin(), servicio.getNro_factura(), servicio.getZona_afectacion(),
+				Servicio s = new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
+						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(),
+						servicio.getFechaAfectacionfin(), servicio.getNroFactura(), servicio.getZonaAfectacion(),
 						servicio.getEntregado(), p, c, g);
 
-				System.out.println("ffff " + servicio.getFecha_servicio());
+				System.out.println("ffff " + servicio.getFechaServicio());
 				System.out.println("ffff " + servicio.getCultivo());
-				System.out.println("ffff " + servicio.getTipo_afectacion());
-				System.out.println("ffff " + servicio.getFecha_afectacion());
-				System.out.println("ffff " + servicio.getNro_factura());
-				System.out.println("ffff " + servicio.getZona_afectacion());
+				System.out.println("ffff " + servicio.getTipoAfectacion());
+				System.out.println("ffff " + servicio.getFechaAfectacion());
+				System.out.println("ffff " + servicio.getNroFactura());
+				System.out.println("ffff " + servicio.getZonaAfectacion());
 				System.out.println("ffff " + servicio.getEntregado());
 
 				// servicioRepository.save(new Servicio(servicio.getCultivo(),
 				// servicio.getTipo_afectacion(), servicio.getFecha_afectacion(),
 				// servicio.getZona_afectacion()));
-				servicioRepository.save(new Servicio(servicio.getFecha_servicio(), servicio.getCultivo(),
-						servicio.getTipo_afectacion(), servicio.getFecha_afectacion(),
-						servicio.getFecha_afectacionfin(), servicio.getNro_factura(), servicio.getZona_afectacion(),
+				servicioRepository.save(new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
+						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(),
+						servicio.getFechaAfectacionfin(), servicio.getNroFactura(), servicio.getZonaAfectacion(),
 						servicio.getEntregado(), p, clientetemp, g));
 
 				redirectAttributes.addFlashAttribute("msgbody",
@@ -230,20 +230,20 @@ public class ServicioController {
 
 			sol.setServicio(true);
 
-			Servicio s = new Servicio(servicio.getFecha_servicio(), servicio.getCultivo(),
-					servicio.getTipo_afectacion(), servicio.getFecha_afectacion(), servicio.getFecha_afectacionfin(),
-					servicio.getNro_factura(), servicio.getZona_afectacion(), servicio.getEntregado(),
+			Servicio s = new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
+					servicio.getTipoAfectacion(), servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(),
+					servicio.getNroFactura(), servicio.getZonaAfectacion(), servicio.getEntregado(),
 					new Pueblo(p.getId()), new Cliente(c.getNro()), new Grupo(g.getName()));
 
 			System.out.println("solicitud " + solicitud);
-			System.out.println("ffffff " + servicio.getFecha_servicio());
+			System.out.println("ffffff " + servicio.getFechaServicio());
 			System.out.println("ffffff " + servicio.getCultivo());
-			System.out.println("ffffff " + servicio.getTipo_afectacion());
-			System.out.println("ffffff afecatacion " + servicio.getFecha_afectacion());
-			System.out.println("ffffffinnnnn " + servicio.getFecha_afectacionfin());
+			System.out.println("ffffff " + servicio.getTipoAfectacion());
+			System.out.println("ffffff afecatacion " + servicio.getFechaAfectacion());
+			System.out.println("ffffffinnnnn " + servicio.getFechaAfectacionfin());
 
-			System.out.println("ffffff " + servicio.getNro_factura());
-			System.out.println("ffffff " + servicio.getZona_afectacion());
+			System.out.println("ffffff " + servicio.getNroFactura());
+			System.out.println("ffffff " + servicio.getZonaAfectacion());
 			System.out.println("ffffff " + servicio.getEntregado());
 			System.out.println("ffffff " + p.getId());
 			System.out.println("ffffff " + c.getNro());
@@ -310,7 +310,7 @@ public class ServicioController {
 
 		model.addAttribute("servicios", new Servicio());
 		model.addAttribute("clientes", clientes);
-		model.addAttribute("fecha_servicio", servicios.getFecha_servicio());
+		model.addAttribute("fecha_servicio", servicios.getFechaServicio());
 		model.addAttribute("grupos", grupos);
 		model.addAttribute("serviciotoupdate", servicios);
 		model.addAttribute("provincias", provincias);
@@ -328,9 +328,9 @@ public class ServicioController {
 			RedirectAttributes redirectAttributes) {
 
 		try {
-			Servicio s = new Servicio(servicio.getNro(), servicio.getFecha_servicio(), servicio.getCultivo(),
-					servicio.getTipo_afectacion(), servicio.getFecha_afectacion(), servicio.getFecha_afectacionfin(),
-					servicio.getNro_factura(), servicio.getZona_afectacion(), servicio.getEntregado(),
+			Servicio s = new Servicio(servicio.getNro(), servicio.getFechaServicio(), servicio.getCultivo(),
+					servicio.getTipoAfectacion(), servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(),
+					servicio.getNroFactura(), servicio.getZonaAfectacion(), servicio.getEntregado(),
 					new Pueblo(servicio.getPueblo().getId()), new Cliente(servicio.getCliente().getNro()),
 					new Grupo(servicio.getGrupo().getName()));
 

@@ -51,14 +51,14 @@
 									<section id="sct1" >
 										<div class="form-group">
 											<label class="login2">Nro. de contrato </label>
-											<input name="nrocontrato" id="nrocontrato" type="text" th:field="*{nro_contrato}"
+											<input name="nrocontrato" id="nrocontrato" type="text" th:field="*{nroContrato}"
 												class="form-control" required="true"
 												placeholder="Número de contrato">
 										</div>
 										<div class="form-group">
 											<label class="login2">Nombre del cliente </label>
 											<input name="nombre_cliente" id="nombre_cliente" type="text"
-												th:field="*{nombre_cliente}" class="form-control" required="true"
+												th:field="*{nombreCliente}" class="form-control" required="true"
 												placeholder="Nombre del cliente">
 										</div>
 										<div class="form-group">
@@ -79,7 +79,7 @@
 										<div class="form-group">
 											<label class="login2">Tipo de contrato </label>
 											<input name="tipo_contrato" id="tipo_contrato" type="text"
-												 class="form-control"  th:field="*{tipo_contrato}"
+												 class="form-control"  th:field="*{tipoContrato}"
 												value="Prestación de Servicios" placeholder="Tipo de contrato">
 										</div>
 										<div class="form-group">
@@ -88,7 +88,7 @@
 												<div class="input-group">
 													<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span>
-													<input id="fechasuscripcion" th:field="*{fecha_suscripcion}"  name="fechasuscripcion"
+													<input id="fechasuscripcion" th:field="*{fechaSuscripcion}"  name="fechasuscripcion"
 														placeholder="Fecha de suscripción" type="text"
 														class="form-control">
 
@@ -116,7 +116,7 @@
 										<div class="form-group">
 											<label class="login2">Nro. de suplemento </label>
 											<input name="nro_suplemento" id="nro_suplemento" type="text"
-												 class="form-control" th:field="*{nro_suplemento}"
+												 class="form-control" th:field="*{nroSuplemento}"
 												placeholder="Nro de suplemento">
 										</div>
 										<div class="form-group">
@@ -125,7 +125,7 @@
 												<div class="input-group">
 													<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span>
-													<input id="fechasuplemento" name="fechasuplemento" th:field="*{fecha_suplemento}"
+													<input id="fechasuplemento" name="fechasuplemento" th:field="*{fechaSuplemento}"
 														placeholder="Fecha de suplemento" type="text"
 														class="form-control">
 
@@ -141,9 +141,9 @@
 											<label class="login2">Provincia </label>
 											<select name="provincia" id="provincia"
 												data-placeholder="--Seleccione la provincia--" onclick="dd();"
-												class="form-control" required="true">
+												class="form-control select2" required="true">
 												<option th:each="provincia:${listprovincias}" th:value="${provincia.id}"
-													th:text="${provincia.nomb_prov}"></option>
+													th:text="${provincia.nombProv}"></option>
 
 											</select>
 										</div>
@@ -153,7 +153,7 @@
 											<div class="form-select-list">
 												<label class="login2">Municipio </label>
 												<select name="municipio" id="loadMunicipiosFragment"
-													class="form-control" data-placeholder="--Seleccione el municipio--"
+													class="form-control select2" data-placeholder="--Seleccione el municipio--"
 													required="true">
 														<!--<option value="-1">--Seleccione el municipio--</option>-->
 													<option th:value="${cliente.pueblo.municipio.id}" th:text="${cliente.pueblo.municipio.nomb_mun}"></option>
@@ -165,7 +165,7 @@
 										<div class="form-group">
 											<div class="form-select-list">
 												<label class="login2">Pueblo </label>
-												<select name="pueblo" class="form-control" id="loadPueblosFragment"
+												<select name="pueblo" class="form-control select2" id="loadPueblosFragment"
 													data-placeholder="--Seleccione el pueblo--" required="true"
 													th:field="*{pueblo.id}">
 													<option value="-1">--Seleccione el pueblo--</option>
@@ -177,7 +177,7 @@
 										</div>
 
 										<div class="form-group">
-											<button id="addpueblo" title="AÃ±adir pueblo" type="button"
+											<button id="addpueblo" title="Añadir pueblo" type="button"
 												class="btn btn-primary waves-effect waves-light" disabled="disabled"
 												data-toggle="modal" data-target="#DetailModalAddPueblo">
 												+ Añadir Pueblo</button>
@@ -459,7 +459,7 @@
 						success: function (data) {
 
 							for (var i = 0; i <= data.length; i++) {
-								$('#provincia').trigger('chosen:updated').append("<option value=\"" + data[i].id + "\">" + data[i].nomb_prov + "</option>");
+								$('#provincia').trigger('chosen:updated').append("<option value=\"" + data[i].id + "\">" + data[i].nombProv + "</option>");
 							}
 
 

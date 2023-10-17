@@ -30,21 +30,21 @@ public class Servicio implements Serializable {
     private int nro;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fecha_servicio;
+    private Date fechaServicio;
     private String cultivo;
-    private String tipo_afectacion;
+    private String tipoAfectacion;
 
     
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fecha_afectacion;
+    private Date fechaAfectacion;
     
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fecha_afectacionfin;
+    private Date fechaAfectacionfin;
     
     
     
-    private String nro_factura;
-    private String zona_afectacion;
+    private String nroFactura;
+    private String zonaAfectacion;
     private String entregado;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -66,57 +66,57 @@ public class Servicio implements Serializable {
     
     
     
-    public Servicio(String cultivo, String tipo_afectacion, Date fecha_afectacion, Date fecha_afectacionfin,String zona_afectacion) {
+    public Servicio(String cultivo, String tipoAfectacion, Date fechaAfectacion, Date fechaAfectacionfin,String zonaAfectacion) {
 		super();
 		this.cultivo = cultivo;
-		this.tipo_afectacion = tipo_afectacion;
-		this.fecha_afectacion = fecha_afectacion;
-		this.fecha_afectacionfin = fecha_afectacionfin;
-		this.zona_afectacion = zona_afectacion;
+		this.tipoAfectacion = tipoAfectacion;
+		this.fechaAfectacion = fechaAfectacion;
+		this.fechaAfectacionfin = fechaAfectacionfin;
+		this.zonaAfectacion = zonaAfectacion;
 	}
     
     
     
 
-	public Servicio(Date fecha_servicio,
+	public Servicio(Date fechaServicio,
             String cultivo,
-            String tipo_afectacion,
-            Date fecha_afectacion,
-            Date fecha_afectacionfin,
-            String nro_factura,
-            String zona_afectacion,
+            String tipoAfectacion,
+            Date fechaAfectacion,
+            Date fechaAfectacionfin,
+            String nroFactura,
+            String zonaAfectacion,
             String entregado,
             Pueblo pueblo,
             Cliente cliente,
             Grupo grupo) {
-        this.fecha_servicio = fecha_servicio;
+        this.fechaServicio = fechaServicio;
         this.cultivo = cultivo;
-        this.tipo_afectacion = tipo_afectacion;
-        this.fecha_afectacion = fecha_afectacion;
-        this.fecha_afectacionfin = fecha_afectacionfin;
-        this.nro_factura = nro_factura;
-        this.zona_afectacion = zona_afectacion;
+        this.tipoAfectacion = tipoAfectacion;
+        this.fechaAfectacion = fechaAfectacion;
+        this.fechaAfectacionfin = fechaAfectacionfin;
+        this.nroFactura = nroFactura;
+        this.zonaAfectacion = zonaAfectacion;
         this.entregado = entregado;
         this.pueblo = pueblo;
         this.cliente = cliente;
         this.grupo = grupo;
     }
 
-    public Servicio(int nro, Date fecha_servicio, 
-            String cultivo, String tipo_afectacion, 
-            Date fecha_afectacion,
-            Date fecha_afectacionfin,
-            String nro_factura, 
+    public Servicio(int nro, Date fechaServicio, 
+            String cultivo, String tipoAfectacion, 
+            Date fechaAfectacion,
+            Date fechaAfectacionfin,
+            String nroFactura, 
             String zona_afectacion, String entregado, 
             Pueblo pueblo, Cliente cliente, Grupo grupo) {
         this.nro = nro;
-        this.fecha_servicio = fecha_servicio;
+        this.fechaServicio = fechaServicio;
         this.cultivo = cultivo;
-        this.tipo_afectacion = tipo_afectacion;
-        this.fecha_afectacion = fecha_afectacion;
-        this.fecha_afectacionfin = fecha_afectacionfin;
-        this.nro_factura = nro_factura;
-        this.zona_afectacion = zona_afectacion;
+        this.tipoAfectacion = tipoAfectacion;
+        this.fechaAfectacion = fechaAfectacion;
+        this.fechaAfectacionfin = fechaAfectacionfin;
+        this.nroFactura = nroFactura;
+        this.zonaAfectacion = zona_afectacion;
         this.entregado = entregado;
         this.pueblo = pueblo;
         this.cliente = cliente;
@@ -131,20 +131,20 @@ public class Servicio implements Serializable {
         this.nro = nro;
     }
 
-    public Date getFecha_afectacionfin() {
-		return fecha_afectacionfin;
+    public Date getFechaAfectacionfin() {
+		return fechaAfectacionfin;
 	}
 
-	public void setFecha_afectacionfin(Date fecha_afectacionfin) {
-		this.fecha_afectacionfin = fecha_afectacionfin;
+	public void setFechaAfectacionfin(Date fechaAfectacionfin) {
+		this.fechaAfectacionfin = fechaAfectacionfin;
 	}
 
-	public Date getFecha_servicio() {
-        return fecha_servicio;
+	public Date getFechaServicio() {
+        return fechaServicio;
     }
 
-    public void setFecha_servicio(Date fecha_servicio) {
-        this.fecha_servicio = fecha_servicio;
+    public void setFechaServicio(Date fechaServicio) {
+        this.fechaServicio = fechaServicio;
     }
 
     public String getCultivo() {
@@ -155,36 +155,36 @@ public class Servicio implements Serializable {
         this.cultivo = cultivo;
     }
 
-    public String getTipo_afectacion() {
-        return tipo_afectacion;
+    public String getTipoAfectacion() {
+        return tipoAfectacion;
     }
 
-    public void setTipo_afectacion(String tipo_afectacion) {
-        this.tipo_afectacion = tipo_afectacion;
+    public void setTipoAfectacion(String tipoAfectacion) {
+        this.tipoAfectacion = tipoAfectacion;
     }
 
-    public Date getFecha_afectacion() {
-        return fecha_afectacion;
+    public Date getFechaAfectacion() {
+        return fechaAfectacion;
     }
 
-    public void setFecha_afectacion(Date fecha_afectacion) {
-        this.fecha_afectacion = fecha_afectacion;
+    public void setFechaAfectacion(Date fechaAfectacion) {
+        this.fechaAfectacion = fechaAfectacion;
     }
 
-    public String getNro_factura() {
-        return nro_factura;
+    public String getNroFactura() {
+        return nroFactura;
     }
 
-    public void setNro_factura(String nro_factura) {
-        this.nro_factura = nro_factura;
+    public void setNroFactura(String nroFactura) {
+        this.nroFactura = nroFactura;
     }
 
-    public String getZona_afectacion() {
-        return zona_afectacion;
+    public String getZonaAfectacion() {
+        return zonaAfectacion;
     }
 
-    public void setZona_afectacion(String zona_afectacion) {
-        this.zona_afectacion = zona_afectacion;
+    public void setZonaAfectacion(String zonaAfectacion) {
+        this.zonaAfectacion = zonaAfectacion;
     }
 
     public String getEntregado() {
@@ -219,9 +219,9 @@ public class Servicio implements Serializable {
         this.grupo = grupo;
     }
 
-	public Servicio(Date fecha_afectacionfin) {
+	public Servicio(Date fechaAfectacionfin) {
 		super();
-		this.fecha_afectacionfin = fecha_afectacionfin;
+		this.fechaAfectacionfin = fechaAfectacionfin;
 	}
     
     

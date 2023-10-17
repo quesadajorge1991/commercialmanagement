@@ -85,7 +85,7 @@
 													class="select2 " required="true">
 													<option value="-1">--Seleccione el número de contrato--</option>
 													<option th:each="grupo :${listclientes}" th:value="${grupo.nro}"
-														th:text="${grupo.nro_contrato}"></option>
+														th:text="${grupo.nroContrato}"></option>
 												</select>
 
 												<div class="form-group">
@@ -104,7 +104,7 @@
 												<label class="login2">Nro. de factura </label>
 												<input name="nrofactura" id="nrofactura" type="text"
 													class="form-control" required="true" placeholder="Nro. de factura"
-													th:field="*{nro_factura}">
+													th:field="*{nroFactura}">
 											</div>
 											<div class="form-group">
 												<label class="login2">Fecha de servicio </label>
@@ -115,7 +115,7 @@
 																class="fa fa-calendar"></i></span>
 														<input id="fechaservicio" type="text" class="form-control"
 															placeholder="Fecha de servicio"
-															th:field="*{fecha_servicio}">
+															th:field="*{fechaServicio}">
 													</div>
 												</div>
 											</div>
@@ -128,7 +128,7 @@
 												<label class="login2">Tipo de afectación </label>
 												<input name="tipo_afectacion" id="tipo_afectacion" type="text"
 													class="form-control" placeholder="Tipo de afectaciÃ³n"
-													required="true" th:field="*{tipo_afectacion}">
+													required="true" th:field="*{tipoAfectacion}">
 											</div>
 										</section>
 									</div>
@@ -141,10 +141,10 @@
 
 													<div class="input-daterange input-group" id="datepickerrango">
 														<input type="text" class="form-control" name="start"
-															th:field="*{fecha_afectacion}" />
+															th:field="*{fechaAfectacion}" />
 														<span class="input-group-addon">al</span>
 														<input type="text" class="form-control" name="end"
-															th:field="*{fecha_afectacionfin}" />
+															th:field="*{fechaAfectacionfin}" />
 													</div>
 												</div>
 											</div>
@@ -152,7 +152,7 @@
 												<label class="login2">Zona afectada </label>
 												<input name="zona_afectacion" id="zona_afectacion" type="text"
 													class="form-control" placeholder="Zona afectada"
-													th:field="*{zona_afectacion}">
+													th:field="*{zonaAfectacion}">
 											</div>
 											<div class="form-group">
 												<label class="login2">Provincia </label>
