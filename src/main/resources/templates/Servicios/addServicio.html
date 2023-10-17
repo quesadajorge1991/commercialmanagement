@@ -525,7 +525,7 @@
 						$('#fechaafecta').val(data.fecha);
 						$('#zona_afectacion').val(data.zona_afect);
 
-						$('#loadProvinciaFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.municipio.provincia.nomb_prov + "</option>");
+						$('#loadProvinciaFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.municipio.provincia.nombProv + "</option>");
 						$('#loadPueblosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.nomb_pueb + "</option>");
 						$('#loadMunicipiosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.municipio.id + "\">" + data.pueblo.municipio.nomb_mun + "</option>");
 

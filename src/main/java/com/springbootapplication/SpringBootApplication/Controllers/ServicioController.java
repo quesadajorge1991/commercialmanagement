@@ -122,7 +122,7 @@ public class ServicioController {
 		Pueblo p = new Pueblo(servicio.getPueblo().getId());
 		Grupo g = new Grupo(servicio.getGrupo().getName());
 		Cliente clientetemp = clientesRepository.findById(servicio.getCliente().getNro()).get();
-		Cliente c = new Cliente(clientetemp.getNro_contrato());
+		Cliente c = new Cliente(clientetemp.getNroContrato());
 		Solicitud sol = solicitudRepository.findById(getNumero())
 				.get(); /* sdao.getSolicitudxNro(getNumero()).get(0); */
 		sol.setServicio(true);

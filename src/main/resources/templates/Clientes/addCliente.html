@@ -52,13 +52,13 @@
 										<div class="form-group">
 											<label class="login2">Nro. de contrato </label>
 											<input name="nrocontrato" hi id="nrocontrato" type="text"
-												th:field="*{nro_contrato}" class="form-control" required="true"
+												th:field="*{nroContrato}" class="form-control" required="true"
 												placeholder="Número de contrato">
 										</div>
 										<div class="form-group">
 											<label class="login2">Nombre del cliente </label>
-											<input name="nombre_cliente" id="nombre_cliente" type="text"
-												th:field="*{nombre_cliente}" class="form-control" required="true"
+											<input name="nombreCliente" id="nombre_cliente" type="text"
+												th:field="*{nombreCliente}" class="form-control" required="true"
 												placeholder="Nombre del cliente">
 										</div>
 										<div class="form-group">
@@ -78,8 +78,8 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Tipo de contrato </label>
-											<input name="tipo_contrato" id="tipo_contrato" type="text"
-												th:field="*{telefono}" class="form-control"
+											<input name="tipoContrato" id="tipo_contrato" type="text"
+												th:field="*{tipoContrato}" class="form-control"
 												value="Prestación de Servicios" placeholder="Tipo de contrato">
 										</div>
 										<div class="form-group">
@@ -90,7 +90,7 @@
 															class="fa fa-calendar"></i></span>
 													<input id="fechasuscripcion" type="text" class="form-control"
 														placeholder="Fecha de suscripcion"
-														th:field="*{fecha_suscripcion}">
+														th:field="*{fechaSuscripcion}">
 												</div>
 											</div>
 										</div>
@@ -114,7 +114,7 @@
 										<div class="form-group">
 											<label class="login2">Nro. de suplemento </label>
 											<input name="nro_suplemento" id="nro_suplemento" type="text"
-												th:field="*{nro_suplemento}" class="form-control"
+												th:field="*{nroSuplemento}" class="form-control"
 												placeholder="Nro de suplemento">
 										</div>
 										<div class="form-group">
@@ -126,7 +126,7 @@
 															class="fa fa-calendar"></i></span>
 													<input id="fechasuplemento" type="text" class="form-control"
 														placeholder="Fecha de suplemento"
-														th:field="*{fecha_suplemento}">
+														th:field="*{fechaSuplemento}">
 												</div>
 											</div>
 										</div>
@@ -406,7 +406,7 @@
 								resetCombo(); /*resetea los combo pueblo y municipio*/
 								
 			
-								$('#loadProvinciaFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.municipio.provincia.nomb_prov + "</option>");
+								$('#loadProvinciaFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.municipio.provincia.nombProv + "</option>");
 								$('#loadPueblosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.id + "\">" + data.pueblo.nomb_pueb + "</option>");
 								$('#loadMunicipiosFragment').trigger('chosen:updated').append("<option value=\"" + data.pueblo.municipio.id + "\">" + data.pueblo.municipio.nomb_mun + "</option>");
 
@@ -441,7 +441,7 @@
 						success: function (data) {
 
 							for (var i = 0; i <= data.length; i++) {
-								$('#provincia').trigger('chosen:updated').append("<option value=\"" + data[i].id + "\">" + data[i].nomb_prov + "</option>");
+								$('#provincia').trigger('chosen:updated').append("<option value=\"" + data[i].id + "\">" + data[i].nombProv + "</option>");
 							}
 
 

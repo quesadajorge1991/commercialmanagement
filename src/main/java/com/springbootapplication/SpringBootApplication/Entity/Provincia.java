@@ -24,7 +24,7 @@ public class Provincia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
-    private String nomb_prov;
+    private String nombProv;
 
     public Provincia() {
     }
@@ -33,16 +33,16 @@ public class Provincia implements Serializable {
         this.id = id;
     }
 
-    public Provincia(long id, String nomb_prov) {
+    public Provincia(long id, String nombProv) {
         this.id = id;
-        this.nomb_prov = nomb_prov;
+        this.nombProv = nombProv;
     }
 
     
     
-    public Provincia(String nomb_prov) {
+    public Provincia(String nombProv) {
 		super();
-		this.nomb_prov = nomb_prov;
+		this.nombProv = nombProv;
 	}
 
 	public long getId() {
@@ -53,12 +53,12 @@ public class Provincia implements Serializable {
         this.id = id;
     }
 
-    public String getNomb_prov() {
-        return nomb_prov;
+    public String getNombProv() {
+        return nombProv;
     }
 
-    public void setNomb_prov(String nomb_prov) {
-        this.nomb_prov = nomb_prov;
+    public void setNombProv(String nombProv) {
+        this.nombProv = nombProv;
     }
 
 }

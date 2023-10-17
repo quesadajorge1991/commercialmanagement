@@ -86,6 +86,7 @@ public class ClientesController {
 		List<Provincia> listaprovin = (List<Provincia>) provinciaRepository.findAll();
 		listaprovin.remove(tempprov);
 		listaprovin.add(0, tempprov);
+
 		List<Municipio> listMunicipio = (List<Municipio>) municipioRepository
 				.getMunicipiosByProvincia(listaprovin.get(0).getId());
 		listMunicipio.remove(tempmun);
@@ -94,9 +95,11 @@ public class ClientesController {
 		listpueblo.remove(temppueblo);
 		listpueblo.add(0, temppueblo);
 		model.addAttribute("clientetoupdate", clientes);
-		model.addAttribute("fecha_suscripcion", clientes.getFecha_suscripcion());
+		model.addAttribute("fecha_suscripcion", clientes.getFechaSuscripcion());
 		model.addAttribute("vigencia", clientes.getVigencia());
-		model.addAttribute("fecha_suplemento", clientes.getFecha_suplemento());
+		model.addAttribute("fecha_suplemento", clientes.getFechaSuplemento());
+
+		model.addAttribute("provincias", listaprovin);
 		model.addAttribute("municipios", listMunicipio);
 		model.addAttribute("pueblos", listpueblo);
 		return "Clientes/updateCliente";
@@ -108,9 +111,9 @@ public class ClientesController {
 			RedirectAttributes redirectAttributes) {
 
 		Pueblo p = new Pueblo(cliente.getPueblo().getId());
-		Cliente c = new Cliente(getNumero(), cliente.getNro_contrato(), cliente.getNombre_cliente(),
-				cliente.getTipo_contrato(), cliente.getFecha_suscripcion(), cliente.getVigencia(),
-				cliente.getNro_suplemento(), cliente.getFecha_suplemento(), cliente.getEntidad(), cliente.getCi(),
+		Cliente c = new Cliente(getNumero(), cliente.getNroContrato(), cliente.getNombreCliente(),
+				cliente.getTipoContrato(), cliente.getFechaSuscripcion(), cliente.getVigencia(),
+				cliente.getNroSuplemento(), cliente.getFechaSuplemento(), cliente.getEntidad(), cliente.getCi(),
 				cliente.getTelefono(), cliente.getDireccion(), cliente.getVencido(), p);
 
 		if (bindingResult.hasErrors()) {
@@ -135,10 +138,11 @@ public class ClientesController {
 			listpueblo.add(0, temppueblo);
 
 			mav.addObject("clientetoupdate", clientes);
-			mav.addObject("fecha_suscripcion", clientes.getFecha_suscripcion());
+			mav.addObject("fecha_suscripcion", clientes.getFechaSuscripcion());
 			mav.addObject("vigencia", clientes.getVigencia());
-			mav.addObject("fecha_suplemento", clientes.getFecha_suplemento());
+			mav.addObject("fecha_suplemento", clientes.getFechaSuplemento());
 			mav.addObject("provincias", listaprovin);
+
 			mav.addObject("municipios", listMunicipio);
 			mav.addObject("pueblos", listpueblo);
 
@@ -191,25 +195,23 @@ public class ClientesController {
 			throws ParseException {
 
 		try {
-			if (clientesRepository.getClientexCI(cliente.getCi()).isEmpty()) {
+			if (clientesRepository.findByCi(cliente.getCi()).isEmpty()) {
 
-				if (!clientesRepository.getClientexNro_contrato(cliente.getNro_contrato()).isEmpty()) {
+				if (!clientesRepository.findByNroContrato(cliente.getNroContrato()).isEmpty()) {
 
 					redirectAttributes.addFlashAttribute("msgtipo", "warning");
 					redirectAttributes.addFlashAttribute("msgbody",
-							"El nro. de contrato " + cliente.getNro_contrato() + " ya existe");
+							"El nro. de contrato " + cliente.getNroContrato() + " ya existe");
 					redirectAttributes.addFlashAttribute("msgtitulo", "Error");
 
 				} else {
 
-					if (!cliente.getFecha_suplemento()
+					if (!cliente.getFechaSuplemento()
 							.equals(null)) { /* pregunta si tiene valor la fecha de suplemento */
 
-						System.out.println("ENTROOOOOOOOOOO " + cliente.getCi());
-
-						Cliente c = new Cliente(cliente.getNro_contrato(), cliente.getNombre_cliente(),
-								cliente.getTipo_contrato(), cliente.getFecha_suscripcion(), cliente.getVigencia(),
-								cliente.getNro_suplemento(), cliente.getFecha_suplemento(), cliente.getEntidad(),
+						Cliente c = new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(),
+								cliente.getTipoContrato(), cliente.getFechaSuscripcion(), cliente.getVigencia(),
+								cliente.getNroSuplemento(), cliente.getFechaSuplemento(), cliente.getEntidad(),
 								cliente.getCi(), cliente.getTelefono(), cliente.getDireccion(), cliente.getVencido(),
 								new Pueblo(cliente.getPueblo().getId()));
 
@@ -219,23 +221,23 @@ public class ClientesController {
 							redirectAttributes.addFlashAttribute("msgtipo", "success");
 							redirectAttributes.addFlashAttribute("msgbody",
 									"Se ha insertado correctamente los datos del cliente "
-											+ cliente.getNombre_cliente());
+											+ cliente.getNombreCliente());
 							redirectAttributes.addFlashAttribute("msgtitu", "Información");
 
 						} catch (Exception e) {
 
 							redirectAttributes.addFlashAttribute("msgtipo", "success");
 							redirectAttributes.addFlashAttribute("msgbody",
-									"Error al insertar " + cliente.getNombre_cliente());
+									"Error al insertar " + cliente.getNombreCliente());
 							redirectAttributes.addFlashAttribute("msgtitu", "Información");
 
 						}
 
 					} else {
 
-						Cliente c = new Cliente(cliente.getNro_contrato(), cliente.getNombre_cliente(),
-								cliente.getTipo_contrato(), cliente.getFecha_suscripcion(), cliente.getVigencia(),
-								cliente.getNro_suplemento(), null, cliente.getEntidad(), cliente.getCi(),
+						Cliente c = new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(),
+								cliente.getTipoContrato(), cliente.getFechaSuscripcion(), cliente.getVigencia(),
+								cliente.getNroSuplemento(), null, cliente.getEntidad(), cliente.getCi(),
 								cliente.getTelefono(), cliente.getDireccion(), cliente.getVencido(),
 								new Pueblo(cliente.getPueblo().getId()));
 
@@ -245,14 +247,14 @@ public class ClientesController {
 							redirectAttributes.addFlashAttribute("msgtipo", "success");
 							redirectAttributes.addFlashAttribute("msgbody",
 									"Se ha insertado correctamente los datos del cliente "
-											+ cliente.getNombre_cliente());
+											+ cliente.getNombreCliente());
 							redirectAttributes.addFlashAttribute("msgtitu", "Información");
 
 						} catch (Exception e) {
 
 							redirectAttributes.addFlashAttribute("msgtipo", "success");
 							redirectAttributes.addFlashAttribute("msgbody",
-									"Error al insertar " + cliente.getNombre_cliente());
+									"Error al insertar " + cliente.getNombreCliente());
 							redirectAttributes.addFlashAttribute("msgtitu", "Información");
 
 						}
@@ -266,13 +268,13 @@ public class ClientesController {
 			}
 
 		} catch (Exception e) {
-			clientesRepository.save(new Cliente(cliente.getNro_contrato(), cliente.getNombre_cliente(),
-					cliente.getTipo_contrato(), cliente.getFecha_suscripcion(), cliente.getVigencia(),
-					cliente.getNro_suplemento(), null, cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(),
+			clientesRepository.save(new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(),
+					cliente.getTipoContrato(), cliente.getFechaSuscripcion(), cliente.getVigencia(),
+					cliente.getNroSuplemento(), null, cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(),
 					cliente.getDireccion(), cliente.getVencido(), new Pueblo(cliente.getPueblo().getId())));
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgbody",
-					"Se ha insertado correctamente los datos del cliente " + cliente.getNombre_cliente());
+					"Se ha insertado correctamente los datos del cliente " + cliente.getNombreCliente());
 			redirectAttributes.addFlashAttribute("msgtitu", "Información");
 
 		}
@@ -294,17 +296,17 @@ public class ClientesController {
 
 			Pueblo p = new Pueblo(cliente.getPueblo().getId());
 			Cliente c = new Cliente();
-			if (!(cliente.getFecha_suplemento() == null)) {
+			if (!(cliente.getFechaSuplemento() == null)) {
 
 				try {
-					c = new Cliente(cliente.getNro_contrato(), cliente.getNombre_cliente(), cliente.getTipo_contrato(),
-							cliente.getFecha_suscripcion(), cliente.getVigencia(), cliente.getNro_suplemento(),
-							cliente.getFecha_suplemento(), cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(),
+					c = new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(), cliente.getTipoContrato(),
+							cliente.getFechaSuscripcion(), cliente.getVigencia(), cliente.getNroSuplemento(),
+							cliente.getFechaSuplemento(), cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(),
 							cliente.getDireccion(), cliente.getVencido(), p);
 
 					clientesRepository.save(c);
 					redirectAttributes.addFlashAttribute("msgbody",
-							"Se ha insertado correctamente los datos del cliente " + cliente.getNombre_cliente());
+							"Se ha insertado correctamente los datos del cliente " + cliente.getNombreCliente());
 					redirectAttributes.addFlashAttribute("msgtipo", "success");
 					redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
 					return "redirect:/listclientes";
@@ -317,14 +319,14 @@ public class ClientesController {
 			} else {
 
 				try {
-					c = new Cliente(cliente.getNro_contrato(), cliente.getNombre_cliente(), cliente.getTipo_contrato(),
-							cliente.getFecha_suscripcion(), cliente.getVigencia(), cliente.getNro_suplemento(),
+					c = new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(), cliente.getTipoContrato(),
+							cliente.getFechaSuscripcion(), cliente.getVigencia(), cliente.getNroSuplemento(),
 							cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(), cliente.getDireccion(),
 							cliente.getVencido(), p);
 
 					clientesRepository.save(c);
 					redirectAttributes.addFlashAttribute("msgbody",
-							"Se ha insertado correctamente los datos del cliente " + cliente.getNombre_cliente());
+							"Se ha insertado correctamente los datos del cliente " + cliente.getNombreCliente());
 					redirectAttributes.addFlashAttribute("msgtipo", "success");
 					redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
 					return "redirect:/listclientes";

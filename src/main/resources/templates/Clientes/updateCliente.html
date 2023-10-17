@@ -34,13 +34,13 @@
 											<label class="login2">Nro. de contrato </label>
 											<input name="nrocontrato" id="nrocontrato" type="text" class="form-control"
 												required="true" placeholder="Número de contrato"
-												th:field="*{nro_contrato}" value="${nro_contrato}">
+												th:field="*{nroContrato}" value="${nroContrato}">
 										</div>
 										<div class="form-group">
 											<label class="login2">Nombre del cliente </label>
 											<input name="nombre_cliente" id="nombre_cliente" type="text"
 												class="form-control" required="true" placeholder="Nombre del cliente"
-												th:field="*{nombre_cliente}">
+												th:field="*{nombreCliente}">
 										</div>
 										<div class="form-group">
 											<label class="login2">Carnet de Identidad </label>
@@ -62,7 +62,7 @@
 											<label class="login2">Tipo de contrato </label>
 											<input name="tipo_contrato" id="tipo_contrato" type="text"
 												class="form-control" placeholder="Tipo de contrato"
-												th:field="*{tipo_contrato}">
+												th:field="*{tipoContrato}">
 										</div>
 										<div class="form-group">
 											<label class="login2">Fecha de suscripción </label>
@@ -72,7 +72,7 @@
 													<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span>
 													<input id="fechasuscripcion" type="text" class="form-control"
-														th:field="*{fecha_suscripcion}">
+														th:field="*{fechaSuscripcion}">
 												</div>
 											</div>
 										</div>
@@ -94,7 +94,7 @@
 											<label class="login2">Nro. de suplemento </label>
 											<input name="nro_suplemento" id="nro_suplemento" type="text"
 												class="form-control" placeholder="Nro de suplemento"
-												th:field="*{nro_suplemento}">
+												th:field="*{nroSuplemento}">
 										</div>
 										<div class="form-group">
 											<label class="login2">Fecha de suplemento </label>
@@ -104,7 +104,7 @@
 													<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span>
 													<input id="fechasuplemento" type="text" class="form-control"
-														th:field="*{fecha_suplemento}">
+														th:field="*{fechaSuplemento}">
 												</div>
 											</div>
 										</div>
@@ -115,16 +115,16 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Provincia </label>
-											<select name="provincia" id="provincia" class="form-control"
+											<select name="provincia" id="provincia" class="form-control select2"
 												required="true">
 												<option th:each="provincia:${provincias}" th:value="${provincia.id}"
-													th:text="${provincia.nomb_prov}"> </option>
+													th:text="${provincia.nombProv}"> </option>
 
 											</select>
 										</div>
 										<div class="form-group">
 											<label class="login2">Municipio </label>
-											<select name="municipio" id="loadMunicipiosFragment" class="form-control"
+											<select name="municipio" id="loadMunicipiosFragment" class="form-control select2"
 												required="true">
 												<option th:each="municipio:${municipios}" th:value="${municipio.id}"
 													th:text="${municipio.nomb_mun}"></option>
@@ -134,7 +134,7 @@
 										<div class="form-group">
 											<div class="form-select-list">
 												<label class="login2">Pueblo </label>
-												<select name="pueblo" class="form-control" id="loadPueblosFragment"
+												<select name="pueblo" class="form-control select2" id="loadPueblosFragment"
 													required="true">
 													<option th:each="pueblo:${pueblos}" th:value="${pueblo.id}"
 														th:text="${pueblo.nomb_pueb}"></option>

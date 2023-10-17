@@ -32,20 +32,20 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nro;
-    private String nro_contrato;
-    private String nombre_cliente;
-    private String tipo_contrato;
+    private String nroContrato;
+    private String nombreCliente;
+    private String tipoContrato;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fecha_suscripcion;
+    private Date fechaSuscripcion;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date vigencia;
     
-    private String nro_suplemento;
+    private String nroSuplemento;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date fecha_suplemento;
+    private Date fechaSuplemento;
 
     private String entidad;
     
@@ -68,25 +68,25 @@ public class Cliente implements Serializable {
     
     
 
-    public Cliente(String nro_contrato) {
+    public Cliente(String nroContrato) {
 		super();
-		this.nro_contrato = nro_contrato;
+		this.nroContrato = nroContrato;
 	}
 
 
 
-	public Cliente(String nombre_cliente, String ci, String telefono, String direccion) {
+	public Cliente(String nombreCliente, String ci, String telefono, String direccion) {
 		super();
-		this.nombre_cliente = nombre_cliente;
+		this.nombreCliente = nombreCliente;
 		this.ci = ci;
 		this.telefono = telefono;
 		this.direccion = direccion;
 	}
 	
 
-	public Cliente(String nombre_cliente, String ci, String telefono, String direccion,Pueblo pueblo) {
+	public Cliente(String nombreCliente, String ci, String telefono, String direccion,Pueblo pueblo) {
 		super();
-		this.nombre_cliente = nombre_cliente;
+		this.nombreCliente = nombreCliente;
 		this.ci = ci;
 		this.telefono = telefono;
 		this.direccion = direccion;
@@ -100,17 +100,17 @@ public class Cliente implements Serializable {
         this.nro = nro;
     }
 
-    public Cliente(int nro, String nro_contrato, String nombre_cliente, String tipo_contrato,
-            Date fecha_suscripcion, Date vigencia, String nro_suplemento, Date fecha_suplemento,
+    public Cliente(int nro, String nroContrato, String nombreCliente, String tipoContrato,
+            Date fechaSuscripcion, Date vigencia, String nroSuplemento, Date fechaSuplemento,
             String entidad, String ci, String telefono, String direccion, String vencido, Pueblo pueblo) {
         this.nro = nro;
-        this.nro_contrato = nro_contrato;
-        this.nombre_cliente = nombre_cliente;
-        this.tipo_contrato = tipo_contrato;
-        this.fecha_suscripcion = fecha_suscripcion;
+        this.nroContrato = nroContrato;
+        this.nombreCliente = nombreCliente;
+        this.tipoContrato = tipoContrato;
+        this.fechaSuscripcion = fechaSuscripcion;
         this.vigencia = vigencia;
-        this.nro_suplemento = nro_suplemento;
-        this.fecha_suplemento = fecha_suplemento;
+        this.nroSuplemento = nroSuplemento;
+        this.fechaSuplemento = fechaSuplemento;
         this.entidad = entidad;
         this.ci = ci;
         this.telefono = telefono;
@@ -123,13 +123,13 @@ public class Cliente implements Serializable {
             Date fecha_suscripcion, Date vigencia, String nro_suplemento,
             Date fecha_suplemento, String entidad, String ci, String telefono,
             String direccion, String vencido, Pueblo pueblo) {
-        this.nro_contrato = nro_contrato;
-        this.nombre_cliente = nombre_cliente;
-        this.tipo_contrato = tipo_contrato;
-        this.fecha_suscripcion = fecha_suscripcion;
+        this.nroContrato = nro_contrato;
+        this.nombreCliente = nombre_cliente;
+        this.tipoContrato = tipo_contrato;
+        this.fechaSuscripcion = fecha_suscripcion;
         this.vigencia = vigencia;
-        this.nro_suplemento = nro_suplemento;
-        this.fecha_suplemento = fecha_suplemento;
+        this.nroSuplemento = nro_suplemento;
+        this.fechaSuplemento = fecha_suplemento;
         this.entidad = entidad;
         this.ci = ci;
         this.telefono = telefono;
@@ -142,12 +142,12 @@ public class Cliente implements Serializable {
             Date fecha_suscripcion, Date vigencia, String nro_suplemento,
             String entidad, String ci, String telefono,
             String direccion, String vencido, Pueblo pueblo) {
-        this.nro_contrato = nro_contrato;
-        this.nombre_cliente = nombre_cliente;
-        this.tipo_contrato = tipo_contrato;
-        this.fecha_suscripcion = fecha_suscripcion;
+        this.nroContrato = nro_contrato;
+        this.nombreCliente = nombre_cliente;
+        this.tipoContrato = tipo_contrato;
+        this.fechaSuscripcion = fecha_suscripcion;
         this.vigencia = vigencia;
-        this.nro_suplemento = nro_suplemento;
+        this.nroSuplemento = nro_suplemento;
       
         this.entidad = entidad;
         this.ci = ci;
@@ -156,12 +156,12 @@ public class Cliente implements Serializable {
         this.vencido = vencido;
         this.pueblo = pueblo;
     }
-    public String getNro_contrato() {
-        return nro_contrato;
+    public String getNroContrato() {
+        return nroContrato;
     }
 
-    public void setNro_contrato(String nro_contrato) {
-        this.nro_contrato = nro_contrato;
+    public void setNroContrato(String nro_contrato) {
+        this.nroContrato = nro_contrato;
     }
 
     public int getNro() {
@@ -172,36 +172,36 @@ public class Cliente implements Serializable {
         this.nro = nro;
     }
 
-    public String getNombre_cliente() {
-        return nombre_cliente;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setNombre_cliente(String nombre_cliente) {
-        this.nombre_cliente = nombre_cliente;
+    public void setNombreCliente(String nombre_cliente) {
+        this.nombreCliente = nombre_cliente;
     }
 
-    public String getTipo_contrato() {
-        return tipo_contrato;
+    public String getTipoContrato() {
+        return tipoContrato;
     }
 
-    public void setTipo_contrato(String tipo_contrato) {
-        this.tipo_contrato = tipo_contrato;
+    public void setTipoContrato(String tipo_contrato) {
+        this.tipoContrato = tipo_contrato;
     }
 
-    public String getNro_suplemento() {
-        return nro_suplemento;
+    public String getNroSuplemento() {
+        return nroSuplemento;
     }
 
-    public void setNro_suplemento(String nro_suplemento) {
-        this.nro_suplemento = nro_suplemento;
+    public void setNroSuplemento(String nro_suplemento) {
+        this.nroSuplemento = nro_suplemento;
     }
 
-    public Date getFecha_suscripcion() {
-        return fecha_suscripcion;
+    public Date getFechaSuscripcion() {
+        return fechaSuscripcion;
     }
 
-    public void setFecha_suscripcion(Date fecha_suscripcion) {
-        this.fecha_suscripcion = fecha_suscripcion;
+    public void setFechaSuscripcion(Date fecha_suscripcion) {
+        this.fechaSuscripcion = fecha_suscripcion;
     }
 
     public Date getVigencia() {
@@ -212,12 +212,12 @@ public class Cliente implements Serializable {
         this.vigencia = vigencia;
     }
 
-    public Date getFecha_suplemento() {
-        return fecha_suplemento;
+    public Date getFechaSuplemento() {
+        return fechaSuplemento;
     }
 
-    public void setFecha_suplemento(Date fecha_suplemento) {
-        this.fecha_suplemento = fecha_suplemento;
+    public void setFechaSuplemento(Date fecha_suplemento) {
+        this.fechaSuplemento = fecha_suplemento;
     }
 
     public String getEntidad() {

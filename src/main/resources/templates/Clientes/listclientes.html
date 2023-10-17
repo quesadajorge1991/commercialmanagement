@@ -56,10 +56,10 @@
 										<tbody>
 											<tr th:each="cliente: ${clientes}">
 												<td th:text="${cliente.nro}"></td>
-												<td th:text="${cliente.nro_contrato}"></td>
-												<td th:text="${cliente.nombre_cliente}"></td>
+												<td th:text="${cliente.nroContrato}"></td>
+												<td th:text="${cliente.nombreCliente}"></td>
 												<td th:text="${cliente.ci}"></td>
-												<td th:text="${#dates.format(cliente.fecha_suscripcion,'dd-MM-yyyy')}">
+												<td th:text="${#dates.format(cliente.fechaSuscripcion,'dd-MM-yyyy')}">
 												</td>
 												<td th:text="${#dates.format(cliente.vigencia,'dd-MM-yyyy')}"></td>
 
@@ -134,7 +134,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${#dates.format(cliente.fecha_suplemento,'dd-MM-yyyy')}"></label>
+																							th:text="${#dates.format(cliente.fechaSuplemento,'dd-MM-yyyy')}"></label>
 																					</div>
 																				</div>
 																			</div>
@@ -157,7 +157,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${cliente.nro_contrato}"></label>
+																							th:text="${cliente.nroContrato}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -173,7 +173,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${cliente.nro_suplemento}"></label>
+																							th:text="${cliente.nroSuplemento}"></label>
 																					</div>
 																				</div>
 																			</div>
@@ -196,7 +196,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${cliente.nombre_cliente}"></label>
+																							th:text="${cliente.nombreCliente}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -251,7 +251,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${cliente.pueblo.municipio.provincia.nomb_prov}"></label>
+																							th:text="${cliente.pueblo.municipio.provincia.nombProv}"></label>
 																					</div>
 																				</div>
 																			</div>
@@ -351,7 +351,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${#dates.format(cliente.fecha_suscripcion,'dd-MM-yyyy')}"></label>
+																							th:text="${#dates.format(cliente.fechaSuscripcion,'dd-MM-yyyy')}"></label>
 																					</div>
 																				</div>
 																				<div
@@ -367,7 +367,7 @@
 																					<div class="input-daterange input-group"
 																						id="datepicker">
 																						<label class="form-control"
-																							th:text="${cliente.tipo_contrato}"></label>
+																							th:text="${cliente.tipoContrato}"></label>
 																					</div>
 																				</div>
 																			</div>
@@ -445,7 +445,7 @@
 																<h3>
 																	<p> Está seguro que quiere eliminar el cliente:
 																		<span
-																			th:text="${cliente.nombre_cliente}"></span>
+																			th:text="${cliente.nombreCliente}"></span>
 																	</p>
 																</h3>
 																<br />

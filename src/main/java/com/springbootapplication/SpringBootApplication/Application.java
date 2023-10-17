@@ -98,7 +98,7 @@ public class Application {
 
 		for (int i = 0; i < municipiosSS.length; i++) {
 			municipioRepository.save(new Municipio(municipiosSS[i],
-					new Provincia(provinciaRepository.findByName("Sancti Spíritus").getId())));
+					new Provincia(provinciaRepository.findByNombProv("Sancti Spíritus").getId())));
 		}
 
 	}
