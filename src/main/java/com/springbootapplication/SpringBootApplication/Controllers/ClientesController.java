@@ -174,14 +174,14 @@ public class ClientesController {
 	public String addClienteId(@PathVariable(value = "id") int id, Model model) {
 		List<Provincia> provincias = (List<Provincia>) provinciaRepository.findAll();
 
-		Solicitud solicitud = solicitudRepository.findById(id).get();
+		Solicitud solicitud = solicitudRepository.findById(id);
 		provincias.remove(solicitud.getPueblo().getMunicipio().getProvincia());
 		provincias.add(0, solicitud.getPueblo().getMunicipio().getProvincia());
 		/*
 		 * model.addAttribute("cliente", new Cliente(solicitud.getNomb_pers(),
 		 * solicitud.getCi(), solicitud.getTelefono(), solicitud.getDireccion()));
 		 */
-		model.addAttribute("cliente", new Cliente(solicitud.getNomb_pers(), solicitud.getCi(), solicitud.getTelefono(),
+		model.addAttribute("cliente", new Cliente(solicitud.getNombPers(), solicitud.getCi(), solicitud.getTelefono(),
 				solicitud.getDireccion(), solicitud.getPueblo()));
 		model.addAttribute("solicitudtoadd", solicitud);
 		model.addAttribute("listprovincias", provincias);

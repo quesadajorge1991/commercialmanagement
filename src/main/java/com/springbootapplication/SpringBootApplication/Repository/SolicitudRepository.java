@@ -17,11 +17,13 @@ public interface SolicitudRepository extends CrudRepository<Solicitud, Integer> 
 	@Query("FROM Solicitud s WHERE s.servicio=true")
 	List<Solicitud> getSolicitudConServicio();
 
-	@Query(value = "SELECT s.nomb_pers,s.direccion, s.telefono, s.ci, s.cult_danado,s.tipo_afect, s.fecha, s.zona_afect, s.pueblo.municipio.provincia.nombProv, s.pueblo.municipio.nomb_mun, s.pueblo.nomb_pueb  FROM Solicitud s WHERE s.id=?1 ")
+	@Query(value = "SELECT s.nombPers,s.direccion, s.telefono, s.ci, s.cultDanado,s.tipoAfect, s.fecha, s.zonaAfect, s.pueblo.municipio.provincia.nombProv, s.pueblo.municipio.nomb_mun, s.pueblo.nomb_pueb  FROM Solicitud s WHERE s.id=?1 ")
 	List<String> getDatosSolicitud(int id);
 	
-	@Query(value = "FROM Solicitud s WHERE s.id=?1 ")
-	List<Solicitud> getDatosSolicitudd(int id);
+	//@Query(value = "FROM Solicitud s WHERE s.id=?1 ")
+	//List<Solicitud> getDatosSolicitudd(int id);
+	
+	Solicitud findById(int id);
 	
 	
 	

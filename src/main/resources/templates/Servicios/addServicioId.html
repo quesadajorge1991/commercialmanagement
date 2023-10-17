@@ -5,6 +5,9 @@
 <head>
 	<meta charset="utf-8">
 	<title>Insert title here</title>
+
+	<script th:src="@{/servicios.js}"></script>
+
 </head>
 
 <body>
@@ -31,29 +34,39 @@
 								<div class="row">
 									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-										<div class="form-group">
+										<div class="form-group ">
 											<label class="login2">Grupo </label>
-											<select name="grupo" id="grupo" data-placeholder="--Seleccione el grupo--" th:field="*{grupo.nombre_grupo}"
-												class="form-control" required="true">
+											<select name="grupo" id="loadGrupoFragment" th:field="*{grupo.name}"
+												style="width: 100%;" data-placeholder="--Seleccione el grupo--"
+												class="select2" required="true">
 												<option value="-1">--Seleccione el grupo--</option>
-
-												<option th:each="grupo :${grupos}" th:value="${grupo.nombre_grupo}" th:text="${grupo.nombre_grupo}"></option>
-
+												<option th:each="grupo :${listgrupos}" th:value="${grupo.name}"
+													th:text="${grupo.name}"></option>
 											</select>
+
+											<div class="form-group">
+												<button id="addcontrato" title="Añadir contrato" type="button"
+													class="btn btn-success waves-effect " data-toggle="modal"
+													data-target="#DetailModalAddGroup">
+													+ Add grupo</button>
+											</div>
+
+
 										</div>
 										<div class="form-group">
 											<label class="login2">Nro. de contrato </label>
-											<select name="contrato" id="contrato"   th:field="*{cliente.nro}"
+											<select name="contrato" id="contrato" th:field="*{cliente.nro}"
 												data-placeholder="--Seleccione el número de contrato--"
-												class="form-control" required="true">
+												class="form-control select2" required="true">
 												<option value="-1">--Seleccione el número de contrato--</option>
-												<option th:each="cliente :${listclientes}" th:value="${cliente.nro}" th:text="${cliente.nro_contrato}" ></option>
+												<option th:each="cliente :${listclientes}" th:value="${cliente.nro}"
+													th:text="${cliente.nroContrato}"></option>
 											</select>
 										</div>
 										<div class="form-group">
 											<label class="login2">Nro. de factura </label>
-											<input name="nrofactura" id="nrofactura" type="text" class="form-control" th:field="*{nro_factura}"
-												required="true" placeholder="Nro. de factura">
+											<input name="nrofactura" id="nrofactura" type="text" class="form-control"
+												th:field="*{nroFactura}" required="true" placeholder="Nro. de factura">
 										</div>
 										<div class="form-group">
 											<label class="login2">Fecha de servicio </label>
@@ -62,7 +75,8 @@
 												<div class="input-group ">
 													<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span>
-													<input id="fechaservicio" type="text" class="form-control" placeholder="Fecha de servicio" th:field="*{fecha_servicio}">
+													<input id="fechaservicio" type="text" class="form-control"
+														placeholder="Fecha de servicio" th:field="*{fechaServicio}">
 												</div>
 											</div>
 										</div>
@@ -75,7 +89,7 @@
 											<label class="login2">Tipo de afectación </label>
 											<input name="tipo_afectacion" id="tipo_afectacion" type="text"
 												class="form-control" placeholder="Tipo de afectación"
-												th:field="*{tipo_afectacion}" required="">
+												th:field="*{tipoAfectacion}" required="">
 										</div>
 									</div>
 
@@ -87,7 +101,8 @@
 												<div class="input-group ">
 													<span class="input-group-addon"><i
 															class="fa fa-calendar"></i></span>
-													<input id="fechaafectacion" type="text" class="form-control" placeholder="Fecha de afectación" th:field="*{fecha_afectacion}">
+													<input id="fechaafectacion" type="text" class="form-control"
+														placeholder="Fecha de afectación" th:field="*{fechaAfectacion}">
 												</div>
 											</div>
 										</div>
@@ -95,11 +110,11 @@
 											<label class="login2">Zona afectada </label>
 											<input name="zona_afectacion" id="zona_afectacion" type="text"
 												class="form-control" placeholder="Zona afectada"
-												th:field="*{zona_afectacion}">
+												th:field="*{zonaAfectacion}">
 										</div>
 										<div class="form-group">
 											<label class="login2">Provincia </label>
-											<select name="provincia" id="provincia" class="form-control"
+											<select name="provincia" id="provincia" class="form-control select2"
 												required="true">
 												<option th:each="provincia:${provincias}" th:value="${provincia.id}"
 													th:text="${provincia.nombProv}"> </option>
@@ -108,8 +123,8 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Municipio </label>
-											<select name="municipio" id="loadMunicipiosFragment" class="form-control"
-												required="true">
+											<select name="municipio" id="loadMunicipiosFragment"
+												class="form-control select2" required="true">
 												<option th:value="${municipio.id}" th:text="${municipio.nomb_mun}">
 												</option>
 
@@ -118,8 +133,8 @@
 										<div class="form-group">
 											<div class="form-select-list">
 												<label class="login2">Pueblo </label>
-												<select name="pueblo" class="form-control" id="loadPueblosFragment" th:field="*{pueblo.id}"
-													required="true">
+												<select name="pueblo" class="form-control select2"
+													id="loadPueblosFragment" th:field="*{pueblo.id}" required="true">
 													<option th:value="${pueblo.id}" th:text="${pueblo.nomb_pueb}">
 													</option>
 
@@ -133,11 +148,12 @@
 											<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 												<div class="inline-checkbox-cs">
 													<label class="checkbox-inline i-checks pull-left">
-														<input type="radio" value="Si" name="entregado" id="entregado1"  th:field="*{entregado}">
+														<input type="radio" value="Si" name="entregado" id="entregado1"
+															th:field="*{entregado}">
 														<i></i> Si </label>
 													<label class="checkbox-inline i-checks pull-left">
-														<input type="radio"  value="No" name="entregado"  th:field="*{entregado}"
-															id="entregado2"> <i></i> No </label>
+														<input type="radio" value="No" name="entregado"
+															th:field="*{entregado}" id="entregado2"> <i></i> No </label>
 												</div>
 											</div>
 										</div>
@@ -145,10 +161,65 @@
 									</div>
 								</div>
 								<br />
+
+
+								<!-- modal add group-->
+								<div id="DetailModalAddGroup"
+									class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header header-color-modal bg-color-1">
+												<h4 class="modal-title">Add Grupo</h4>
+												<div class="modal-close-area modal-close-df">
+													<a class="close" data-dismiss="modal" href="#"><i
+															class="fa fa-close"></i>
+													</a>
+												</div>
+											</div>
+											<div class="modal-body">
+												<div class="row">
+
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<div class="devit-card-custom">
+															<div class="row">
+																<div class="form-group">
+																	<input class="form-control" placeholder="Group"
+																		name="grupo" required="true" type="text"
+																		id="grupo">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="modal-footer">
+													<div class="button-drop-style-one btn-default-bg">
+
+
+														<button class="btn btn-primary waves-effect waves-light"
+															data-dismiss="modal"><i class="fa fa-close"></i>
+															Cancelar</button>
+
+
+														<button type="button"
+															class="btn btn-primary waves-effect waves-light"
+															onclick="addGroup();" data-dismiss="modal"><i
+																class="fa fa-save"></i>
+															Aceptar</button>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+
+
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="payment-adress">
-											<button type="submit" 
+											<button type="submit"
 												class="btn btn-primary waves-effect waves-light">Aceptar</button>
 											<a class="btn btn-primary waves-effect waves-light"
 												href="${path}/Gestion_Servicio">Cancelar</a>
@@ -160,6 +231,13 @@
 					</div>
 				</div>
 			</div>
+
+
+
+
+
+
+
 		</div>
 
 
@@ -170,7 +248,14 @@
 
 
 
-		<script>
+		<script type="text/javascript" charset="UTF-8" th:inline="javascript">
+
+
+
+
+
+
+
 
 			$(document).ready(function () {
 
@@ -182,9 +267,9 @@
 					autoclose: true,
 					format: "dd-mm-yyyy"
 				});
-				
-				
-					$('#fechaafectacion').datepicker({
+
+
+				$('#fechaafectacion').datepicker({
 					startView: 1,
 					todayBtn: "linked",
 					keyboardNavigation: false,

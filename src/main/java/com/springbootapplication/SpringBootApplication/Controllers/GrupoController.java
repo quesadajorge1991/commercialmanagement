@@ -31,7 +31,7 @@ public class GrupoController {
 
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
+	//@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@PostMapping("/addGrupo")
 	public @ResponseBody String addGrupo(@RequestParam("grupo") String grupo) {
 

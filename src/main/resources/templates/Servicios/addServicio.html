@@ -5,6 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Insert title here</title>
+	<script th:src="@{/servicios.js}"></script>
 </head>
 
 <body>
@@ -38,7 +39,7 @@
 												style="width: 100%;" required="true">
 												<option value="-1">--Seleccione la solicitud--</option>
 												<option th:each="solicitud :${listsolicitudes}"
-													th:value="${solicitud.id}" th:text="${solicitud.nomb_pers}">
+													th:value="${solicitud.id}" th:text="${solicitud.nombPers}">
 												</option>
 
 											</select>
@@ -114,8 +115,7 @@
 														<span class="input-group-addon"><i
 																class="fa fa-calendar"></i></span>
 														<input id="fechaservicio" type="text" class="form-control"
-															placeholder="Fecha de servicio"
-															th:field="*{fechaServicio}">
+															placeholder="Fecha de servicio" th:field="*{fechaServicio}">
 													</div>
 												</div>
 											</div>
@@ -338,73 +338,11 @@
 
 
 
-		<script type="text/javascript" charset="UTF-8">
-
-
-			function addGroup() {
-				var grupo = $("#grupo").val();
-				var url =/*[[@{/addGrupo}]]*/ 'addGrupo';
-				if (true) {
-					$.ajax({
-						url: url,
-						dataType: 'json',
-						method: 'POST',
-						data: {
-							grupo: grupo
-						},
-						success: function (data) {
-
-							//$('#loadMunicipiosFragment').addClass('chosen-select').trigger('change');
-							// $("#loadTableFragment").empty();
-							$("#loadGrupoFragment").load('/getGrupo');
-							toastr[data.msgtipo](data.msgbody, data.msgtitu);
-						},
-						error: function (data) {
-							toastr[data.msgtipo](data.msgbody, data.msgtitu);
-						}
-
-					});
-				} else {
-
-				}
-
-			}
-
-
-			function addNroContrato() {
-				var nrocontrato = $("#nrocontrato").val();
-				var url =/*[[@{/addNroContrato}]]*/ 'addNroContrato';
-				if (true) {
-					$.ajax({
-						url: url,
-						dataType: 'json',
-						method: 'POST',
-						data: {
-							nrocontrato: nrocontrato
-						},
-						success: function (data) {
-
-							//$('#loadMunicipiosFragment').addClass('chosen-select').trigger('change');
-							// $("#loadTableFragment").empty();
-							$("#loadGrupoFragment").load('/getGrupo');
-							toastr[data.msgtipo](data.msgbody, data.msgtitu);
-
-
-						},
-						error: function (data) {
-							toastr[data.msgtipo](data.msgbody, data.msgtitu);
-						}
-
-					});
-				} else {
+		<script type="text/javascript" charset="UTF-8" th:inline="javascript">
 
 
 
-				}
 
-
-
-			}
 
 
 

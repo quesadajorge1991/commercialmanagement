@@ -35,7 +35,7 @@ public class Solicitud implements Serializable {
 
 	@Size(min = 2, message = "Nombre de persona, obligatorio con mas de 2 caracteres")
 	@NotBlank(message = "El telefono, no puede estar vacio")
-	private String nomb_pers;
+	private String nombPers;
 
 	@Size(min = 2, message = "Carnet de Identidad o Código NIT, obligatorio con mas de 2 caracteres")
 	@NotBlank(message = "Carnet de Identidad o Código NIT , no puede estar vacio")
@@ -51,11 +51,11 @@ public class Solicitud implements Serializable {
 
 	@Size(min = 2, message = "Cultivo dañado, obligatorio con mas de 2 caracteres")
 	@NotBlank(message = "Cultivo dañado, no puede estar vacio")
-	private String cult_danado;
+	private String cultDanado;
 
 	@Size(min = 2, message = "Tipo de afectación, obligatorio con mas de 2 caracteres")
 	@NotBlank(message = "Tipo de afectación, no puede estar vacio")
-	private String tipo_afect;
+	private String tipoAfect;
 
 	@NotNull(message = "La fecha no puede estar vacía")
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -65,7 +65,7 @@ public class Solicitud implements Serializable {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date fechafin;
 
-	private String zona_afect;
+	private String zonaAfect;
 
 	private boolean servicio;
 
@@ -81,45 +81,45 @@ public class Solicitud implements Serializable {
 
 	public Solicitud(String nomb_pers, String ci, String direccion, String telefono, String cult_danado,
 			String tipo_afect, Date fecha,Date fechafin, String zona_afect, Pueblo pueblo) {
-		this.nomb_pers = nomb_pers;
+		this.nombPers = nomb_pers;
 		this.ci = ci;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.cult_danado = cult_danado;
-		this.tipo_afect = tipo_afect;
+		this.cultDanado = cult_danado;
+		this.tipoAfect = tipo_afect;
 		this.fecha = fecha;
 		this.fechafin = fechafin;
-		this.zona_afect = zona_afect;
+		this.zonaAfect = zona_afect;
 		this.pueblo = pueblo;
 	}
 	
 	public Solicitud(int id,String nomb_pers, String ci, String direccion, String telefono, String cult_danado,
 			String tipo_afect, Date fecha,Date fechafin, String zona_afect, Pueblo pueblo) {
 		this.id = id;
-		this.nomb_pers = nomb_pers;
+		this.nombPers = nomb_pers;
 		this.ci = ci;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.cult_danado = cult_danado;
-		this.tipo_afect = tipo_afect;
+		this.cultDanado = cult_danado;
+		this.tipoAfect = tipo_afect;
 		this.fecha = fecha;
 		this.fechafin = fechafin;
-		this.zona_afect = zona_afect;
+		this.zonaAfect = zona_afect;
 		this.pueblo = pueblo;
 	}
 
 	public Solicitud(int id, String nomb_pers, String ci, String direccion, String telefono, String cult_danado,
 			String tipo_afect, Date fecha,Date fechafin, String zona_afect, boolean servicio, Pueblo pueblo) {
 		this.id = id;
-		this.nomb_pers = nomb_pers;
+		this.nombPers = nomb_pers;
 		this.ci = ci;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.cult_danado = cult_danado;
-		this.tipo_afect = tipo_afect;
+		this.cultDanado = cult_danado;
+		this.tipoAfect = tipo_afect;
 		this.fecha = fecha;
 		this.fechafin = fechafin;
-		this.zona_afect = zona_afect;
+		this.zonaAfect = zona_afect;
 		this.servicio = servicio;
 		this.pueblo = pueblo;
 	}
@@ -132,12 +132,12 @@ public class Solicitud implements Serializable {
 		this.id = id;
 	}
 
-	public String getNomb_pers() {
-		return nomb_pers;
+	public String getNombPers() {
+		return nombPers;
 	}
 
-	public void setNomb_pers(String nomb_pers) {
-		this.nomb_pers = nomb_pers;
+	public void setNombPers(String nomb_pers) {
+		this.nombPers = nomb_pers;
 	}
 
 	public String getCi() {
@@ -164,20 +164,20 @@ public class Solicitud implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public String getCult_danado() {
-		return cult_danado;
+	public String getCultDanado() {
+		return cultDanado;
 	}
 
-	public void setCult_danado(String cult_danado) {
-		this.cult_danado = cult_danado;
+	public void setCultDanado(String cult_danado) {
+		this.cultDanado = cult_danado;
 	}
 
-	public String getTipo_afect() {
-		return tipo_afect;
+	public String getTipoAfect() {
+		return tipoAfect;
 	}
 
-	public void setTipo_afect(String tipo_afect) {
-		this.tipo_afect = tipo_afect;
+	public void setTipoAfect(String tipo_afect) {
+		this.tipoAfect = tipo_afect;
 	}
 
 	public Date getFecha() {
@@ -188,12 +188,12 @@ public class Solicitud implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public String getZona_afect() {
-		return zona_afect;
+	public String getZonaAfect() {
+		return zonaAfect;
 	}
 
-	public void setZona_afect(String zona_afect) {
-		this.zona_afect = zona_afect;
+	public void setZonaAfect(String zona_afect) {
+		this.zonaAfect = zona_afect;
 	}
 
 	public boolean isServicio() {

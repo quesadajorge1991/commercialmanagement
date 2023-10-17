@@ -79,7 +79,7 @@ public class ServicioController {
 	public String addServicioId(Model model, @PathVariable(value = "id") int id) {
 		// ModelAndView mav = new ModelAndView();
 		List<Provincia> listprovincias = (List<Provincia>) provinciaRepository.findAll();
-		Solicitud solicitud = solicitudRepository.findById(id).get();
+		Solicitud solicitud = solicitudRepository.findById(id);
 		Provincia provincia = solicitud.getPueblo().getMunicipio().getProvincia();
 		setNumero(solicitud.getId());
 
@@ -89,18 +89,15 @@ public class ServicioController {
 		listprovtemp.remove(provincia);
 		listprovtemp.add(0, provincia);
 
-		model.addAttribute("servicio", new Servicio(solicitud.getCult_danado(), solicitud.getTipo_afect(),
-				solicitud.getFecha(), solicitud.getFecha(), solicitud.getZona_afect()));
+		model.addAttribute("servicio", new Servicio(solicitud.getCultDanado(), solicitud.getTipoAfect(),
+				solicitud.getFecha(), solicitud.getFecha(), solicitud.getZonaAfect()));
 		model.addAttribute("provincias", listprovtemp);
 		model.addAttribute("municipio", solicitud.getPueblo().getMunicipio());
 		model.addAttribute("pueblo", solicitud.getPueblo());
 		model.addAttribute("listclientes", clientesRepository.findAll());
-		model.addAttribute("grupos", grupoRepository.findAll());
+		model.addAttribute("listgrupos", grupoRepository.findAll());
 
 		model.addAttribute("nroContrato", solicitud.getPueblo());
-		model.addAttribute("grupos", grupoRepository.findAll());
-		model.addAttribute("grupos", grupoRepository.findAll());
-		model.addAttribute("grupos", grupoRepository.findAll());
 
 		return "Servicios/addServicioId";
 	}
@@ -123,13 +120,12 @@ public class ServicioController {
 		Grupo g = new Grupo(servicio.getGrupo().getName());
 		Cliente clientetemp = clientesRepository.findById(servicio.getCliente().getNro()).get();
 		Cliente c = new Cliente(clientetemp.getNroContrato());
-		Solicitud sol = solicitudRepository.findById(getNumero())
-				.get(); /* sdao.getSolicitudxNro(getNumero()).get(0); */
+		Solicitud sol = solicitudRepository.findById(getNumero()); /* sdao.getSolicitudxNro(getNumero()).get(0); */
 		sol.setServicio(true);
 
 		if (bindingResult.hasErrors()) {
 			List<Provincia> listprovincias = (List<Provincia>) provinciaRepository.findAll();
-			Solicitud solicitud = solicitudRepository.findById(getId()).get();
+			Solicitud solicitud = solicitudRepository.findById(getId());
 			Provincia provincia = solicitud.getPueblo().getMunicipio().getProvincia();
 			setNumero(solicitud.getId());
 
@@ -139,8 +135,8 @@ public class ServicioController {
 			listprovtemp.remove(provincia);
 			listprovtemp.add(0, provincia);
 
-			model.addAttribute("servicio", new Servicio(solicitud.getCult_danado(), solicitud.getTipo_afect(),
-					solicitud.getFecha(), solicitud.getFecha(), solicitud.getZona_afect()));
+			model.addAttribute("servicio", new Servicio(solicitud.getCultDanado(), solicitud.getTipoAfect(),
+					solicitud.getFecha(), solicitud.getFecha(), solicitud.getZonaAfect()));
 			model.addAttribute("provincias", listprovtemp);
 			model.addAttribute("municipio", solicitud.getPueblo().getMunicipio());
 			model.addAttribute("pueblo", solicitud.getPueblo());
@@ -155,9 +151,8 @@ public class ServicioController {
 
 			try {
 				Servicio s = new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
-						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(),
-						servicio.getFechaAfectacionfin(), servicio.getNroFactura(), servicio.getZonaAfectacion(),
-						servicio.getEntregado(), p, c, g);
+						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(),
+						servicio.getNroFactura(), servicio.getZonaAfectacion(), servicio.getEntregado(), p, c, g);
 
 				System.out.println("ffff " + servicio.getFechaServicio());
 				System.out.println("ffff " + servicio.getCultivo());
@@ -171,9 +166,9 @@ public class ServicioController {
 				// servicio.getTipo_afectacion(), servicio.getFecha_afectacion(),
 				// servicio.getZona_afectacion()));
 				servicioRepository.save(new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
-						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(),
-						servicio.getFechaAfectacionfin(), servicio.getNroFactura(), servicio.getZonaAfectacion(),
-						servicio.getEntregado(), p, clientetemp, g));
+						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(),
+						servicio.getNroFactura(), servicio.getZonaAfectacion(), servicio.getEntregado(), p, clientetemp,
+						g));
 
 				redirectAttributes.addFlashAttribute("msgbody",
 						"Se ha insertado correctamente los datos del servicio ");
@@ -223,17 +218,17 @@ public class ServicioController {
 		Cliente c = new Cliente(servicio.getCliente().getNro());
 
 		try {
-			Solicitud sol = solicitudRepository.findById(solicitud).get();
-			Solicitud soli = new Solicitud(sol.getId(), sol.getNomb_pers(), sol.getCi(), sol.getDireccion(),
-					sol.getTelefono(), sol.getCult_danado(), sol.getTipo_afect(), sol.getFecha(), sol.getFechafin(),
-					sol.getZona_afect(), true, sol.getPueblo());
+			Solicitud sol = solicitudRepository.findById(solicitud);
+			Solicitud soli = new Solicitud(sol.getId(), sol.getNombPers(), sol.getCi(), sol.getDireccion(),
+					sol.getTelefono(), sol.getCultDanado(), sol.getTipoAfect(), sol.getFecha(), sol.getFechafin(),
+					sol.getZonaAfect(), true, sol.getPueblo());
 
 			sol.setServicio(true);
 
-			Servicio s = new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
-					servicio.getTipoAfectacion(), servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(),
-					servicio.getNroFactura(), servicio.getZonaAfectacion(), servicio.getEntregado(),
-					new Pueblo(p.getId()), new Cliente(c.getNro()), new Grupo(g.getName()));
+			Servicio s = new Servicio(servicio.getFechaServicio(), servicio.getCultivo(), servicio.getTipoAfectacion(),
+					servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(), servicio.getNroFactura(),
+					servicio.getZonaAfectacion(), servicio.getEntregado(), new Pueblo(p.getId()),
+					new Cliente(c.getNro()), new Grupo(g.getName()));
 
 			System.out.println("solicitud " + solicitud);
 			System.out.println("ffffff " + servicio.getFechaServicio());

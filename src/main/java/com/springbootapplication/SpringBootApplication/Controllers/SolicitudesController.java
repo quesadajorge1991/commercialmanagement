@@ -74,14 +74,14 @@ public class SolicitudesController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("provincias", provinciaRepository.findAll());
 
-			System.out.println("NOMBRE " + solicitud.getNomb_pers());
+			System.out.println("NOMBRE " + solicitud.getNombPers());
 			System.out.println("CI " + solicitud.getCi());
 			System.out.println("DIRECCCION " + solicitud.getDireccion());
 			System.out.println("TELEFONO " + solicitud.getTelefono());
-			System.out.println("CULTIVO DAÑADO " + solicitud.getCult_danado());
-			System.out.println("TIPO DE AFECTACION " + solicitud.getTipo_afect());
+			System.out.println("CULTIVO DAÑADO " + solicitud.getCultDanado());
+			System.out.println("TIPO DE AFECTACION " + solicitud.getTipoAfect());
 			System.out.println("FECHA " + solicitud.getFecha());
-			System.out.println("ZONA AFECTADA " + solicitud.getZona_afect());
+			System.out.println("ZONA AFECTADA " + solicitud.getZonaAfect());
 			System.out.println("PUEBLO " + solicitud.getPueblo().getId());
 			return "Solicitudes/addsolicitud";
 
@@ -94,10 +94,10 @@ public class SolicitudesController {
 				 * SimpleDateFormat("yy-MM-dd").parse(tempfesus);
 				 */
 
-				solicitudRepository.save(new Solicitud(solicitud.getNomb_pers(), solicitud.getCi(),
-						solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-						solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(),
-						solicitud.getZona_afect(), new Pueblo(solicitud.getPueblo().getId())));
+				solicitudRepository.save(new Solicitud(solicitud.getNombPers(), solicitud.getCi(),
+						solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(),
+						solicitud.getTipoAfect(), solicitud.getFecha(), solicitud.getFechafin(),
+						solicitud.getZonaAfect(), new Pueblo(solicitud.getPueblo().getId())));
 
 				redirectAttributes.addFlashAttribute("msgtipo", "success");
 				redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -124,7 +124,7 @@ public class SolicitudesController {
 		 * se selecciona un objeto de provincia municipio y pueblo y se elminina de la
 		 * lista y luego se añade en la primera posicion
 		 */
-		Pueblo temppueblo = solicitudRepository.findById(id).get().getPueblo();
+		Pueblo temppueblo = solicitudRepository.findById(id).getPueblo();
 		Municipio tempmun = temppueblo.getMunicipio();
 		Provincia tempprov = tempmun.getProvincia();
 
@@ -185,10 +185,10 @@ public class SolicitudesController {
 				 * System.out.println("sfsdfsdfsdf " + fechasuscripcion);
 				 */
 
-				solicitudRepository.save(new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
-						solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-						solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(),
-						solicitud.getZona_afect(), new Pueblo(solicitud.getPueblo().getId())));
+				solicitudRepository.save(new Solicitud(solicitud.getId(), solicitud.getNombPers(), solicitud.getCi(),
+						solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(),
+						solicitud.getTipoAfect(), solicitud.getFecha(), solicitud.getFechafin(),
+						solicitud.getZonaAfect(), new Pueblo(solicitud.getPueblo().getId())));
 
 				redirectAttributes.addFlashAttribute("msgtipo", "success");
 				redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -231,15 +231,15 @@ public class SolicitudesController {
 	@GetMapping(value = "/datosSolicitud")
 	public @ResponseBody Solicitud getSolicitud(@RequestParam("ids") int ids, Model model) throws Exception {
 		Solicitud resultsolicitud = new Solicitud();
-		Solicitud solicitud = solicitudRepository.findById(ids).get();
+		Solicitud solicitud = solicitudRepository.findById(ids);
 
 		Municipio municipio = municipioRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get();
 
 		Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
 		
-		resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNomb_pers(), solicitud.getCi(),
-				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCult_danado(),
-				solicitud.getTipo_afect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZona_afect(),
+		resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNombPers(), solicitud.getCi(),
+				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(),
+				solicitud.getTipoAfect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZonaAfect(),
 				solicitud.isServicio(), pueblo);
 
 		return resultsolicitud;
@@ -250,7 +250,7 @@ public class SolicitudesController {
 	public @ResponseBody List<Provincia> getprovincia(@RequestParam("ids") int ids, Model model) {
 		List<Provincia> listaprovin = new ArrayList<>();
 		try {
-			Solicitud solicitud = solicitudRepository.findById(ids).get();
+			Solicitud solicitud = solicitudRepository.findById(ids);
 			Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
 					.getMunicipio();
 			Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
