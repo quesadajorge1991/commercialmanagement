@@ -5,3 +5,5 @@ Cada vez que un cliente, tanto estatal como particular, requiera de los servicio
 Luego, se confecciona la factura a pagar en el área económica, para posteriormente recibir el servicio solicitado en el local que ocupa el Técnico en Gestión Comercial que es la persona encargada de entregarlo.
 Una vez concluido este proceso, en el caso de los servicios que son informes que acreditan afectaciones meteorológicas, se archiva en los grupos que dan el servicio la solicitud con la respuesta dada por el centro para en caso de reclamación tener todo de la mejor forma.
 
+
+

@@ -127,7 +127,7 @@
 											<div class="form-group">
 												<label class="login2">Tipo de afectación </label>
 												<input name="tipo_afectacion" id="tipo_afectacion" type="text"
-													class="form-control" placeholder="Tipo de afectaciÃ³n"
+													class="form-control" placeholder="Tipo de afectación"
 													required="true" th:field="*{tipoAfectacion}">
 											</div>
 										</section>
@@ -210,6 +210,26 @@
 								</div>
 
 
+
+
+								<br />
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="payment-adress">
+											<a class="btn btn-primary waves-effect waves-light"
+												th:href="@{/listservicios}"><span class="fa fa-bars"></span>
+												Cancelar</a>
+											<button type="submit" id="addservicio" hidden=""
+												class="btn btn-primary waves-effect waves-light"><span
+													class="fa fa-save"> </span> Aceptar</button>
+
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								
 								<!-- modal add group-->
 								<div id="DetailModalAddGroup"
 									class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
@@ -311,22 +331,6 @@
 									</div>
 								</div>
 
-
-
-								<br />
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="payment-adress">
-											<a class="btn btn-primary waves-effect waves-light"
-												th:href="@{/listservicios}"><span class="fa fa-bars"></span>
-												Cancelar</a>
-											<button type="submit" id="addservicio" hidden=""
-												class="btn btn-primary waves-effect waves-light"><span
-													class="fa fa-save"> </span> Aceptar</button>
-
-										</div>
-									</div>
-								</div>
 							</form>
 						</div>
 					</div>

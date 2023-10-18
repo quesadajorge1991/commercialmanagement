@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.springbootapplication.SpringBootApplication.Entity.Authorities;
+import com.springbootapplication.SpringBootApplication.Entity.Users;
 
 
 
@@ -24,8 +25,10 @@ public interface AuthoritiesRepository extends JpaRepository<Authorities, Intege
 	public List<String> listaAuthorities(String username);
 	
 	
-	@Query(value = "from Authorities u where u.usernamee.usernamee=?1")
-	public List<Authorities> listAuthorities(String username);
+//	@Query(value = "from Authorities u where u.usernamee.usernamee=?1")
+//	public List<Authorities> listAuthorities(String username);
+	
+	List<Authorities> findByUsernamee(Users usernamee);
 	
 	@Query(value = "select distinct authority from  Authorities")
 	public List<String> listaDistintAuthorities();

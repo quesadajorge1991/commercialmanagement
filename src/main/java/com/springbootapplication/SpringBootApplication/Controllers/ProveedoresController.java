@@ -108,11 +108,11 @@ public class ProveedoresController {
 		} else {
 			try {
 				proovedorRepository.save(new Proveedor(proveedor.getNroContrato(), proveedor.getNroRegistro(),
-						proveedor.getNombreProveedor(), proveedor.getAliasProveedor(),
-						proveedor.getFechaSuscripcion(), proveedor.getVigencia(), proveedor.getFichaCliente(),
-						proveedor.getCodigoREUP(), proveedor.getCuentaBancaria(), proveedor.getDictaminado(),
-						proveedor.getTelefono(), proveedor.getEmail(), proveedor.getDireccion(),
-						proveedor.getObservaciones(), proveedor.getVencido(), proveedor.getNotificar(),
+						proveedor.getNombreProveedor(), proveedor.getAliasProveedor(), proveedor.getFechaSuscripcion(),
+						proveedor.getVigencia(), proveedor.getFichaCliente(), proveedor.getCodigoREUP(),
+						proveedor.getCuentaBancaria(), proveedor.getDictaminado(), proveedor.getTelefono(),
+						proveedor.getEmail(), proveedor.getDireccion(), proveedor.getObservaciones(),
+						proveedor.getVencido(), proveedor.getNotificar(),
 						new Municipio(proveedor.getMunicipio().getId()),
 						new TipoContrato(proveedor.getTipoContrato().getNro())));
 
@@ -121,14 +121,13 @@ public class ProveedoresController {
 				redirectAttributes.addFlashAttribute("msgbody", "Se ha agregado satisfactoriamente el proveedor ");
 
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 				redirectAttributes.addFlashAttribute("msgtipo", "error");
 				redirectAttributes.addFlashAttribute("msgtitu", "Error");
 				redirectAttributes.addFlashAttribute("msgbody", "Error al agregar el proveedor ");
 			}
 		}
 
-		return "redirect:/addproveedores";
+		return "redirect:/proveedores";
 
 	}
 
@@ -158,7 +157,7 @@ public class ProveedoresController {
 				redirectAttributes.addFlashAttribute("msgbody", "Se ha agregado satisfactoriamente el proveedor ");
 
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+
 				redirectAttributes.addFlashAttribute("msgtipo", "error");
 				redirectAttributes.addFlashAttribute("msgtitu", "Error");
 				redirectAttributes.addFlashAttribute("msgbody", "Error al agregar el proveedor ");
@@ -174,7 +173,6 @@ public class ProveedoresController {
 	public String MunicipioByProvincia(@RequestParam("provincia") String idprovincia, Model model) {
 		List<Municipio> municipios = municipioRepository.getMunicipiosByProvincia(Long.valueOf(idprovincia));
 		model.addAttribute("municipios", municipios);
-		System.out.println(municipios.size());
 
 		return "templateBase/ComponentFragment :: municicipiosByProvincia";
 
@@ -192,7 +190,7 @@ public class ProveedoresController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping("/deleteProveedor/{nro}")
 	public String deleteProveedor(@PathVariable int nro, RedirectAttributes redirectAttributes) {
-		System.out.println(nro);
+
 		try {
 			proovedorRepository.deleteById(nro);
 
@@ -216,7 +214,7 @@ public class ProveedoresController {
 	public String index(Model model) {
 		List<Proveedor> listproveedores = proovedorRepository.findByOrderByVigencia();
 		try {
-		
+
 			List<Proveedor> contr_vencidos = new ArrayList<Proveedor>();
 			ContratosxVencerse cxv = new ContratosxVencerse();
 			List<ContratosxVencerse> contrxVencerse = new ArrayList<ContratosxVencerse>();
@@ -252,7 +250,7 @@ public class ProveedoresController {
 			calendar.add(Calendar.DAY_OF_YEAR, dias);
 			aux = calendar.getTime();
 			if (dd.format(aux).equals(dd.format(fecha))) {
-				System.out.println("Igual");
+
 				activo = true;
 			} else {
 				dias++;
