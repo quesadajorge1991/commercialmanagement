@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.springbootapplication.SpringBootApplication.Entity.Municipio;
 import com.springbootapplication.SpringBootApplication.Entity.Pueblo;
-import com.springbootapplication.SpringBootApplication.Repository.*;
+import com.springbootapplication.SpringBootApplication.Services.PuebloService;
 
 
 
@@ -21,7 +21,7 @@ import com.springbootapplication.SpringBootApplication.Repository.*;
 public class PuebloController {
 
 	@Autowired
-	PuebloRepository puebloRepository;
+	PuebloService puebloService;
 
 	
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')")
@@ -33,10 +33,10 @@ public class PuebloController {
 
 		JSONObject jsono = new JSONObject();
 
-		if (!puebloRepository.getNamePueblo(municipio).contains(namepueblo)) {/* Pregunta si la lista esta vacia, de estarlo inserta el pueblo */
+		if (!puebloService.getNamePueblo(municipio).contains(namepueblo)) {/* Pregunta si la lista esta vacia, de estarlo inserta el pueblo */
 
 			try {
-				puebloRepository.save(new Pueblo(namepueblo, new Municipio(municipio)));
+				puebloService.save(new Pueblo(namepueblo, new Municipio(municipio)));
 				jsono.put("msgtipo", "success");
 				jsono.put("msgtitu", "Información");
 				jsono.put("msgbody", "Se inserto correctamente el pueblo " + namepueblo);

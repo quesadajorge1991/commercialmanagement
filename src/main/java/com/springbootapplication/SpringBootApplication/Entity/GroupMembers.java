@@ -22,8 +22,12 @@ import jakarta.persistence.Table;
 @Table(name = "group_members")
 public class GroupMembers implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String username;
     @JoinColumn(name = "group_id", referencedColumnName = "id")

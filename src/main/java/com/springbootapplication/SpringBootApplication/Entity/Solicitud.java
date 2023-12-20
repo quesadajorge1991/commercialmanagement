@@ -29,8 +29,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table
 public class Solicitud implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Size(min = 2, message = "Nombre de persona, obligatorio con mas de 2 caracteres")

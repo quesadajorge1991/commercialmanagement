@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -29,8 +30,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "users")
 public class Users implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	private String usernamee;
@@ -65,11 +71,9 @@ public class Users implements Serializable {
 
 	public Users(int id, String username, String password, boolean enabled, String descripcion) {
 		this.id = id;
-		this.usernamee = usernamee;
 		this.password = password;
 		this.enabled = enabled;
 		this.descripcion = descripcion;
-		this.authoritiesList = authoritiesList;
 	}
 
 	public Users(int id, String usernamee, String password, boolean enabled, String descripcion,

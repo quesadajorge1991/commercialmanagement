@@ -7,6 +7,8 @@ package com.springbootapplication.SpringBootApplication.Entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +17,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -25,8 +29,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "servicios")
 public class Servicio implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int nro;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -48,12 +57,15 @@ public class Servicio implements Serializable {
     private String entregado;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Pueblo pueblo;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Grupo grupo;
 
     public Servicio() {

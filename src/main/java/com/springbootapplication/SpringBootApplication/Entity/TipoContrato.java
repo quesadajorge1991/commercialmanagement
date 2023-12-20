@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 public class TipoContrato {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int nro;
 
     private String tipoContrato;

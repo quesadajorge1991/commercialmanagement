@@ -22,8 +22,13 @@ import jakarta.persistence.Table;
 @Table
 public class Municipio implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
     
     public String nomb_mun;

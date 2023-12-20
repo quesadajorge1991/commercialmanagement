@@ -20,30 +20,30 @@ import com.springbootapplication.SpringBootApplication.Entity.Municipio;
 import com.springbootapplication.SpringBootApplication.Entity.Provincia;
 import com.springbootapplication.SpringBootApplication.Entity.Pueblo;
 import com.springbootapplication.SpringBootApplication.Entity.Solicitud;
-import com.springbootapplication.SpringBootApplication.Repository.ClientesRepository;
-import com.springbootapplication.SpringBootApplication.Repository.MunicipioRepository;
-import com.springbootapplication.SpringBootApplication.Repository.ProvinciaRepository;
-import com.springbootapplication.SpringBootApplication.Repository.PuebloRepository;
 import com.springbootapplication.SpringBootApplication.Repository.ServicioRepository;
 import com.springbootapplication.SpringBootApplication.Repository.SolicitudRepository;
+import com.springbootapplication.SpringBootApplication.Services.ClientesService;
+import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
+import com.springbootapplication.SpringBootApplication.Services.ProvinciaService;
+import com.springbootapplication.SpringBootApplication.Services.PuebloService;
 
 @Controller
 public class ClientesController {
 
 	@Autowired
-	ClientesRepository clientesRepository;
+	ClientesService clientesService;
 
 	@Autowired
-	ProvinciaRepository provinciaRepository;
+	ProvinciaService provinciaService;
 
 	@Autowired
 	SolicitudRepository solicitudRepository;
 
 	@Autowired
-	MunicipioRepository municipioRepository;
+	MunicipioService municipioService;
 
 	@Autowired
-	PuebloRepository puebloRepository;
+	PuebloService puebloService;
 
 	@Autowired
 	ServicioRepository servicioRepository;
@@ -61,7 +61,7 @@ public class ClientesController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ECONOMIA')")
 	@GetMapping("/listclientes")
 	public String listclientes(Model model) {
-		model.addAttribute("clientes", clientesRepository.findAll());
+		model.addAttribute("clientes", clientesService.findAll());
 		return "Clientes/listclientes";
 	}
 
@@ -69,7 +69,7 @@ public class ClientesController {
 	@GetMapping("/addCliente")
 	public String addCliente(Model model) {
 		model.addAttribute("listsolicitudes", solicitudRepository.findAll());
-		model.addAttribute("provincias", provinciaRepository.findAll());
+		model.addAttribute("provincias", provinciaService.findAll());
 		model.addAttribute("cliente", new Cliente());
 		return "Clientes/addCliente";
 
@@ -78,20 +78,20 @@ public class ClientesController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping(value = "/updateCliente/{nro}")
 	public String updateCliente(Model model, @PathVariable(value = "nro") int nro) {
-		Cliente clientes = clientesRepository.findById(nro).get();
+		Cliente clientes = clientesService.findById(nro);
 		setNumero(clientes.getNro());
 		Pueblo temppueblo = clientes.getPueblo();
 		Municipio tempmun = temppueblo.getMunicipio();
 		Provincia tempprov = tempmun.getProvincia();
-		List<Provincia> listaprovin = (List<Provincia>) provinciaRepository.findAll();
+		List<Provincia> listaprovin = (List<Provincia>) provinciaService.findAll();
 		listaprovin.remove(tempprov);
 		listaprovin.add(0, tempprov);
 
-		List<Municipio> listMunicipio = (List<Municipio>) municipioRepository
-				.getMunicipiosByProvincia(listaprovin.get(0).getId());
+		List<Municipio> listMunicipio = (List<Municipio>) municipioService
+				.findMunicipiosByProvincia(listaprovin.get(0).getId());
 		listMunicipio.remove(tempmun);
 		listMunicipio.add(0, tempmun);
-		List<Pueblo> listpueblo = (List<Pueblo>) puebloRepository.getPueblosByMunicipios(listMunicipio.get(0).getId());
+		List<Pueblo> listpueblo = (List<Pueblo>) puebloService.getPueblosByMunicipios(listMunicipio.get(0).getId());
 		listpueblo.remove(temppueblo);
 		listpueblo.add(0, temppueblo);
 		model.addAttribute("clientetoupdate", clientes);
@@ -118,22 +118,21 @@ public class ClientesController {
 
 		if (bindingResult.hasErrors()) {
 			ModelAndView mav = new ModelAndView();
-			Cliente clientes = clientesRepository.findById(cliente.getNro()).get();
+			Cliente clientes = clientesService.findById(cliente.getNro());
 			Pueblo temppueblo = clientes.getPueblo();
 			Municipio tempmun = temppueblo.getMunicipio();
 			Provincia tempprov = tempmun.getProvincia();
 
-			List<Provincia> listaprovin = (List<Provincia>) provinciaRepository.findAll();
+			List<Provincia> listaprovin = (List<Provincia>) provinciaService.findAll();
 			listaprovin.remove(tempprov);
 			listaprovin.add(0, tempprov);
 
-			List<Municipio> listMunicipio = (List<Municipio>) municipioRepository
-					.getMunicipiosByProvincia(listaprovin.get(0).getId());
+			List<Municipio> listMunicipio = (List<Municipio>) municipioService
+					.findMunicipiosByProvincia(listaprovin.get(0).getId());
 			listMunicipio.remove(tempmun);
 			listMunicipio.add(0, tempmun);
 
-			List<Pueblo> listpueblo = (List<Pueblo>) puebloRepository
-					.getPueblosByMunicipios(listMunicipio.get(0).getId());
+			List<Pueblo> listpueblo = (List<Pueblo>) puebloService.getPueblosByMunicipios(listMunicipio.get(0).getId());
 			listpueblo.remove(temppueblo);
 			listpueblo.add(0, temppueblo);
 
@@ -151,7 +150,7 @@ public class ClientesController {
 		} else {
 			try {
 
-				clientesRepository.save(c);
+				clientesService.save(c);
 				redirectAttributes.addFlashAttribute("msgbody", "Se han guardado correctamente los datos del cliente");
 				redirectAttributes.addFlashAttribute("msgtipo", "success");
 				redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -172,7 +171,7 @@ public class ClientesController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping("/addClienteId/{id}")
 	public String addClienteId(@PathVariable(value = "id") int id, Model model) {
-		List<Provincia> provincias = (List<Provincia>) provinciaRepository.findAll();
+		List<Provincia> provincias = (List<Provincia>) provinciaService.findAll();
 
 		Solicitud solicitud = solicitudRepository.findById(id);
 		provincias.remove(solicitud.getPueblo().getMunicipio().getProvincia());
@@ -195,9 +194,9 @@ public class ClientesController {
 			throws ParseException {
 
 		try {
-			if (clientesRepository.findByCi(cliente.getCi()).isEmpty()) {
+			if (clientesService.findByCi(cliente.getCi()).isEmpty()) {
 
-				if (!clientesRepository.findByNroContrato(cliente.getNroContrato()).isEmpty()) {
+				if (!clientesService.findByNroContrato(cliente.getNroContrato()).isEmpty()) {
 
 					redirectAttributes.addFlashAttribute("msgtipo", "warning");
 					redirectAttributes.addFlashAttribute("msgbody",
@@ -216,7 +215,7 @@ public class ClientesController {
 								new Pueblo(cliente.getPueblo().getId()));
 
 						try {
-							clientesRepository.save(c);
+							clientesService.save(c);
 
 							redirectAttributes.addFlashAttribute("msgtipo", "success");
 							redirectAttributes.addFlashAttribute("msgbody",
@@ -242,7 +241,7 @@ public class ClientesController {
 								new Pueblo(cliente.getPueblo().getId()));
 
 						try {
-							clientesRepository.save(c);
+							clientesService.save(c);
 
 							redirectAttributes.addFlashAttribute("msgtipo", "success");
 							redirectAttributes.addFlashAttribute("msgbody",
@@ -268,7 +267,7 @@ public class ClientesController {
 			}
 
 		} catch (Exception e) {
-			clientesRepository.save(new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(),
+			clientesService.save(new Cliente(cliente.getNroContrato(), cliente.getNombreCliente(),
 					cliente.getTipoContrato(), cliente.getFechaSuscripcion(), cliente.getVigencia(),
 					cliente.getNroSuplemento(), null, cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(),
 					cliente.getDireccion(), cliente.getVencido(), new Pueblo(cliente.getPueblo().getId())));
@@ -289,7 +288,7 @@ public class ClientesController {
 			RedirectAttributes redirectAttributes) throws java.text.ParseException {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("listprovincias", provinciaRepository.findAll());
+			model.addAttribute("listprovincias", provinciaService.findAll());
 			return "Clientes/addClienteId";
 
 		} else {
@@ -304,7 +303,7 @@ public class ClientesController {
 							cliente.getFechaSuplemento(), cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(),
 							cliente.getDireccion(), cliente.getVencido(), p);
 
-					clientesRepository.save(c);
+					clientesService.save(c);
 					redirectAttributes.addFlashAttribute("msgbody",
 							"Se ha insertado correctamente los datos del cliente " + cliente.getNombreCliente());
 					redirectAttributes.addFlashAttribute("msgtipo", "success");
@@ -324,7 +323,7 @@ public class ClientesController {
 							cliente.getEntidad(), cliente.getCi(), cliente.getTelefono(), cliente.getDireccion(),
 							cliente.getVencido(), p);
 
-					clientesRepository.save(c);
+					clientesService.save(c);
 					redirectAttributes.addFlashAttribute("msgbody",
 							"Se ha insertado correctamente los datos del cliente " + cliente.getNombreCliente());
 					redirectAttributes.addFlashAttribute("msgtipo", "success");
@@ -349,7 +348,7 @@ public class ClientesController {
 	public String delete(@PathVariable(value = "nro") int nro, RedirectAttributes redirectAttributes) {
 
 		try {
-			clientesRepository.deleteById(nro);
+			clientesService.deleteById(nro);
 			redirectAttributes.addFlashAttribute("msgbody", "Se ha eliminado correctamente los datos del cliente ");
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");

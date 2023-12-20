@@ -13,37 +13,41 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springbootapplication.SpringBootApplication.Entity.*;
-import com.springbootapplication.SpringBootApplication.Repository.*;
+import com.springbootapplication.SpringBootApplication.Services.ClientesService;
+import com.springbootapplication.SpringBootApplication.Services.GrupoService;
+import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
+import com.springbootapplication.SpringBootApplication.Services.ProvinciaService;
+import com.springbootapplication.SpringBootApplication.Services.PuebloService;
+import com.springbootapplication.SpringBootApplication.Services.ServicioService;
+import com.springbootapplication.SpringBootApplication.Services.SolicitudService;
 
 @Controller
 public class ServicioController {
 
 	@Autowired
-	ProvinciaRepository provinciaRepository;
+	ProvinciaService provinciaService;
 
 	@Autowired
-	SolicitudRepository solicitudRepository;
+	SolicitudService solicitudService;
 
 	@Autowired
-	GrupoRepository grupoRepository;
+	GrupoService grupoService;
 
 	@Autowired
-	ClientesRepository clientesRepository;
+	ClientesService clientesService;
 
 	@Autowired
-	ServicioRepository servicioRepository;
+	ServicioService servicioService;
 
 	@Autowired
-	MunicipioRepository municipioRepository;
+	MunicipioService municipioService;
 
 	@Autowired
-	PuebloRepository puebloRepository;
+	PuebloService puebloService;
 
 	private int numero;
 
@@ -58,8 +62,7 @@ public class ServicioController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ECONOMIA')")
 	@GetMapping("/listservicios")
 	public String listservicios(Model model) {
-		model.addAttribute("servicios", servicioRepository.findAll());
-		model.addAttribute("servicios", servicioRepository.findAll());
+		model.addAttribute("servicios", servicioService.findAll());
 		return "Servicios/listservicios";
 
 	}
@@ -78,8 +81,8 @@ public class ServicioController {
 	@GetMapping("/addServicioId/{id}")
 	public String addServicioId(Model model, @PathVariable(value = "id") int id) {
 		// ModelAndView mav = new ModelAndView();
-		List<Provincia> listprovincias = (List<Provincia>) provinciaRepository.findAll();
-		Solicitud solicitud = solicitudRepository.findById(id);
+		List<Provincia> listprovincias = (List<Provincia>) provinciaService.findAll();
+		Solicitud solicitud = solicitudService.findById(id);
 		Provincia provincia = solicitud.getPueblo().getMunicipio().getProvincia();
 		setNumero(solicitud.getId());
 
@@ -94,8 +97,8 @@ public class ServicioController {
 		model.addAttribute("provincias", listprovtemp);
 		model.addAttribute("municipio", solicitud.getPueblo().getMunicipio());
 		model.addAttribute("pueblo", solicitud.getPueblo());
-		model.addAttribute("listclientes", clientesRepository.findAll());
-		model.addAttribute("listgrupos", grupoRepository.findAll());
+		model.addAttribute("listclientes", clientesService.findAll());
+		model.addAttribute("listgrupos", grupoService.findAll());
 
 		model.addAttribute("nroContrato", solicitud.getPueblo());
 
@@ -118,14 +121,14 @@ public class ServicioController {
 
 		Pueblo p = new Pueblo(servicio.getPueblo().getId());
 		Grupo g = new Grupo(servicio.getGrupo().getName());
-		Cliente clientetemp = clientesRepository.findById(servicio.getCliente().getNro()).get();
+		Cliente clientetemp = clientesService.findById(servicio.getCliente().getNro());
 		Cliente c = new Cliente(clientetemp.getNroContrato());
-		Solicitud sol = solicitudRepository.findById(getNumero()); /* sdao.getSolicitudxNro(getNumero()).get(0); */
+		Solicitud sol = solicitudService.findById(getNumero()); /* sdao.getSolicitudxNro(getNumero()).get(0); */
 		sol.setServicio(true);
 
 		if (bindingResult.hasErrors()) {
-			List<Provincia> listprovincias = (List<Provincia>) provinciaRepository.findAll();
-			Solicitud solicitud = solicitudRepository.findById(getId());
+			List<Provincia> listprovincias = (List<Provincia>) provinciaService.findAll();
+			Solicitud solicitud = solicitudService.findById(getId());
 			Provincia provincia = solicitud.getPueblo().getMunicipio().getProvincia();
 			setNumero(solicitud.getId());
 
@@ -141,8 +144,8 @@ public class ServicioController {
 			model.addAttribute("municipio", solicitud.getPueblo().getMunicipio());
 			model.addAttribute("pueblo", solicitud.getPueblo());
 
-			model.addAttribute("listclientes", clientesRepository.findAll());
-			model.addAttribute("grupos", grupoRepository.findAll());
+			model.addAttribute("listclientes", clientesService.findAll());
+			model.addAttribute("grupos", grupoService.findAll());
 			model.addAttribute("nroContrato", solicitud.getPueblo());
 
 			return "Servicios/addServicioId";
@@ -165,7 +168,7 @@ public class ServicioController {
 				// servicioRepository.save(new Servicio(servicio.getCultivo(),
 				// servicio.getTipo_afectacion(), servicio.getFecha_afectacion(),
 				// servicio.getZona_afectacion()));
-				servicioRepository.save(new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
+				servicioService.save(new Servicio(servicio.getFechaServicio(), servicio.getCultivo(),
 						servicio.getTipoAfectacion(), servicio.getFechaAfectacion(), servicio.getFechaAfectacionfin(),
 						servicio.getNroFactura(), servicio.getZonaAfectacion(), servicio.getEntregado(), p, clientetemp,
 						g));
@@ -192,10 +195,10 @@ public class ServicioController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping("/addServicio")
 	public String addServicio(Model model) {
-		List<Provincia> provincias = (List<Provincia>) provinciaRepository.findAll();
-		List<Solicitud> solicitudes = (List<Solicitud>) solicitudRepository.getSolicitudSinServicio();
-		List<Cliente> clientes = (List<Cliente>) clientesRepository.findAll();
-		List<Grupo> grupos = (List<Grupo>) grupoRepository.findAll();
+		List<Provincia> provincias = (List<Provincia>) provinciaService.findAll();
+		List<Solicitud> solicitudes = (List<Solicitud>) solicitudService.getSolicitudSinServicio();
+		List<Cliente> clientes = (List<Cliente>) clientesService.findAll();
+		List<Grupo> grupos = (List<Grupo>) grupoService.findAll();
 
 		model.addAttribute("listsolicitudes", solicitudes);
 		model.addAttribute("provincias", provincias);
@@ -218,7 +221,7 @@ public class ServicioController {
 		Cliente c = new Cliente(servicio.getCliente().getNro());
 
 		try {
-			Solicitud sol = solicitudRepository.findById(solicitud);
+			Solicitud sol = solicitudService.findById(solicitud);
 			Solicitud soli = new Solicitud(sol.getId(), sol.getNombPers(), sol.getCi(), sol.getDireccion(),
 					sol.getTelefono(), sol.getCultDanado(), sol.getTipoAfect(), sol.getFecha(), sol.getFechafin(),
 					sol.getZonaAfect(), true, sol.getPueblo());
@@ -244,8 +247,8 @@ public class ServicioController {
 			System.out.println("ffffff " + c.getNro());
 			System.out.println("ffffff " + g.getName());
 
-			servicioRepository.save(s);
-			solicitudRepository.save(soli);
+			servicioService.save(s);
+			solicitudService.save(soli);
 			redirectAttributes.addFlashAttribute("msgbody", "Se ha insertado correctamente los datos del servicio ");
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -264,9 +267,9 @@ public class ServicioController {
 	@GetMapping(value = "/delete_servicio/{nro}")
 	public String delete(@PathVariable(value = "nro") int nro, RedirectAttributes redirectAttributes) {
 		try {
-			Servicio servicio = servicioRepository.findById(nro).get();
+			Servicio servicio = servicioService.findById(nro);
 
-			servicioRepository.deleteservicio(nro);
+			servicioService.deleteservicio(nro);
 			redirectAttributes.addFlashAttribute("msgbody", "Se ha eliminado correctamente los datos del servicio ");
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -285,18 +288,18 @@ public class ServicioController {
 	@GetMapping(value = "/updateServicio/{nro}")
 	public String update(Model model, @PathVariable(value = "nro") int nro) {
 
-		Servicio servicios = servicioRepository.findById(nro).get();
-		List<Provincia> provincias = (List<Provincia>) provinciaRepository.findAll();
+		Servicio servicios = servicioService.findById(nro);
+		List<Provincia> provincias = (List<Provincia>) provinciaService.findAll();
 
 		setNumero(servicios.getNro());
-		List<Cliente> clientes = (List<Cliente>) clientesRepository.findAll();
-		List<Grupo> grupos = (List<Grupo>) grupoRepository.findAll();
+		List<Cliente> clientes = (List<Cliente>) clientesService.findAll();
+		List<Grupo> grupos = (List<Grupo>) grupoService.findAll();
 
-		List<Municipio> listMunicipio = (List<Municipio>) municipioRepository.findAll();
+		List<Municipio> listMunicipio = (List<Municipio>) municipioService.findAll();
 		listMunicipio.remove(servicios.getPueblo().getMunicipio());
 		listMunicipio.add(0, servicios.getPueblo().getMunicipio());
 
-		List<Pueblo> listpueblo = (List<Pueblo>) puebloRepository.findAll();
+		List<Pueblo> listpueblo = (List<Pueblo>) puebloService.findAll();
 		listpueblo.remove(servicios.getPueblo());
 		listpueblo.add(0, servicios.getPueblo());
 
@@ -329,7 +332,7 @@ public class ServicioController {
 					new Pueblo(servicio.getPueblo().getId()), new Cliente(servicio.getCliente().getNro()),
 					new Grupo(servicio.getGrupo().getName()));
 
-			servicioRepository.save(s);
+			servicioService.save(s);
 			redirectAttributes.addFlashAttribute("msgbody", "Se modificado correctamente el servicio");
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");

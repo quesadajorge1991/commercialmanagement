@@ -6,6 +6,9 @@
 package com.springbootapplication.SpringBootApplication.Entity;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,14 +28,19 @@ import jakarta.persistence.Table;
 public class Authorities implements Serializable {
 
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String authority;
     
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username")
+    @JsonIgnore
     private Users usernamee;
 
 

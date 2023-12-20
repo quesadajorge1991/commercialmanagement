@@ -26,29 +26,34 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springbootapplication.SpringBootApplication.Entity.*;
 import com.springbootapplication.SpringBootApplication.Repository.*;
+import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
+import com.springbootapplication.SpringBootApplication.Services.ProovedorService;
+import com.springbootapplication.SpringBootApplication.Services.ProvinciaService;
+import com.springbootapplication.SpringBootApplication.Services.PuebloService;
+import com.springbootapplication.SpringBootApplication.Services.TipoContratoService;
 
 @Controller
 public class ProveedoresController {
 
 	@Autowired
-	ProovedorRepository proovedorRepository;
+	ProovedorService proovedorService;
 
 	@Autowired
-	MunicipioRepository municipioRepository;
+	MunicipioService municipioService;
 
 	@Autowired
-	ProvinciaRepository provinciaRepository;
+	ProvinciaService provinciaService;
 
 	@Autowired
-	TipoContratoRepository tipoContratoRepository;
+	TipoContratoService tipoContratoService;
 
 	@Autowired
-	PuebloRepository puebloRepository;
+	PuebloService puebloService;
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ECONOMIA')")
 	@GetMapping("/proveedores")
 	public String listproveedores(Model model) {
-		model.addAttribute("proveedores", proovedorRepository.findByOrderByNroRegistro());
+		model.addAttribute("proveedores", proovedorService.findByOrderByNroRegistro());
 		model.addAttribute("standardDate", new Date());
 		return "Proveedores/listproveedores";
 	}
@@ -57,8 +62,8 @@ public class ProveedoresController {
 	@GetMapping("/addproveedores")
 	public String Addproveedores(Model model) {
 		model.addAttribute("proveedor", new Proveedor());
-		model.addAttribute("provincias", provinciaRepository.findAll());
-		model.addAttribute("tipocontratos", tipoContratoRepository.findAll());
+		model.addAttribute("provincias", provinciaService.findAll());
+		model.addAttribute("tipocontratos", tipoContratoService.findAll());
 		return "Proveedores/addproveedor";
 	}
 
@@ -71,24 +76,24 @@ public class ProveedoresController {
 	@GetMapping("/updateProveedor/{nro}")
 	public String updateProveedor(@PathVariable int nro, Model model) {
 		// Proveedor provee= proovedorRepository.findById(Integer.parseInt(nro)).get();
-		Proveedor proveedor = proovedorRepository.findById(nro).get();
+		Proveedor proveedor = proovedorService.findById(nro);
 		Municipio tempmunicipio = proveedor.getMunicipio();
 		Provincia tempprov = tempmunicipio.getProvincia();
-		List<Provincia> listaprovin = (List<Provincia>) provinciaRepository.findAll();
+		List<Provincia> listaprovin = (List<Provincia>) provinciaService.findAll();
 		listaprovin.remove(tempprov);
 		listaprovin.add(0, tempprov);
 
-		List<Municipio> listMunicipio = (List<Municipio>) municipioRepository
-				.getMunicipiosByProvincia(listaprovin.get(0).getId());
+		List<Municipio> listMunicipio = (List<Municipio>) municipioService
+				.findMunicipiosByProvincia(listaprovin.get(0).getId());
 		listMunicipio.remove(tempmunicipio);
 		listMunicipio.add(0, tempmunicipio);
 
 		TipoContrato tipo_Contrato = proveedor.getTipoContrato();
-		List<TipoContrato> listTipo_Contrato = (List<TipoContrato>) tipoContratoRepository.findAll();
+		List<TipoContrato> listTipo_Contrato = (List<TipoContrato>) tipoContratoService.findAll();
 		listTipo_Contrato.remove(tipo_Contrato);
 		listTipo_Contrato.add(0, tipo_Contrato);
 
-		model.addAttribute("proveedor", proovedorRepository.findById(nro).get());
+		model.addAttribute("proveedor", proovedorService.findById(nro));
 		model.addAttribute("provincias", listaprovin);
 		model.addAttribute("municipios", listMunicipio);
 		model.addAttribute("tipocontratos", listTipo_Contrato);
@@ -101,13 +106,13 @@ public class ProveedoresController {
 	public String addProveedor(@ModelAttribute("proveedor") @Valid Proveedor proveedor, BindingResult bindingResult,
 			Model model, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("provincias", provinciaRepository.findAll());
-			model.addAttribute("tipocontratos", tipoContratoRepository.findAll());
+			model.addAttribute("provincias", provinciaService.findAll());
+			model.addAttribute("tipocontratos", tipoContratoService.findAll());
 
 			return "Proveedores/addproveedor";
 		} else {
 			try {
-				proovedorRepository.save(new Proveedor(proveedor.getNroContrato(), proveedor.getNroRegistro(),
+				proovedorService.save(new Proveedor(proveedor.getNroContrato(), proveedor.getNroRegistro(),
 						proveedor.getNombreProveedor(), proveedor.getAliasProveedor(), proveedor.getFechaSuscripcion(),
 						proveedor.getVigencia(), proveedor.getFichaCliente(), proveedor.getCodigoREUP(),
 						proveedor.getCuentaBancaria(), proveedor.getDictaminado(), proveedor.getTelefono(),
@@ -136,14 +141,14 @@ public class ProveedoresController {
 	public String updateProveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("provincias", provinciaRepository.findAll());
-			model.addAttribute("tipocontratos", tipoContratoRepository.findAll());
+			model.addAttribute("provincias", provinciaService.findAll());
+			model.addAttribute("tipocontratos", tipoContratoService.findAll());
 
 			return "Proveedores/updateproveedor";
 		} else {
 			try {
 
-				proovedorRepository.save(new Proveedor(proveedor.getNro(), proveedor.getNroContrato(),
+				proovedorService.save(new Proveedor(proveedor.getNro(), proveedor.getNroContrato(),
 						proveedor.getNroRegistro(), proveedor.getNombreProveedor(), proveedor.getAliasProveedor(),
 						proveedor.getFechaSuscripcion(), proveedor.getVigencia(), proveedor.getFichaCliente(),
 						proveedor.getCodigoREUP(), proveedor.getCuentaBancaria(), proveedor.getDictaminado(),
@@ -171,7 +176,7 @@ public class ProveedoresController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')")
 	@GetMapping(value = "/getMunicipioByProvincia")
 	public String MunicipioByProvincia(@RequestParam("provincia") String idprovincia, Model model) {
-		List<Municipio> municipios = municipioRepository.getMunicipiosByProvincia(Long.valueOf(idprovincia));
+		List<Municipio> municipios = municipioService.findMunicipiosByProvincia(Long.valueOf(idprovincia));
 		model.addAttribute("municipios", municipios);
 
 		return "templateBase/ComponentFragment :: municicipiosByProvincia";
@@ -181,7 +186,7 @@ public class ProveedoresController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ESTACIONES')")
 	@GetMapping(value = "/getPuebloByMunicipio")
 	public String getPuebloByMunicipio(@RequestParam("municipio") long idmunicipio, Model model) {
-		List<Pueblo> pueblos = puebloRepository.getPueblosByMunicipios(idmunicipio);
+		List<Pueblo> pueblos = puebloService.getPueblosByMunicipios(idmunicipio);
 		model.addAttribute("pueblos", pueblos);
 		return "templateBase/ComponentFragment :: pueblosByMunicipio";
 
@@ -192,7 +197,7 @@ public class ProveedoresController {
 	public String deleteProveedor(@PathVariable int nro, RedirectAttributes redirectAttributes) {
 
 		try {
-			proovedorRepository.deleteById(nro);
+			proovedorService.deleteById(nro);
 
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -212,7 +217,7 @@ public class ProveedoresController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping({ "/index", "/" })
 	public String index(Model model) {
-		List<Proveedor> listproveedores = proovedorRepository.findByOrderByVigencia();
+		List<Proveedor> listproveedores = proovedorService.findByOrderByVigencia();
 		try {
 
 			List<Proveedor> contr_vencidos = new ArrayList<Proveedor>();
@@ -223,8 +228,7 @@ public class ProveedoresController {
 				if (actual.after(proveedor.getVigencia())) {
 					contr_vencidos.add(proveedor);
 					proveedor.setVencido("si");
-					// pdao.updateProveedor(proveedor);
-					proovedorRepository.save(proveedor);
+					proovedorService.save(proveedor);
 				} else {
 					cxv = new ContratosxVencerse(proveedor, diasRestantes(proveedor.getVigencia()));
 					contrxVencerse.add(cxv);

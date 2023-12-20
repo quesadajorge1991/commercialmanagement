@@ -18,6 +18,7 @@ import com.springbootapplication.SpringBootApplication.Repository.AuthoritiesRep
 import com.springbootapplication.SpringBootApplication.Repository.MunicipioRepository;
 import com.springbootapplication.SpringBootApplication.Repository.ProvinciaRepository;
 import com.springbootapplication.SpringBootApplication.Repository.UsersRepository;
+import com.springbootapplication.SpringBootApplication.Services.UsersService;
 
 @SpringBootApplication
 public class Application {
@@ -37,6 +38,9 @@ public class Application {
 
 	@Autowired
 	MunicipioRepository municipioRepository;
+	
+	@Autowired
+	UsersService usersService;
 
 	@PostConstruct
 	public void insertBD() {
@@ -52,7 +56,7 @@ public class Application {
 					"ROLE_COMERCIAL", "ROLE_ECONOMIA", "ROLE_METEOROLOGIA", "ROLE_PRONOSTICO", "ROLE_ESTACIONES" };
 			for (int i = 0; i < authorities.length; i++) {
 				authoritiesRepository
-						.save(new Authorities(authorities[i], new Users(usersRepository.getUser("admin").getId())));
+						.save(new Authorities(authorities[i], new Users(usersService.findByUsername("admin").getId())));
 			}
 
 		} else if (provincias.isEmpty()) {

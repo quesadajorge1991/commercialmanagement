@@ -17,7 +17,12 @@ import jakarta.persistence.Table;
 @Entity
 public class Grupo implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Id
     private String name;
 
     public Grupo() {

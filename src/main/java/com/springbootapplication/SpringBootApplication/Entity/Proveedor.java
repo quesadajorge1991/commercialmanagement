@@ -30,8 +30,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "proveedores")
 public class Proveedor implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int nro;
     
     private String nroRegistro;

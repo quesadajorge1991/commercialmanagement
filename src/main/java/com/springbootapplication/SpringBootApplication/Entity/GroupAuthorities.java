@@ -22,9 +22,13 @@ import jakarta.persistence.Table;
 @Table(name = "group_authorities")
 public class GroupAuthorities implements Serializable {
 
-    private String authority;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String authority;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @JoinColumn(name = "group_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

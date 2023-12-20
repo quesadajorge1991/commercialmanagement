@@ -15,17 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.springbootapplication.SpringBootApplication.Entity.Grupo;
 import com.springbootapplication.SpringBootApplication.Entity.TipoContrato;
 import com.springbootapplication.SpringBootApplication.Repository.GrupoRepository;
+import com.springbootapplication.SpringBootApplication.Services.GrupoService;
 
 @Controller
 public class GrupoController {
 
 	@Autowired
-	GrupoRepository grupoRepository;
+	GrupoService grupoService;
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping(value = "/getGrupo")
 	public String getTipoContrato(Model model) {
-		List<Grupo> grupos = (List<Grupo>) grupoRepository.findAll();
+		List<Grupo> grupos = (List<Grupo>) grupoService.findAll();
 		model.addAttribute("grupos", grupos);
 		return "templateBase/ComponentFragment :: grupo";
 
@@ -37,10 +38,10 @@ public class GrupoController {
 
 		JSONObject jsono = new JSONObject();
 
-		if (!grupoRepository.existsById(grupo)) {
+		if (!grupoService.existsById(grupo)) {
 
 			try {
-				grupoRepository.save(new Grupo(grupo));
+				grupoService.save(new Grupo(grupo));
 				jsono.put("msgtipo", "success");
 				jsono.put("msgtitu", "Información");
 				jsono.put("msgbody", "Se inserto correctamente el grupo ");

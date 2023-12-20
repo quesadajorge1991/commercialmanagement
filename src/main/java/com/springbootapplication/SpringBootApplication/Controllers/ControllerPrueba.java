@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootapplication.SpringBootApplication.Entity.Solicitud;
 import com.springbootapplication.SpringBootApplication.Repository.*;
+import com.springbootapplication.SpringBootApplication.Services.PuebloService;
+import com.springbootapplication.SpringBootApplication.Services.SolicitudService;
 
 @RestController
 public class ControllerPrueba {
 
 	@Autowired
-	SolicitudRepository solicitudRepository;
+	SolicitudService solicitudService;
 
 	@Autowired
-	PuebloRepository puebloRepository;
+	PuebloService puebloService;
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping(value = "/getdatosSolicitud", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -30,7 +32,7 @@ public class ControllerPrueba {
 			throws Exception {
 		JSONObject jsono = new JSONObject();
 
-		List<String> bus_list = solicitudRepository.getDatosSolicitud(ids);
+		List<String> bus_list = solicitudService.getDatosSolicitud(ids);
 		jsono.put("listsolicitud", bus_list);
 
 		return jsono.toString();
@@ -40,7 +42,7 @@ public class ControllerPrueba {
 	@GetMapping(value = "/gettdata", produces = "application/json;charset=UTF-8")
 	public List<Solicitud> getSolicitud() throws Exception {
 		// JSONObject jsono = new JSONObject();
-		List<Solicitud> bus_list = (List<Solicitud>) solicitudRepository.findAll();
+		List<Solicitud> bus_list = (List<Solicitud>) solicitudService.findAll();
 		// jsono.put("listsolicitud", bus_list);
 		return bus_list;
 	}

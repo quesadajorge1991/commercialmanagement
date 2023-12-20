@@ -2,24 +2,19 @@ package com.springbootapplication.SpringBootApplication.Repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import com.springbootapplication.SpringBootApplication.Entity.Servicio;
 
+public interface ServicioRepository extends JpaRepository<Servicio, Integer> {
 
-
-
-
-public interface ServicioRepository extends CrudRepository<Servicio, Integer> {
-	
-	//@Modifying
-	@Query(value = "delete from servicios s where s.nro=?1",nativeQuery = true)
-	void deleteservicio(int nro);
-	
-	
 	@Query(value = "FROM Servicio s WHERE s.cliente.nro=?1")
 	List<Servicio> getServicioxCliente(int nro);
+
+	@Modifying
+	@Query(value = "DELETE FROM Servicio where nro=?1")
+	void deleteById(int nro);
 
 }

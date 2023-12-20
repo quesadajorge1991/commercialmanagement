@@ -7,12 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.springbootapplication.SpringBootApplication.Repository.UsersRepository;
+import com.springbootapplication.SpringBootApplication.Services.UsersService;
 
 @Controller
 public class IndexController {
 
 	@Autowired
-	UsersRepository usersRepository;
+	UsersService usersService;
 
 	@GetMapping(value = "/login")
 	public String login() {
@@ -22,7 +23,7 @@ public class IndexController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/profile")
 	public String prueba(Model model) {
-		model.addAttribute("users", usersRepository.findAll());
+		model.addAttribute("users", usersService.findAll());
 		return "profile";
 	}
 

@@ -14,28 +14,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springbootapplication.SpringBootApplication.Entity.*;
-import com.springbootapplication.SpringBootApplication.Repository.*;
+import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
+import com.springbootapplication.SpringBootApplication.Services.ProvinciaService;
+import com.springbootapplication.SpringBootApplication.Services.PuebloService;
+import com.springbootapplication.SpringBootApplication.Services.SolicitudService;
 
 @Controller
 public class SolicitudesController {
 
 	@Autowired
-	SolicitudRepository solicitudRepository;
+	SolicitudService solicitudService;
 
 	@Autowired
-	ProvinciaRepository provinciaRepository;
+	ProvinciaService provinciaService;
 
 	@Autowired
-	MunicipioRepository municipioRepository;
+	MunicipioService municipioService;
 
 	@Autowired
-	PuebloRepository puebloRepository;
+	PuebloService puebloService;
 
 	public List<String> getYears() {
 		List<String> years = new ArrayList<String>();
@@ -50,9 +52,9 @@ public class SolicitudesController {
 	public String listsolicitudes(Model model) {
 
 		model.addAttribute("years", getYears());
-		model.addAttribute("listsolicitudes", solicitudRepository.findAll());
-		model.addAttribute("s_sin_servicio", solicitudRepository.getSolicitudSinServicio());
-		model.addAttribute("s_con_servicio", solicitudRepository.getSolicitudConServicio());
+		model.addAttribute("listsolicitudes", solicitudService.findAll());
+		model.addAttribute("s_sin_servicio", solicitudService.getSolicitudSinServicio());
+		model.addAttribute("s_con_servicio", solicitudService.getSolicitudConServicio());
 
 		return "Solicitudes/listsolicitudes";
 	}
@@ -61,9 +63,9 @@ public class SolicitudesController {
 	@GetMapping("/addsolicitud")
 	public String addsolicitud(Model model) {
 		model.addAttribute("solicitud", new Solicitud());
-		model.addAttribute("provincias", provinciaRepository.findAll());
-		model.addAttribute("municipios", municipioRepository.findAll());
-		model.addAttribute("pueblos", puebloRepository.findAll());
+		model.addAttribute("provincias", provinciaService.findAll());
+		model.addAttribute("municipios", provinciaService.findAll());
+		model.addAttribute("pueblos", puebloService.findAll());
 		return "Solicitudes/addsolicitud";
 	}
 
@@ -72,7 +74,7 @@ public class SolicitudesController {
 	public String addProveedor(@ModelAttribute("solicitud") @Valid Solicitud solicitud, BindingResult bindingResult,
 			Model model, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("provincias", provinciaRepository.findAll());
+			model.addAttribute("provincias", provinciaService.findAll());
 
 			System.out.println("NOMBRE " + solicitud.getNombPers());
 			System.out.println("CI " + solicitud.getCi());
@@ -94,7 +96,7 @@ public class SolicitudesController {
 				 * SimpleDateFormat("yy-MM-dd").parse(tempfesus);
 				 */
 
-				solicitudRepository.save(new Solicitud(solicitud.getNombPers(), solicitud.getCi(),
+				solicitudService.save(new Solicitud(solicitud.getNombPers(), solicitud.getCi(),
 						solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(),
 						solicitud.getTipoAfect(), solicitud.getFecha(), solicitud.getFechafin(),
 						solicitud.getZonaAfect(), new Pueblo(solicitud.getPueblo().getId())));
@@ -124,24 +126,24 @@ public class SolicitudesController {
 		 * se selecciona un objeto de provincia municipio y pueblo y se elminina de la
 		 * lista y luego se añade en la primera posicion
 		 */
-		Pueblo temppueblo = solicitudRepository.findById(id).getPueblo();
+		Pueblo temppueblo = solicitudService.findById(id).getPueblo();
 		Municipio tempmun = temppueblo.getMunicipio();
 		Provincia tempprov = tempmun.getProvincia();
 
-		List<Provincia> listaprovin = (List<Provincia>) provinciaRepository.findAll();
+		List<Provincia> listaprovin = (List<Provincia>) provinciaService.findAll();
 		listaprovin.remove(tempprov);
 		listaprovin.add(0, tempprov);
 
-		List<Municipio> listMunicipio = (List<Municipio>) municipioRepository
-				.getMunicipiosByProvincia(listaprovin.get(0).getId());
+		List<Municipio> listMunicipio = (List<Municipio>) municipioService
+				.findMunicipiosByProvincia(listaprovin.get(0).getId());
 		listMunicipio.remove(tempmun);
 		listMunicipio.add(0, tempmun);
 
-		List<Pueblo> listpueblo = (List<Pueblo>) puebloRepository.getPueblosByMunicipios(listMunicipio.get(0).getId());
+		List<Pueblo> listpueblo = (List<Pueblo>) puebloService.getPueblosByMunicipios(listMunicipio.get(0).getId());
 		listpueblo.remove(temppueblo);
 		listpueblo.add(0, temppueblo);
 
-		model.addAttribute("solicitud", solicitudRepository.findById(id));
+		model.addAttribute("solicitud", solicitudService.findById(id));
 		model.addAttribute("provincias", listaprovin);
 		model.addAttribute("municipios", listMunicipio);
 		model.addAttribute("pueblos", listpueblo);
@@ -153,7 +155,7 @@ public class SolicitudesController {
 	@GetMapping("/deletesolicitud/{id}")
 	public String deletesolicitud(@PathVariable int id, RedirectAttributes redirectAttributes) {
 		try {
-			solicitudRepository.deleteById(id);
+			solicitudService.deleteById(id);
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
 			redirectAttributes.addFlashAttribute("msgbody", "Se ha eliminado satisfactoriamente la solicitud ");
@@ -173,7 +175,7 @@ public class SolicitudesController {
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("provincias", provinciaRepository.findAll());
+			model.addAttribute("provincias", provinciaService.findAll());
 			return "Solicitudes/updatesolicitud";
 		} else {
 			try {
@@ -185,7 +187,7 @@ public class SolicitudesController {
 				 * System.out.println("sfsdfsdfsdf " + fechasuscripcion);
 				 */
 
-				solicitudRepository.save(new Solicitud(solicitud.getId(), solicitud.getNombPers(), solicitud.getCi(),
+				solicitudService.save(new Solicitud(solicitud.getId(), solicitud.getNombPers(), solicitud.getCi(),
 						solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(),
 						solicitud.getTipoAfect(), solicitud.getFecha(), solicitud.getFechafin(),
 						solicitud.getZonaAfect(), new Pueblo(solicitud.getPueblo().getId())));
@@ -210,7 +212,7 @@ public class SolicitudesController {
 	@GetMapping("/deleteSolicitud/{id}")
 	public String deleteProveedor(@PathVariable int id, RedirectAttributes redirectAttributes) {
 		try {
-			solicitudRepository.deleteById(id);
+			solicitudService.deleteById(id);
 
 			redirectAttributes.addFlashAttribute("msgtipo", "success");
 			redirectAttributes.addFlashAttribute("msgtitu", "Confirmación");
@@ -231,16 +233,16 @@ public class SolicitudesController {
 	@GetMapping(value = "/datosSolicitud")
 	public @ResponseBody Solicitud getSolicitud(@RequestParam("ids") int ids, Model model) throws Exception {
 		Solicitud resultsolicitud = new Solicitud();
-		Solicitud solicitud = solicitudRepository.findById(ids);
+		Solicitud solicitud = solicitudService.findById(ids);
 
-		Municipio municipio = municipioRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get();
+		Municipio municipio = municipioService.findById(solicitud.getPueblo().getMunicipio().getId());
 
 		Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
-		
+
 		resultsolicitud = new Solicitud(solicitud.getId(), solicitud.getNombPers(), solicitud.getCi(),
-				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(),
-				solicitud.getTipoAfect(), solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZonaAfect(),
-				solicitud.isServicio(), pueblo);
+				solicitud.getDireccion(), solicitud.getTelefono(), solicitud.getCultDanado(), solicitud.getTipoAfect(),
+				solicitud.getFecha(), solicitud.getFechafin(), solicitud.getZonaAfect(), solicitud.isServicio(),
+				pueblo);
 
 		return resultsolicitud;
 	}
@@ -250,9 +252,9 @@ public class SolicitudesController {
 	public @ResponseBody List<Provincia> getprovincia(@RequestParam("ids") int ids, Model model) {
 		List<Provincia> listaprovin = new ArrayList<>();
 		try {
-			Solicitud solicitud = solicitudRepository.findById(ids);
-			Municipio municipio = puebloRepository.findById(solicitud.getPueblo().getMunicipio().getId()).get()
-					.getMunicipio();
+			Solicitud solicitud = solicitudService.findById(ids);
+			Municipio municipio = puebloService.findById(solicitud.getPueblo().getMunicipio().getId()).getMunicipio();
+
 			Pueblo pueblo = new Pueblo(solicitud.getPueblo().getId(), solicitud.getPueblo().getNomb_pueb(), municipio);
 			/*
 			 * Solicitud resultsolicitud = new Solicitud(solicitud.getId(),
@@ -265,7 +267,7 @@ public class SolicitudesController {
 			Municipio tempmun = pueblo.getMunicipio();
 			Provincia tempprov = tempmun.getProvincia();
 
-			listaprovin = (List<Provincia>) provinciaRepository.findAll();
+			listaprovin = (List<Provincia>) provinciaService.findAll();
 			listaprovin.remove(tempprov);
 			listaprovin.add(0, tempprov);
 
@@ -282,9 +284,9 @@ public class SolicitudesController {
 	public String filterByYear(@RequestParam("year") int year, Model model) {
 
 		model.addAttribute("solicitud", new Solicitud());
-		model.addAttribute("provincias", provinciaRepository.findAll());
-		model.addAttribute("municipios", municipioRepository.findAll());
-		model.addAttribute("pueblos", puebloRepository.findAll());
+		model.addAttribute("provincias", provinciaService.findAll());
+		model.addAttribute("municipios", municipioService.findAll());
+		model.addAttribute("pueblos", puebloService.findAll());
 		return "Solicitudes/addsolicitud";
 	}
 
