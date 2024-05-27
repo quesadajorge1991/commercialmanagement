@@ -128,7 +128,7 @@
 									<div class="form-group">
 										<label class="login2">Provincia </label>
 										<select data-placeholder="--Seleccione la provincia--" name="provincia"
-											id="provincia" class="form-control" required="true">
+											id="provincia" class="form-control select2" required="true">
 											<!--		<option th:text="*{municipio.provincia.nomb_prov}"  th:value=" ${municipio.provincia.id}"></option>-->
 											<option th:each="prov :${provincias}" th:value=" ${prov.id}"
 												th:text="${prov.nombProv}"></option>
@@ -138,7 +138,7 @@
 									<div class="form-group">
 										<div class="form-group">
 											<label class="login2">Municipio </label>
-											<select name="municipio" id="loadMunicipiosFragment" class="form-control"
+											<select name="municipio" id="loadMunicipiosFragment" class="form-control select2"
 												required="true">
 												<option th:each="municipio:${municipios}" th:value="${municipio.id}"
 													th:text="${municipio.nomb_mun}"></option>
