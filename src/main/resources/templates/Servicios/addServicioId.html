@@ -28,7 +28,7 @@
 									<h1>Agregar servicio</h1>
 								</div>
 							</div>
-							<form th:action="@{/add_Servicio_Id}" method="POST" th:object="${servicio}"
+							<form th:action="@{/add_Servicio_Id}" method="post" th:object="${servicio}"
 								class="dropzone dropzone-custom needsclick add-professors" name="addservicioid"
 								id="addservicioid">
 								<div class="row">
@@ -175,13 +175,17 @@
 											<button type="submit"
 												class="btn btn-primary waves-effect waves-light"><i class="fa fa-save"></i> Aceptar</button>
 												
-												<input type="submit"  class="btn btn-primary">
+												
 											
 										</div>
 									</div>
 								</div>
 								
 								
+							
+							</form>
+							
+							
 										<!-- modal add group-->
 								<div id="DetailModalAddGroup"
 									class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
@@ -232,7 +236,6 @@
 										</div>
 									</div>
 								</div>
-							</form>
 						</div>
 					</div>
 				</div>
