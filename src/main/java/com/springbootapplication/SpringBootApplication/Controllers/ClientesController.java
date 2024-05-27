@@ -185,7 +185,7 @@ public class ClientesController {
 		model.addAttribute("solicitudtoadd", solicitud);
 		model.addAttribute("listprovincias", provincias);
 
-		return "Clientes/addClienteid";
+		return "Clientes/addClienteId";
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
