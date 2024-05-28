@@ -34,10 +34,10 @@ public class UsersController {
 	@Autowired
 	AuthoritiesService authoritiesService;
 
-	public String encodePassword(String password) {
+/*	public String encodePassword(String password) {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(password);
-	}
+	} */
 
 	@GetMapping("/resetpass")
 	public String resetpass(Model model) {
@@ -64,7 +64,7 @@ public class UsersController {
 
 		try {
 			Users usuario = usersService.findById(username);
-			usuario.setPassword(encodePassword(user.getPassword()));
+			usuario.setPassword(usersService.encodePassword(user.getPassword()));
 			usuario.setEnabled(user.isEnabled());
 			usuario.setDescripcion(user.getDescripcion());
 
@@ -140,7 +140,7 @@ public class UsersController {
 
 		try {
 
-			Users usuario = new Users(user.getUsernamee(), encodePassword(user.getPassword()), user.isEnabled(),
+			Users usuario = new Users(user.getUsernamee(), usersService.encodePassword(user.getPassword()), user.isEnabled(),
 					user.getDescripcion());
 			usersService.save(usuario);
 			redirectAttributes.addFlashAttribute("msgtipo", "success");

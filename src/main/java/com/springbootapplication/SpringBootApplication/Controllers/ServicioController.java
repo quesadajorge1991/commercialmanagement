@@ -59,14 +59,6 @@ public class ServicioController {
 		this.numero = numero;
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ECONOMIA')")
-	@GetMapping("/listservicios")
-	public String listservicios(Model model) {
-		model.addAttribute("servicios", servicioService.findAll());
-		return "Servicios/listservicios";
-
-	}
-
 	int id;
 
 	public int getId() {
@@ -75,6 +67,14 @@ public class ServicioController {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL','ECONOMIA')")
+	@GetMapping("/listservicios")
+	public String listservicios(Model model) {
+		model.addAttribute("servicios", servicioService.findAll());
+		return "Servicios/listservicios";
+
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")

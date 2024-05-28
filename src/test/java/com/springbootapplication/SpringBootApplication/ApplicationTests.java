@@ -1,5 +1,6 @@
 package com.springbootapplication.SpringBootApplication;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +26,7 @@ import com.springbootapplication.SpringBootApplication.Repository.ServicioReposi
 import com.springbootapplication.SpringBootApplication.Repository.TipoContratoRepository;
 import com.springbootapplication.SpringBootApplication.Repository.UsersRepository;
 import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
+import com.springbootapplication.SpringBootApplication.Services.ProveedorService;
 import com.springbootapplication.SpringBootApplication.Services.UsersService;
 
 @SpringBootTest
@@ -62,6 +64,9 @@ class ApplicationTests {
 	
 	@Autowired
 	ProvinciaRepository provinciaRepository;
+	
+	@Autowired
+	ProveedorService proovedorService;
 
 	@Test
 	void contextLoads() throws SQLException {
@@ -74,7 +79,12 @@ class ApplicationTests {
 
 		//municipioService.getMunicipiosByProvincia(1).forEach(item -> System.out.println(item.getNomb_mun()));
 		
-	insertProvinciasMunicipios();
+	//insertProvinciasMunicipios();
+		
+		Date date=new Date(2024, 5, 27);
+		
+		//System.out.println("DIAS RESTANTES" +  proovedorService.diasRestantes(date));
+		
 
 	}
 	

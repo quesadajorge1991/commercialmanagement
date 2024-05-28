@@ -26,6 +26,7 @@ import com.springbootapplication.SpringBootApplication.Services.ClientesService;
 import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
 import com.springbootapplication.SpringBootApplication.Services.ProvinciaService;
 import com.springbootapplication.SpringBootApplication.Services.PuebloService;
+import com.springbootapplication.SpringBootApplication.Services.SolicitudService;
 
 @Controller
 public class ClientesController {
@@ -37,7 +38,9 @@ public class ClientesController {
 	ProvinciaService provinciaService;
 
 	@Autowired
-	SolicitudRepository solicitudRepository;
+	SolicitudService solicitudService;
+	
+	
 
 	@Autowired
 	MunicipioService municipioService;
@@ -68,7 +71,7 @@ public class ClientesController {
 	@PreAuthorize("hasAnyRole('ADMIN','COMERCIAL')")
 	@GetMapping("/addCliente")
 	public String addCliente(Model model) {
-		model.addAttribute("listsolicitudes", solicitudRepository.findAll());
+		model.addAttribute("listsolicitudes", solicitudService.findAll());
 		model.addAttribute("provincias", provinciaService.findAll());
 		model.addAttribute("cliente", new Cliente());
 		return "Clientes/addCliente";
@@ -173,7 +176,7 @@ public class ClientesController {
 	public String addClienteId(@PathVariable(value = "id") int id, Model model) {
 		List<Provincia> provincias = (List<Provincia>) provinciaService.findAll();
 
-		Solicitud solicitud = solicitudRepository.findById(id);
+		Solicitud solicitud = solicitudService.findById(id);
 		provincias.remove(solicitud.getPueblo().getMunicipio().getProvincia());
 		provincias.add(0, solicitud.getPueblo().getMunicipio().getProvincia());
 		/*

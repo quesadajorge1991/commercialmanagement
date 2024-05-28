@@ -8,14 +8,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitterReturnValueHandler;
 
 import com.springbootapplication.SpringBootApplication.Entity.Users;
 import com.springbootapplication.SpringBootApplication.Repository.UsersRepository;
+import com.springbootapplication.SpringBootApplication.Services.IUsersService.IUsersService;
 
 @Service
-public class UsersService {
+public class UsersService implements IUsersService {
 
 	@Autowired
 	UsersRepository usersRepository;
@@ -52,6 +55,12 @@ public class UsersService {
 	public void deleteById(int id) {
 		usersRepository.deleteById(id);
 
+	}
+
+	@Override
+	public String encodePassword(String password) {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.encode(password);
 	}
 
 }

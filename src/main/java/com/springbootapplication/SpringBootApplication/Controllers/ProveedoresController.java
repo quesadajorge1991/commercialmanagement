@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 
 import jakarta.validation.Valid;
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.springbootapplication.SpringBootApplication.Entity.*;
 import com.springbootapplication.SpringBootApplication.Repository.*;
 import com.springbootapplication.SpringBootApplication.Services.MunicipioService;
-import com.springbootapplication.SpringBootApplication.Services.ProovedorService;
+import com.springbootapplication.SpringBootApplication.Services.ProveedorService;
 import com.springbootapplication.SpringBootApplication.Services.ProvinciaService;
 import com.springbootapplication.SpringBootApplication.Services.PuebloService;
 import com.springbootapplication.SpringBootApplication.Services.TipoContratoService;
@@ -36,7 +37,7 @@ import com.springbootapplication.SpringBootApplication.Services.TipoContratoServ
 public class ProveedoresController {
 
 	@Autowired
-	ProovedorService proovedorService;
+	ProveedorService proovedorService;
 
 	@Autowired
 	MunicipioService municipioService;
@@ -230,7 +231,8 @@ public class ProveedoresController {
 					proveedor.setVencido("si");
 					proovedorService.save(proveedor);
 				} else {
-					cxv = new ContratosxVencerse(proveedor, diasRestantes(proveedor.getVigencia()));
+					
+					cxv = new ContratosxVencerse(proveedor,proovedorService.diasRestantes(proveedor.getVigencia()));
 					contrxVencerse.add(cxv);
 				}
 			}
@@ -243,24 +245,6 @@ public class ProveedoresController {
 		return "index";
 	}
 
-	private static int diasRestantes(Date fecha) {
-		DateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
-		int dias = 0;
-		boolean activo = false;
-		Calendar calendar;
-		Date aux;
-		do {
-			calendar = Calendar.getInstance();
-			calendar.add(Calendar.DAY_OF_YEAR, dias);
-			aux = calendar.getTime();
-			if (dd.format(aux).equals(dd.format(fecha))) {
 
-				activo = true;
-			} else {
-				dias++;
-			}
-		} while (activo != true);
-		return dias;
-	}
 
 }

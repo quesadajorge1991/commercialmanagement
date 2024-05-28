@@ -28,9 +28,6 @@ public class Application {
 	}
 
 	@Autowired
-	UsersRepository usersRepository;
-
-	@Autowired
 	AuthoritiesRepository authoritiesRepository;
 
 	@Autowired
@@ -44,14 +41,12 @@ public class Application {
 
 	@PostConstruct
 	public void insertBD() {
-		UsersController u = new UsersController();
-
-		List<Users> user = usersRepository.findAll();
-		List<Provincia> provincias = (List<Provincia>) provinciaRepository.findAll();
+		
+		List<Users> user = usersService.findAll();
 
 		/* pregnta si existe el usuario en la bd */
 		if (user.isEmpty()) {
-			usersRepository.save(new Users("admin", u.encodePassword("admin"), true, "Admiistrador full del sistema"));
+			usersService.save(new Users("admin", usersService.encodePassword("admin"), true, "Admiistrador full del sistema"));
 			String authorities[] = new String[] { "ROLE_ADMIN", "ROLE_CREATE", "ROLE_UPDATE", "ROLE_DELETE",
 					"ROLE_COMERCIAL", "ROLE_ECONOMIA", "ROLE_METEOROLOGIA", "ROLE_PRONOSTICO", "ROLE_ESTACIONES" };
 			for (int i = 0; i < authorities.length; i++) {
