@@ -22,7 +22,7 @@
                     <div class="product-payment-inner-st">
                         <div class="sparkline13-hd">
                             <div class="main-sparkline13-hd">
-                                <h1>Agregar usuario</h1>
+                                <h1 th:text="#{Add.usuario}"></h1>
                             </div>
                         </div>
                         <form   th:object="${user}" method="POST" th:action="@{/add_Usuario}">

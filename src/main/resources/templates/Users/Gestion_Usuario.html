@@ -20,7 +20,7 @@
 						<div class="sparkline13-list">
 							<div class="sparkline13-hd">
 								<div class="main-sparkline13-hd">
-									<h1>Projects <span class="table-project-n">Data</span> Table</h1>
+									<h1 th:text="#{Label.usuarios}"></h1>
 								</div>
 							</div>
 							<div class="sparkline13-graph">
@@ -56,7 +56,7 @@
 
 													<td th:text="${us.descripcion}"></td>
 													<td>
-														<a title="Modificar usuario" class="btn btn-primary"
+														<a title="Modificar usuario" class="btn btn-info"
 															th:href="@{/updateUsuario/}+${us.id}"><i
 																class="fa fa-pencil-square-o"
 																aria-hidden="true"></i></a>

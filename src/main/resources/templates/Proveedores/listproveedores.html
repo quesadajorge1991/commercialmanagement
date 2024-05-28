@@ -21,7 +21,7 @@
 							<div class="sparkline13-hd">
 								<div class="main-sparkline13-hd">
 
-									<h1>Lista <span class="table-project-n">de</span> Proveedores</h1>
+									<h1 th:text="#{Label.proveedor}"></h1>
 
 
 								</div>
@@ -34,7 +34,7 @@
 								<div class="datatable-dashv1-list custom-datatable-overright">
 
 									<div class="add-product" sec:authorize="hasAnyRole('ADMIN','COMERCIAL')">
-										<a class="Primary mg-b-10" th:href="@{/addproveedores}">+ Añadir proveedor</a>
+										<a class="Primary mg-b-10" th:href="@{/addproveedores}">+ <span th:text="#{Add.proveedor}"></span> </a>
 									</div>
 
 
