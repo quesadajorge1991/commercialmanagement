@@ -23,7 +23,7 @@
 						<div class="product-payment-inner-st">
 							<div class="sparkline13-hd">
 								<div class="main-sparkline13-hd">
-									<h1>Añadir solicitud</h1>
+									<h1 th:text="#{Add.solicitud}"></h1>
 								</div>
 							</div>
 							<form method="post" th:action="@{/addSolicitud}"
@@ -44,9 +44,9 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Carnet de Identidad o Código NIT </label>
-											<input name="ci" id="ci" type="text" class="form-control"
+											<input name="ci" id="ci" type="number" maxlength="11"  class="form-control"
 												placeholder="Carnet de Identidad" required="true"
-												data-mask="99999999999" th:field="*{ci}">
+												 th:field="*{ci}">
 											<div style="color: red" role="alert" th:if="${#fields.hasErrors('ci')}">
 												<span th:errors="*{ci}"></span>
 											</div>
@@ -401,6 +401,10 @@
 
 
 		<script th:inline="javascript">
+			
+		
+
+	
 
 			$(document).ready(function () {
 

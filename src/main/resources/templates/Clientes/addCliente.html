@@ -24,7 +24,7 @@
 						<div class="product-payment-inner-st">
 							<div class="sparkline13-hd">
 								<div class="main-sparkline13-hd">
-									<h1>Agregar cliente</h1>
+									<h1 th:text="#{Add.cliente}"></h1>
 								</div>
 							</div>
 
@@ -63,7 +63,7 @@
 										</div>
 										<div class="form-group">
 											<label class="login2">Carnet de Identidad o Código NIT</label>
-											<input name="ci" id="ci" type="text" class="form-control" th:field="*{ci}"
+											<input name="ci" id="ci" type="number" class="form-control" th:field="*{ci}"
 												placeholder="Carnet de Identidad" required="true">
 										</div>
 										<div class="form-group">
