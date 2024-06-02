@@ -13,5 +13,8 @@ public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
 
 	@Query("FROM Municipio m WHERE m.provincia.id=?1")
 	List<Municipio> findMunicipiosByProvincia(long id);
+	
+	@Query("SELECT nomb_mun FROM Municipio")
+	List<String> listMunicipios();
 
 }

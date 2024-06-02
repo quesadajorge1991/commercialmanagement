@@ -9,6 +9,13 @@
 
 <body>
 
+    <div class="form-group">
+		<select required="required" th:fragment="provincias" id="provincias" class="form-control select2">
+			<option value="">Seleccione Provincia</option>
+			<option th:each="provincia:${provincias}" th:value="${provincia.id}" th:text="${provincia.nombProv}" />
+		</select>
+	</div>
+
 
 	<div class="form-group">
 		<select required="required" th:fragment="municicipiosByProvincia" id="ddd">
